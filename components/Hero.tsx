@@ -66,7 +66,9 @@ export function Hero({ tagline }: { tagline: string }) {
             />
           </video>
         )}
-        <div className="absolute inset-0 bg-linear-to-t from-background via-background/70 to-background/30" />
+        <div className="absolute inset-0 bg-linear-to-t from-background via-background/70 to-background/40" />
+        {/* Keeps the header readable over bright footage. */}
+        <div className="absolute inset-x-0 top-0 h-48 bg-linear-to-b from-background/85 to-transparent" />
       </div>
 
       <div className="relative mx-auto w-full max-w-7xl px-6 pb-20 pt-40 md:px-10 md:pb-28">
