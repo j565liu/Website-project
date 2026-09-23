@@ -5,7 +5,7 @@ A private events club for high-income professionals in Toronto. This project is 
 ## Stack
 - Next.js 14+ App Router, TypeScript (strict), Tailwind CSS, Framer Motion
 - Forms: Server Actions + Zod validation (server-side is the source of truth; mirror on the client for UX)
-- Email: Resend via its HTTP API (no SDK). Without `RESEND_API_KEY`, emails are written to `.outbox/` and logged instead of sent (local dev and tests).
+- Email: plain SMTP via Nodemailer, so the provider can be switched with environment variables alone (e.g. an existing Google Workspace / Microsoft 365 mailbox, or Resend's SMTP service). Never add provider-specific SDKs or APIs. Without `SMTP_HOST`, emails are written to `.outbox/` and logged instead of sent (local dev and tests). Provider setup steps live in `docs/email-setup.md`.
 - Database: PostgreSQL via Drizzle ORM with generated SQL migrations (local DB via `docker-compose.yml`)
 - Testing: Vitest for validation/server logic, Playwright for a form-submission smoke test
 - Deploy target: Vercel with any hosted Postgres. Config via environment variables only.
