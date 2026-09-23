@@ -10,12 +10,12 @@ A private, membership-by-application events club for high-income professionals i
 - Deploy target: Vercel with any hosted Postgres. Config via environment variables only.
 
 ## Commands
-<!-- Claude: fill in once scaffolding is complete -->
-- Start DB:
-- Migrations (generate / apply):
-- Dev / build / lint / typecheck:
-- Unit tests / e2e tests:
-- Export applications to CSV:
+<!-- Claude: create matching package.json scripts during scaffolding; keep this list in sync with them -->
+- Start DB: `docker compose up -d`
+- Migrations (generate / apply): `npm run db:generate` / `npm run db:migrate`
+- Dev / build / lint / typecheck: `npm run dev` / `npm run build` / `npm run lint` / `npm run typecheck`
+- Unit tests / e2e tests: `npm test` / `npm run test:e2e`
+- Export applications to CSV: `npm run export:applications`
 
 ## Site Map
 - `/`: cinematic video hero, brief club intro, event teasers preview, closing CTA
