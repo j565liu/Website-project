@@ -36,6 +36,7 @@ A private events club for high-income professionals in Toronto. This project is 
 - Fields: preferred_name (what we call them in emails, max 80 chars), email, industry (select), how_did_you_hear (optional select), why_join (short text, max 500 chars), consent checkbox (required). Collect nothing else.
 - `registrations` table: id (UUID), the fields above, consent_accepted_at, confirmed_at (null until the email link is used), confirmation_token_hash (never store the raw token), confirmation_expires_at (48 hours), created_at, updated_at. Unique index on lowercased email; index on confirmed_at and created_at.
 - Everyone who confirms is registered: there is no approval status.
+- The only emails the site sends are the confirmation link, a "you're registered" email once confirmed, and the "already registered" email. No announcements, newsletters or reminders, and copy must not promise them.
 - After every valid submission, show `/register/check-email` whether or not the email is new, so the form never reveals who has registered. New or unconfirmed email → send a fresh confirmation link. Already confirmed → send a short "you're already registered" email instead.
 - Unconfirmed registrations older than 7 days are deleted.
 - Spam protection: honeypot field + basic rate limiting per IP (hashed with `RATE_LIMIT_SECRET`; never store raw IP addresses).

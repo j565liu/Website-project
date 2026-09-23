@@ -25,8 +25,8 @@ export default function HomePage() {
               gatherings each season, across Toronto&rsquo;s most interesting neighbourhoods.
             </p>
             <p>
-              Register your interest with your email and we will let you know when the next
-              gathering is announced. Come curious, and bring your good conversation.
+              Registering takes a minute: your name, your email and a little about you.
+              Come curious, and bring your good conversation.
             </p>
             <Link
               href="/the-club"
@@ -56,8 +56,8 @@ export default function HomePage() {
       </section>
 
       <CtaSection
-        title="Be the first to hear."
-        body="Leave your email and we will let you know when the next gathering is announced. Locations are shared with registered guests only."
+        title="Take a seat at the table."
+        body="Register your interest with a few details about yourself. Locations are shared with registered guests only."
       />
     </>
   );
