@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { CtaSection } from "@/components/CtaSection";
 import { PageHeader } from "@/components/PageHeader";
 import { TextSection } from "@/components/TextSection";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "The Club",
-  description:
-    "Ready to Mingle hosts a small number of private gatherings each season for Toronto professionals.",
-};
+  description: "Ready to Mingle hosts a small number of private gatherings each season for Toronto professionals.",
+  path: "/the-club",
+});
 
 export default function TheClubPage() {
   return (

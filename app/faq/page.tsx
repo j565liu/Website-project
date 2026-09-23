@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import Link from "next/link";
 import { PageHeader } from "@/components/PageHeader";
 import { faq } from "@/content/faq";
 import { site } from "@/content/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "FAQ",
   description: "Answers to common questions about Ready to Mingle, registration and our events.",
-};
+  path: "/faq",
+});
 
 export default function FaqPage() {
   return (

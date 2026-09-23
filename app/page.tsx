@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CtaSection } from "@/components/CtaSection";
 import { EventList } from "@/components/EventList";
 import { Hero } from "@/components/Hero";
+import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { getUpcomingEvents } from "@/lib/events";
 
@@ -16,9 +17,9 @@ export default function HomePage() {
       <Hero tagline="Private gatherings for Toronto’s professionals, in some of the city’s most interesting rooms." />
 
       <section aria-labelledby="intro" className="mx-auto max-w-7xl px-6 py-32 md:px-10 md:py-44">
-        <div className="grid gap-16 md:grid-cols-[1fr_1.4fr] md:gap-24">
+        <Reveal className="grid gap-16 lg:grid-cols-[1fr_1.4fr] lg:gap-24">
           <SectionHeading id="intro" label="The Club" title="Fewer people. Better evenings." />
-          <div className="space-y-6 text-lg leading-relaxed text-muted md:pt-12">
+          <div className="space-y-6 text-lg leading-relaxed text-muted lg:pt-12">
             <p>
               Ready to Mingle is a private club for professionals who would rather spend an
               evening in good company than in a crowded room. We host a small number of
@@ -35,12 +36,12 @@ export default function HomePage() {
               About the club
             </Link>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <section aria-labelledby="upcoming" className="border-t border-charcoal">
         <div className="mx-auto max-w-7xl px-6 py-32 md:px-10 md:py-44">
-          <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
+          <Reveal className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
             <SectionHeading id="upcoming" label="Upcoming" title="Forthcoming gatherings" />
             <Link
               href="/events"
@@ -48,7 +49,7 @@ export default function HomePage() {
             >
               All events
             </Link>
-          </div>
+          </Reveal>
           <div className="mt-16">
             <EventList events={nextEvents} />
           </div>

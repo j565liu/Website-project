@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { PageHeader } from "@/components/PageHeader";
 import { site } from "@/content/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy",
   description: "How Ready to Mingle collects, uses and protects your personal information.",
-};
+  path: "/privacy",
+});
 
 const sections: { id: string; title: string; body: React.ReactNode }[] = [
   {

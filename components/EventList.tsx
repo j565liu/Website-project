@@ -1,5 +1,6 @@
 import type { ClubEvent } from "@/content/events";
 import { EventTeaser } from "./EventTeaser";
+import { Reveal } from "./Reveal";
 
 export function EventList({ events }: { events: ClubEvent[] }) {
   if (events.length === 0) {
@@ -12,9 +13,11 @@ export function EventList({ events }: { events: ClubEvent[] }) {
 
   return (
     <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {events.map((event) => (
+      {events.map((event, index) => (
         <li key={event.id}>
-          <EventTeaser event={event} />
+          <Reveal className="h-full" delay={(index % 3) * 0.12}>
+            <EventTeaser event={event} />
+          </Reveal>
         </li>
       ))}
     </ul>

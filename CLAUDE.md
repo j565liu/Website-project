@@ -54,5 +54,7 @@ A private events club for high-income professionals in Toronto. This project is 
 ## Conventions
 - Components in `components/`, content in `content/`, DB code in `lib/db/`, validation schemas in `lib/validation/`.
 - Comments only where logic is non-obvious.
+- Page metadata goes through `pageMetadata()` in `lib/metadata.ts` (Next replaces `openGraph` per page rather than merging it). New public pages also go in `content/routes.ts` for the sitemap.
+- Wrap below-the-fold sections in `components/Reveal.tsx` for scroll reveals; keep above-the-fold content (hero, page headers) on CSS animations or static so it doesn't wait for JavaScript.
 - The project runs Next.js 16, whose APIs differ from older versions: read @AGENTS.md before writing Next-specific code.
 - Out of scope unless explicitly requested: logins or accounts, approval workflows, gated content, admin dashboard, payments, marketing or newsletter emails (only the confirmation emails above), CMS integration.

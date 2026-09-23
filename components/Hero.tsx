@@ -1,13 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { site } from "@/content/site";
 import { RegisterLink } from "./RegisterLink";
 
 const POSTER = "/images/hero-fallback.jpg";
-const ease = [0.22, 1, 0.36, 1] as const;
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState<boolean | null>(null);
@@ -72,33 +70,22 @@ export function Hero({ tagline }: { tagline: string }) {
       </div>
 
       <div className="relative mx-auto w-full max-w-7xl px-6 pb-20 pt-40 md:px-10 md:pb-28">
-        <motion.p
-          className="label text-muted"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease, delay: 0.1 }}
-        >
+        <p className="label rise-in text-muted" style={{ animationDelay: "0.1s" }}>
           {site.city} · Private gatherings
-        </motion.p>
-        <motion.h1
-          className="mt-6 font-display text-6xl font-light leading-[0.95] tracking-tight text-ivory sm:text-7xl md:text-8xl lg:text-9xl"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease, delay: 0.25 }}
+        </p>
+        <h1
+          className="rise-in mt-6 font-display text-6xl font-light leading-[0.95] tracking-tight text-ivory sm:text-7xl md:text-8xl lg:text-9xl"
+          style={{ animationDelay: "0.15s" }}
         >
           {site.name}
-        </motion.h1>
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease, delay: 0.5 }}
-        >
+        </h1>
+        <div className="rise-in" style={{ animationDelay: "0.45s" }}>
           <p className="mt-8 max-w-md font-display text-xl italic leading-snug text-ivory/85 md:text-2xl">
             {tagline}
           </p>
           <div className="mt-12 h-px w-16 bg-gold" />
           <RegisterLink className="mt-12" />
-        </motion.div>
+        </div>
       </div>
     </section>
   );

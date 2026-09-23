@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { MotionProvider } from "@/components/MotionProvider";
 import { site } from "@/content/site";
+import { pageMetadata, rootMetadata } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site-url";
 import "./globals.css";
 
@@ -24,10 +25,11 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl()),
   title: {
-    default: `${site.name} · Private gatherings in ${site.city}`,
+    default: rootMetadata.title,
     template: `%s · ${site.name}`,
   },
-  description: site.description,
+  applicationName: site.name,
+  ...pageMetadata({ description: rootMetadata.description, path: "/" }),
 };
 
 export const viewport: Viewport = {
@@ -39,6 +41,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en-CA" className={`${inter.variable} ${cormorant.variable}`}>
       <body className="flex min-h-dvh flex-col bg-background font-sans text-ivory">
+        <noscript>
+          <style>{"[data-reveal]{opacity:1!important;transform:none!important}"}</style>
+        </noscript>
         <a
           href="#main"
           className="label sr-only z-50 bg-background px-4 py-3 text-ivory focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
