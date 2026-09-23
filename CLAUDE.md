@@ -1,4 +1,4 @@
-# [Platform Name]
+# Ready to Mingle
 
 A private, membership-by-application events club for high-income professionals in Toronto. This project is the public marketing website only: it is a website, not a mobile app. There are no member logins. Visitors learn about the club, see upcoming event teasers, and submit a membership application. Brand references: Soho House, The League. Private, understated, highly curated.
 
@@ -49,4 +49,5 @@ A private, membership-by-application events club for high-income professionals i
 ## Conventions
 - Components in `components/`, content in `content/`, DB code in `lib/db/`, validation schemas in `lib/validation/`.
 - Comments only where logic is non-obvious.
+- The project runs Next.js 16, whose APIs differ from older versions: read @AGENTS.md before writing Next-specific code.
 - Out of scope unless explicitly requested: member logins, gated content, admin dashboard, payments, email sending, CMS integration.
