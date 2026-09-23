@@ -11,12 +11,12 @@ A private events club for high-income professionals in Toronto. This project is 
 - Deploy target: Vercel with any hosted Postgres. Config via environment variables only.
 
 ## Commands
-<!-- Claude: create matching package.json scripts during scaffolding; keep this list in sync with them -->
+<!-- Keep this list in sync with package.json scripts -->
 - Start DB: `docker compose up -d`
-- Migrations (generate / apply): `npm run db:generate` / `npm run db:migrate`
+- Migrations (generate / apply / undo last): `npm run db:generate` / `npm run db:migrate` / `npm run db:rollback`. Every migration needs a hand-written `drizzle/rollback/<tag>.down.sql`.
 - Dev / build / lint / typecheck: `npm run dev` / `npm run build` / `npm run lint` / `npm run typecheck`
-- Unit tests / e2e tests: `npm test` / `npm run test:e2e`
-- Export registrations to CSV: `npm run export:registrations`
+- Unit tests / e2e tests: `npm test` / `npm run test:e2e` (both need the DB running; they use a separate `<db>_test` database, created and migrated automatically)
+- Export registrations to CSV: `npm run export:registrations -- --status=all|confirmed|unconfirmed` (writes to `exports/`, which is git-ignored)
 
 ## Site Map
 - `/`: cinematic video hero, brief club intro, event teasers preview, closing CTA
@@ -24,7 +24,7 @@ A private events club for high-income professionals in Toronto. This project is 
 - `/events`: upcoming event teasers (title, date, time, neighborhood only; never venue or address)
 - `/register`: registration form
 - `/register/check-email`: "Check your inbox" page shown after submitting
-- `/register/confirm?token=…`: landing page from the email link; the visitor presses a button to confirm (a button, not the bare link, so email link scanners can't confirm on their behalf), then sees "You're registered"
+- `/register/confirm?token=…`: landing page from the email link; the visitor presses a button to confirm (a button, not the bare link, so email link scanners can't confirm on their behalf), then lands on `/register/confirmed` ("You're registered")
 - `/faq`, `/privacy`
 
 ## Content Rules

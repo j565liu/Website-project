@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { MotionProvider } from "@/components/MotionProvider";
 import { site } from "@/content/site";
+import { siteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 const inter = Inter({
@@ -21,7 +22,7 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  metadataBase: new URL(siteUrl()),
   title: {
     default: `${site.name} · Private gatherings in ${site.city}`,
     template: `%s · ${site.name}`,
