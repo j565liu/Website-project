@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { site } from "@/content/site";
-import { ApplyLink } from "./ApplyLink";
+import { RegisterLink } from "./RegisterLink";
 
 const POSTER = "/images/hero-fallback.jpg";
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -78,7 +78,7 @@ export function Hero({ tagline }: { tagline: string }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease, delay: 0.1 }}
         >
-          {site.city} · Membership by application
+          {site.city} · Private gatherings
         </motion.p>
         <motion.h1
           className="mt-6 font-display text-6xl font-light leading-[0.95] tracking-tight text-ivory sm:text-7xl md:text-8xl lg:text-9xl"
@@ -97,7 +97,7 @@ export function Hero({ tagline }: { tagline: string }) {
             {tagline}
           </p>
           <div className="mt-12 h-px w-16 bg-gold" />
-          <ApplyLink className="mt-12" />
+          <RegisterLink className="mt-12" />
         </motion.div>
       </div>
     </section>

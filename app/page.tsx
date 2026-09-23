@@ -13,7 +13,7 @@ export default function HomePage() {
 
   return (
     <>
-      <Hero tagline="Private gatherings for Toronto’s professionals. A small, considered membership." />
+      <Hero tagline="Private gatherings for Toronto’s professionals, in some of the city’s most interesting rooms." />
 
       <section aria-labelledby="intro" className="mx-auto max-w-7xl px-6 py-32 md:px-10 md:py-44">
         <div className="grid gap-16 md:grid-cols-[1fr_1.4fr] md:gap-24">
@@ -25,8 +25,8 @@ export default function HomePage() {
               gatherings each season, across Toronto&rsquo;s most interesting neighbourhoods.
             </p>
             <p>
-              Membership is by application and reviewed with care. We look for curiosity,
-              generosity and people who make a table better for being at it.
+              Register your interest with your email and we will let you know when the next
+              gathering is announced. Come curious, and bring your good conversation.
             </p>
             <Link
               href="/the-club"
@@ -56,8 +56,8 @@ export default function HomePage() {
       </section>
 
       <CtaSection
-        title="Membership is by application."
-        body="Every application is read by a person, not a process. If it feels like the right fit, we would be glad to hear from you."
+        title="Be the first to hear."
+        body="Leave your email and we will let you know when the next gathering is announced. Locations are shared with registered guests only."
       />
     </>
   );

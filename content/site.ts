@@ -2,8 +2,8 @@ export const site = {
   name: "Ready to Mingle",
   city: "Toronto",
   description:
-    "A private, membership-by-application club for Toronto professionals. Considered gatherings, a carefully curated membership.",
-  applyLabel: "Apply for Membership",
+    "Private gatherings for Toronto professionals. Small rooms, good company, and evenings worth leaving the house for.",
+  ctaLabel: "Register Your Interest",
 } as const;
 
 export const primaryNav = [

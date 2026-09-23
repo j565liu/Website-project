@@ -63,11 +63,11 @@ export function MobileMenu() {
             ))}
             <li className="border-t border-charcoal pt-8">
               <Link
-                href="/apply"
+                href="/register"
                 onClick={close}
                 className="label inline-block border border-gold px-8 py-4 text-ivory"
               >
-                {site.applyLabel}
+                {site.ctaLabel}
               </Link>
             </li>
           </ul>

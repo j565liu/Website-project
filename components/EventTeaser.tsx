@@ -16,7 +16,7 @@ export function EventTeaser({ event }: { event: ClubEvent }) {
             <span className="text-muted"> · {formatEventTime(event.startsAt)}</span>
           </time>
         </p>
-        <p className="mt-2 text-sm italic text-muted">Location disclosed to approved members</p>
+        <p className="mt-2 text-sm italic text-muted">Location shared with registered guests</p>
       </div>
     </article>
   );

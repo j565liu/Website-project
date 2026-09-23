@@ -23,7 +23,7 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: {
-    default: `${site.name} · A private members’ club in ${site.city}`,
+    default: `${site.name} · Private gatherings in ${site.city}`,
     template: `%s · ${site.name}`,
   },
   description: site.description,

@@ -6,14 +6,14 @@ type Props = {
   className?: string;
 };
 
-export function ApplyLink({ size = "lg", className = "" }: Props) {
+export function RegisterLink({ size = "lg", className = "" }: Props) {
   const sizing = size === "sm" ? "px-4 py-2.5" : "px-8 py-4";
   return (
     <Link
-      href="/apply"
+      href="/register"
       className={`label inline-block border border-gold text-ivory transition-colors duration-500 ease-luxe hover:bg-gold hover:text-background ${sizing} ${className}`}
     >
-      {site.applyLabel}
+      {site.ctaLabel}
     </Link>
   );
 }
