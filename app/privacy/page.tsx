@@ -146,7 +146,7 @@ export default function PrivacyPage() {
           <div className="mt-4">
             {sections.map((section) => (
               <section key={section.id} aria-labelledby={section.id} className="border-b border-charcoal py-12">
-                <h2 id={section.id} className="font-display text-3xl font-light text-ivory">
+                <h2 id={section.id} className="font-display text-3xl font-medium text-ivory">
                   {section.title}
                 </h2>
                 <div className="mt-6 space-y-4 leading-relaxed text-muted">{section.body}</div>

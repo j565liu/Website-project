@@ -10,7 +10,7 @@ export function SectionHeading({ label, title, id }: Props) {
       <p className="label text-muted">{label}</p>
       <h2
         id={id}
-        className="mt-5 font-display text-4xl font-light leading-tight text-ivory md:text-5xl"
+        className="mt-5 font-display text-4xl font-normal leading-tight text-ivory md:text-5xl"
       >
         {title}
       </h2>

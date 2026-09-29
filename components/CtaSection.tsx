@@ -13,7 +13,7 @@ export function CtaSection({ title, body }: Props) {
         <div className="h-px w-16 bg-gold" />
         <h2
           id="closing-cta"
-          className="mt-12 font-display text-4xl font-light leading-tight text-ivory md:text-6xl"
+          className="mt-12 font-display text-4xl font-normal leading-tight text-ivory md:text-6xl"
         >
           {title}
         </h2>

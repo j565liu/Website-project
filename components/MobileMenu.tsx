@@ -38,7 +38,7 @@ export function MobileMenu() {
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((value) => !value)}
-        className="label relative z-50 py-2 text-ivory"
+        className="label relative z-50 -mr-3 px-3 py-3 text-ivory"
       >
         {open ? "Close" : "Menu"}
       </button>
@@ -55,7 +55,7 @@ export function MobileMenu() {
                   ref={index === 0 ? firstLinkRef : undefined}
                   href={item.href}
                   onClick={close}
-                  className="font-display text-4xl font-light text-ivory"
+                  className="font-display text-4xl font-normal text-ivory"
                 >
                   {item.label}
                 </Link>

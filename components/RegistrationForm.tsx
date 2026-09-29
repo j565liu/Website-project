@@ -138,7 +138,7 @@ export function RegistrationForm() {
       </div>
 
       <div>
-        <label htmlFor="preferredName" className="label text-ivory">
+        <label htmlFor="preferredName" className="text-base font-medium text-ivory">
           Preferred name
         </label>
         <p id="preferredName-hint" className="mt-2 text-sm text-muted">
@@ -162,7 +162,7 @@ export function RegistrationForm() {
       </div>
 
       <div>
-        <label htmlFor="email" className="label text-ivory">
+        <label htmlFor="email" className="text-base font-medium text-ivory">
           Email
         </label>
         <p id="email-hint" className="mt-2 text-sm text-muted">
@@ -188,7 +188,7 @@ export function RegistrationForm() {
 
       <div className="grid gap-10 md:grid-cols-2">
         <div>
-          <label htmlFor="industry" className="label text-ivory">
+          <label htmlFor="industry" className="text-base font-medium text-ivory">
             Industry
           </label>
           <SelectShell>
@@ -217,8 +217,8 @@ export function RegistrationForm() {
         </div>
 
         <div>
-          <label htmlFor="howDidYouHear" className="label text-ivory">
-            How did you hear about us <span className="text-muted normal-case tracking-normal">(optional)</span>
+          <label htmlFor="howDidYouHear" className="text-base font-medium text-ivory">
+            How did you hear about us <span className="font-normal text-muted">(optional)</span>
           </label>
           <SelectShell>
             <select
@@ -243,7 +243,7 @@ export function RegistrationForm() {
       </div>
 
       <div>
-        <label htmlFor="whyJoin" className="label text-ivory">
+        <label htmlFor="whyJoin" className="text-base font-medium text-ivory">
           Why you are interested
         </label>
         <p id="whyJoin-hint" className="mt-2 text-sm text-muted">
@@ -287,7 +287,7 @@ export function RegistrationForm() {
             onChange={(e) => update("consent", e.target.checked)}
             aria-invalid={Boolean(errors.consent)}
             aria-describedby={describedBy("consent", "consent-privacy")}
-            className="mt-1 size-5 shrink-0 cursor-pointer accent-gold"
+            className="mt-1 size-6 shrink-0 cursor-pointer accent-gold"
           />
           <div>
             <label htmlFor="consent" className="cursor-pointer leading-relaxed text-ivory">
@@ -333,7 +333,7 @@ function SelectShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative">
       {children}
-      <span aria-hidden="true" className="pointer-events-none absolute bottom-4 right-4 text-xs text-gold">
+      <span aria-hidden="true" className="pointer-events-none absolute bottom-0 right-4 flex h-[3.625rem] items-center text-sm text-gold">
         ▾
       </span>
     </div>

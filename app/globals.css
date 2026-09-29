@@ -7,12 +7,21 @@
   --color-surface: #141414;
   --color-charcoal: #2a2a2a;
   --color-ivory: #f5f3ef;
-  --color-muted: #a39e94;
+  --color-muted: #c2bcb1;
   --color-gold: #b89b5e;
   --color-transparent: transparent;
 
   --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
-  --tracking-label: 0.24em;
+  --tracking-label: 0.16em;
+
+  /* Type scale tuned for a 45+ audience: nothing below 16px, body at 18px. */
+  --text-sm: 1rem;
+  --text-sm--line-height: 1.6;
+  --text-base: 1.125rem;
+  --text-base--line-height: 1.7;
+  --text-lg: 1.1875rem;
+  --text-lg--line-height: 1.75;
+  --leading-relaxed: 1.75;
 }
 
 @theme inline {
@@ -44,8 +53,8 @@
 
 @utility label {
   font-family: var(--font-sans);
-  font-size: 0.6875rem;
-  line-height: 1rem;
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
   font-weight: 500;
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;

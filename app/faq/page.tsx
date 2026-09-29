@@ -20,7 +20,7 @@ export default function FaqPage() {
           <div className="border-t border-charcoal">
             {faq.map((item) => (
               <details key={item.question} className="group border-b border-charcoal">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-8 font-display text-2xl font-light text-ivory transition-colors duration-500 hover:text-gold md:text-3xl [&::-webkit-details-marker]:hidden">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-8 font-display text-2xl font-medium text-ivory transition-colors duration-500 hover:text-gold md:text-3xl [&::-webkit-details-marker]:hidden">
                   {item.question}
                   <span
                     aria-hidden="true"

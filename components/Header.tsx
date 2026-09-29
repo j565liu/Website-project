@@ -9,7 +9,7 @@ export function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-6 md:px-10 md:py-8">
         <Link
           href="/"
-          className="relative z-50 font-display text-2xl tracking-wide text-ivory md:text-[1.75rem]"
+          className="relative z-50 -my-2 py-2 font-display text-2xl tracking-wide text-ivory md:text-[1.75rem]"
         >
           {site.name}
         </Link>
@@ -19,7 +19,7 @@ export function Header() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="label text-muted transition-colors duration-500 hover:text-ivory"
+                  className="label inline-block py-3 text-muted transition-colors duration-500 hover:text-ivory"
                 >
                   {item.label}
                 </Link>

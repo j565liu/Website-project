@@ -44,11 +44,12 @@ A private events club for high-income professionals in Toronto. This project is 
 - No secrets in code; keep `.env.example` current. Schema changes only through migrations.
 
 ## Design System
-- Colors: background #0A0A0A, surface #141414, charcoal #2A2A2A, text #F5F3EF, muted text #A39E94, accent muted gold #B89B5E (sparingly: CTA borders/hover, thin rules). No bright or saturated colors anywhere.
+- Colors: background #0A0A0A, surface #141414, charcoal #2A2A2A, text #F5F3EF, muted text #C2BCB1, accent muted gold #B89B5E (sparingly: CTA borders/hover, thin rules). No bright or saturated colors anywhere.
 - Type: Cormorant Garamond (serif display) for headlines; Inter for body; wide letter-spacing on small uppercase labels. Load via `next/font`.
 - Generous whitespace, 1px hairline borders, no heavy shadows, no rounded pill buttons.
 - Motion: slow ease-out fades and rises (0.8–1.2s), subtle scroll reveals. No springs or bounces. Respect prefers-reduced-motion.
 - Copy: the CTA is always "Register Your Interest", never "Sign Up", "Join Now", or "Apply for Membership". Don't describe the club as membership-based. Tone is understated and confident, never salesy. No exclamation marks.
+- Audience is mostly 45+: keep text comfortably readable. Nothing below 16px (body 18px, small uppercase labels 13px), Cormorant Light only for very large display type (use regular/medium below ~48px), no small italic text, tap targets at least 44px, and form labels in plain sentence case rather than small caps. The type scale lives in `app/globals.css`.
 - Accessibility: WCAG AA contrast, visible keyboard focus, labelled form fields, and error messages announced to screen readers.
 
 ## Conventions

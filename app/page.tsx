@@ -31,7 +31,7 @@ export default function HomePage() {
             </p>
             <Link
               href="/the-club"
-              className="label inline-block pt-4 text-ivory underline decoration-gold underline-offset-8 transition-colors duration-500 hover:text-gold"
+              className="label inline-block py-3 text-ivory underline decoration-gold underline-offset-8 transition-colors duration-500 hover:text-gold"
             >
               About the club
             </Link>
@@ -45,7 +45,7 @@ export default function HomePage() {
             <SectionHeading id="upcoming" label="Upcoming" title="Forthcoming gatherings" />
             <Link
               href="/events"
-              className="label self-start text-ivory underline decoration-gold underline-offset-8 transition-colors duration-500 hover:text-gold md:self-auto"
+              className="label inline-block self-start py-3 text-ivory underline decoration-gold underline-offset-8 transition-colors duration-500 hover:text-gold md:self-auto"
             >
               All events
             </Link>

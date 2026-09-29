@@ -7,7 +7,7 @@ type Props = {
 };
 
 export function RegisterLink({ size = "lg", className = "" }: Props) {
-  const sizing = size === "sm" ? "px-4 py-2.5" : "px-8 py-4";
+  const sizing = size === "sm" ? "px-5 py-3.5" : "px-8 py-4";
   return (
     <Link
       href="/register"

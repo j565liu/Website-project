@@ -15,7 +15,7 @@ export function TextSection({ id, label, title, children }: Props) {
           <p className="label text-muted">{label}</p>
           <h2
             id={id}
-            className="mt-5 font-display text-3xl font-light leading-tight text-ivory md:text-4xl"
+            className="mt-5 font-display text-3xl font-medium leading-tight text-ivory md:text-4xl"
           >
             {title}
           </h2>

@@ -5,7 +5,7 @@ import { Reveal } from "./Reveal";
 export function EventList({ events }: { events: ClubEvent[] }) {
   if (events.length === 0) {
     return (
-      <p className="border-t border-charcoal pt-10 font-display text-2xl font-light italic text-muted">
+      <p className="border-t border-charcoal pt-10 font-display text-2xl font-normal text-muted">
         New gatherings will be announced soon.
       </p>
     );

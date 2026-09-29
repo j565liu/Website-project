@@ -15,12 +15,12 @@ export function Footer() {
           <RegisterLink size="sm" />
         </div>
         <nav aria-label="Footer">
-          <ul className="flex flex-wrap gap-x-8 gap-y-4">
+          <ul className="flex flex-wrap gap-x-8 gap-y-1">
             {footerNav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="label text-muted transition-colors duration-500 hover:text-ivory"
+                  className="label inline-block py-3 text-muted transition-colors duration-500 hover:text-ivory"
                 >
                   {item.label}
                 </Link>

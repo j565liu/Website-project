@@ -8,7 +8,7 @@ export function PageHeader({ label, title, intro }: Props) {
   return (
     <header className="mx-auto max-w-7xl px-6 pb-20 pt-44 md:px-10 md:pb-28 md:pt-56">
       <p className="label text-muted">{label}</p>
-      <h1 className="mt-6 max-w-4xl font-display text-5xl font-light leading-[1.05] text-ivory md:text-7xl">
+      <h1 className="mt-6 max-w-4xl font-display text-5xl font-normal md:font-light leading-[1.05] text-ivory md:text-7xl">
         {title}
       </h1>
       {intro && (

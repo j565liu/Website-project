@@ -40,7 +40,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en-CA" className={`${inter.variable} ${cormorant.variable}`}>
-      <body className="flex min-h-dvh flex-col bg-background font-sans text-ivory">
+      <body className="flex min-h-dvh flex-col bg-background font-sans text-base text-ivory">
         <noscript>
           <style>{"[data-reveal]{opacity:1!important;transform:none!important}"}</style>
         </noscript>
