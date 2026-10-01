@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Inter } from "next/font/google";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { MotionProvider } from "@/components/MotionProvider";
+import { PageBackground } from "@/components/PageBackground";
 import { site } from "@/content/site";
 import { pageMetadata, rootMetadata } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site-url";
@@ -40,7 +41,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en-CA" className={`${inter.variable} ${cormorant.variable}`}>
-      <body className="flex min-h-dvh flex-col bg-background font-sans text-base text-ivory">
+      <body className="flex min-h-dvh flex-col font-sans text-base text-ivory">
         <noscript>
           <style>{"[data-reveal]{opacity:1!important;transform:none!important}"}</style>
         </noscript>
@@ -50,6 +51,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
+        <PageBackground />
         <MotionProvider>
           <Header />
           <main id="main" className="flex-1">
