@@ -19,12 +19,13 @@ Use only images you own or have licensed for commercial web use.
 
 ## Page background photos
 
-Every page except the home page shows a photo behind its content, darkened so text stays easy
+Every page shows a photo behind its content (on the home page, below the video), darkened so text stays easy
 to read. The list of which photo goes on which page is in `content/backgrounds.ts`:
 
 ```ts
 export const pageBackgrounds = {
   default: "/images/hero-fallback.jpg",   // used by any page not listed below
+  "/": "/images/events.jpg",              // the home page, below the video
   "/events": "/images/events.jpg",        // example: a different photo for Events
 };
 ```

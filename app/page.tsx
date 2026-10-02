@@ -15,6 +15,8 @@ export default function HomePage() {
   return (
     <>
       <Hero tagline="Private gatherings for Toronto’s professionals, in some of the city’s most interesting rooms." />
+      {/* Blends the hero's solid bottom edge into the background photo below it. */}
+      <div aria-hidden="true" className="pointer-events-none relative -mb-48 h-48 bg-linear-to-b from-background to-transparent" />
 
       <section aria-labelledby="intro" className="mx-auto max-w-7xl px-6 py-32 md:px-10 md:py-44">
         <Reveal className="grid gap-16 lg:grid-cols-[1fr_1.4fr] lg:gap-24">

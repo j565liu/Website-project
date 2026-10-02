@@ -5,14 +5,14 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { backgroundFor } from "@/content/backgrounds";
 
-// A fixed, heavily darkened photo behind every page except home. The overlay keeps all text
-// well above WCAG AA contrast even over the brightest parts of a photo.
+// A fixed, heavily darkened photo behind every page (below the video hero on home). The overlay
+// keeps all text well above WCAG AA contrast even over the brightest parts of a photo.
 export function PageBackground() {
   const pathname = usePathname();
   const src = backgroundFor(pathname);
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
 
-  if (!src || failedSrc === src) return null;
+  if (failedSrc === src) return null;
 
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10">
