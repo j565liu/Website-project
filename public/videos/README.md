@@ -1,5 +1,10 @@
 # Hero video
 
+> **Replacing the video?** All four files below must contain the same footage. Browsers pick
+> whichever format they support first (most use the `.webm` files), so replacing only the `.mp4`
+> files leaves most visitors seeing the old video. The simplest route: upload your new video under
+> any name and ask for all four files to be regenerated from it.
+
 The home page hero plays a silent background video. Add these two files to this folder
 (the site works without them and shows the fallback image instead):
 

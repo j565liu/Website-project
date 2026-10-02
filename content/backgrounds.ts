@@ -4,7 +4,7 @@
 export const pageBackgrounds = {
   default: "/images/hero-fallback.jpg",
   // "/the-club": "/images/the-club.jpg",
-  // "/events": "/images/events.jpg",
+  "/events": "/images/events.jpg",
   // "/register": "/images/register.jpg",
   // "/faq": "/images/faq.jpg",
   // "/privacy": "/images/privacy.jpg",
