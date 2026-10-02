@@ -47,8 +47,8 @@ describe("honeypot", () => {
   });
 });
 
-describe("new registration", () => {
-  it("stores the registration unconfirmed and emails a confirmation link", async () => {
+describe("new request", () => {
+  it("stores the request unconfirmed and emails a confirmation link", async () => {
     const { ctx, mailer } = context();
     expect(await handleSubmission(formData(validFields), ctx)).toEqual({ kind: "accepted" });
 
@@ -56,8 +56,6 @@ describe("new registration", () => {
     expect(row).toMatchObject({
       preferredName: "Alex",
       email: "alex.morgan@example.com",
-      industry: "Law",
-      howDidYouHear: "LinkedIn",
       confirmedAt: null,
       consentAcceptedAt: baseNow,
       confirmationExpiresAt: new Date(baseNow.getTime() + 48 * HOUR),
@@ -66,7 +64,7 @@ describe("new registration", () => {
     expect(mailer.sent).toHaveLength(1);
     expect(mailer.sent[0].to).toBe("alex.morgan@example.com");
     expect(mailer.sent[0].subject).toMatch(/Confirm your email/);
-    expect(mailer.sent[0].html).toContain("https://readytomingle.test/register/confirm?token=");
+    expect(mailer.sent[0].html).toContain("https://readytomingle.test/guide/confirm?token=");
 
     // Only a hash of the token is stored.
     const token = tokenFrom(mailer.sent[0]);
@@ -106,7 +104,7 @@ describe("duplicate email", () => {
     expect(await getTokenStatus(secondToken, { db, now: later })).toBe("pending");
   });
 
-  it("looks identical to the visitor for a confirmed email, and sends an 'already registered' email", async () => {
+  it("looks identical to the visitor for a confirmed email, and re-sends the guide link", async () => {
     const { ctx, mailer } = context();
     await handleSubmission(formData(validFields), ctx);
     await confirmRegistration(tokenFrom(mailer.sent[0]), ctx);
@@ -122,14 +120,15 @@ describe("duplicate email", () => {
     expect(rows).toHaveLength(1);
     expect(rows[0]).toEqual(before);
     const last = mailer.sent.at(-1)!;
-    expect(last.subject).toMatch(/already registered/);
+    expect(last.subject).toMatch(/starter guide link/);
     expect(last.text).toContain("Hello Alex,");
+    expect(last.text).toContain("https://readytomingle.test/guide/read");
     expect(last.text).not.toMatch(/token=/);
   });
 });
 
 describe("confirmation", () => {
-  it("confirms a valid link once and sends a 'registered' email", async () => {
+  it("confirms a valid link once and emails the guide link", async () => {
     const { ctx, mailer } = context();
     await handleSubmission(formData(validFields), ctx);
     const token = tokenFrom(mailer.sent[0]);
@@ -137,7 +136,8 @@ describe("confirmation", () => {
     expect(await confirmRegistration(token, ctx)).toBe("confirmed");
     const [row] = await allRows();
     expect(row.confirmedAt).toEqual(baseNow);
-    expect(mailer.sent.at(-1)!.subject).toMatch(/You're registered/);
+    expect(mailer.sent.at(-1)!.subject).toMatch(/Your Ready to Mingle starter guide/);
+    expect(mailer.sent.at(-1)!.text).toContain("https://readytomingle.test/guide/read");
 
     expect(await confirmRegistration(token, ctx)).toBe("confirmed");
     expect(mailer.sent).toHaveLength(2);
@@ -158,7 +158,7 @@ describe("confirmation", () => {
     expect(await confirmRegistration(token, ctx)).toBe("invalid");
   });
 
-  it("still confirms when the 'registered' email fails to send", async () => {
+  it("still confirms when the guide email fails to send", async () => {
     const { ctx, mailer } = context();
     await handleSubmission(formData(validFields), ctx);
     const failing = async () => {
@@ -170,7 +170,7 @@ describe("confirmation", () => {
 });
 
 describe("clean-up", () => {
-  it("deletes unconfirmed registrations older than 7 days, keeping confirmed ones", async () => {
+  it("deletes unconfirmed requests older than 7 days, keeping confirmed ones", async () => {
     const old = context();
     await handleSubmission(formData({ ...validFields, email: "stale@example.com" }), old.ctx);
     await handleSubmission(formData({ ...validFields, email: "kept@example.com" }), old.ctx);

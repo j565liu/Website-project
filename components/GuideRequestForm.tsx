@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { startTransition, useActionState, useEffect, useRef, useState } from "react";
-import { registerAction, type RegisterState } from "@/app/register/actions";
-import { industries, referralSources } from "@/content/registration";
+import { requestGuideAction, type GuideRequestState } from "@/app/guide/actions";
 import { site } from "@/content/site";
 import {
   HONEYPOT_FIELD,
@@ -16,36 +15,20 @@ import {
 type Values = {
   preferredName: string;
   email: string;
-  industry: string;
-  howDidYouHear: string;
-  whyJoin: string;
   consent: boolean;
 };
 
 const initialValues: Values = {
   preferredName: "",
   email: "",
-  industry: "",
-  howDidYouHear: "",
-  whyJoin: "",
   consent: false,
 };
 
-const fieldOrder: RegistrationField[] = [
-  "preferredName",
-  "email",
-  "industry",
-  "howDidYouHear",
-  "whyJoin",
-  "consent",
-];
+const fieldOrder: RegistrationField[] = ["preferredName", "email", "consent"];
 
 const fieldLabels: Record<RegistrationField, string> = {
   preferredName: "Preferred name",
   email: "Email",
-  industry: "Industry",
-  howDidYouHear: "How did you hear about us",
-  whyJoin: "Why you are interested",
   consent: "Consent",
 };
 
@@ -53,17 +36,12 @@ const inputClass =
   "mt-3 block w-full border border-charcoal bg-surface px-4 py-3.5 text-base text-ivory transition-colors duration-500 placeholder:text-muted/60 hover:border-muted/50 focus:border-gold focus:outline-none aria-[invalid=true]:border-gold";
 
 function validateValues(values: Values): FieldErrors {
-  const result = validateRegistration({
-    ...values,
-    industry: values.industry as (typeof industries)[number],
-    howDidYouHear: values.howDidYouHear as (typeof referralSources)[number] | "",
-    consent: values.consent as true,
-  });
+  const result = validateRegistration({ ...values, consent: values.consent as true });
   return result.success ? {} : result.errors;
 }
 
-export function RegistrationForm() {
-  const [state, formAction, pending] = useActionState<RegisterState, FormData>(registerAction, {});
+export function GuideRequestForm() {
+  const [state, formAction, pending] = useActionState<GuideRequestState, FormData>(requestGuideAction, {});
   const [values, setValues] = useState<Values>(initialValues);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [summary, setSummary] = useState<string | null>(null);
@@ -166,7 +144,7 @@ export function RegistrationForm() {
           Email
         </label>
         <p id="email-hint" className="mt-2 text-sm text-muted">
-          We will send a link to this address to confirm it.
+          We will send a link to this address to confirm it, then a link to the guide.
         </p>
         <input
           id="email"
@@ -184,90 +162,6 @@ export function RegistrationForm() {
           className={inputClass}
         />
         <FieldError field="email" message={errors.email} />
-      </div>
-
-      <div className="grid gap-10 md:grid-cols-2">
-        <div>
-          <label htmlFor="industry" className="text-base font-medium text-ivory">
-            Industry
-          </label>
-          <SelectShell>
-            <select
-              id="industry"
-              name="industry"
-              required
-              value={values.industry}
-              onChange={(e) => update("industry", e.target.value)}
-              onBlur={() => validateField("industry")}
-              aria-invalid={Boolean(errors.industry)}
-              aria-describedby={describedBy("industry")}
-              className={`${inputClass} appearance-none pr-12`}
-            >
-              <option value="" disabled>
-                Select your industry
-              </option>
-              {industries.map((industry) => (
-                <option key={industry} value={industry}>
-                  {industry}
-                </option>
-              ))}
-            </select>
-          </SelectShell>
-          <FieldError field="industry" message={errors.industry} />
-        </div>
-
-        <div>
-          <label htmlFor="howDidYouHear" className="text-base font-medium text-ivory">
-            How did you hear about us <span className="font-normal text-muted">(optional)</span>
-          </label>
-          <SelectShell>
-            <select
-              id="howDidYouHear"
-              name="howDidYouHear"
-              value={values.howDidYouHear}
-              onChange={(e) => update("howDidYouHear", e.target.value)}
-              aria-invalid={Boolean(errors.howDidYouHear)}
-              aria-describedby={describedBy("howDidYouHear")}
-              className={`${inputClass} appearance-none pr-12`}
-            >
-              <option value="">Prefer not to say</option>
-              {referralSources.map((source) => (
-                <option key={source} value={source}>
-                  {source}
-                </option>
-              ))}
-            </select>
-          </SelectShell>
-          <FieldError field="howDidYouHear" message={errors.howDidYouHear} />
-        </div>
-      </div>
-
-      <div>
-        <label htmlFor="whyJoin" className="text-base font-medium text-ivory">
-          Why you are interested
-        </label>
-        <p id="whyJoin-hint" className="mt-2 text-sm text-muted">
-          A sentence or two is plenty.
-        </p>
-        <textarea
-          id="whyJoin"
-          name="whyJoin"
-          rows={5}
-          maxLength={LIMITS.whyJoin}
-          required
-          value={values.whyJoin}
-          onChange={(e) => update("whyJoin", e.target.value)}
-          onBlur={() => validateField("whyJoin")}
-          aria-invalid={Boolean(errors.whyJoin)}
-          aria-describedby={describedBy("whyJoin", "whyJoin-hint whyJoin-count")}
-          className={`${inputClass} resize-y`}
-        />
-        <div className="mt-2 flex items-start justify-between gap-4">
-          <FieldError field="whyJoin" message={errors.whyJoin} />
-          <p id="whyJoin-count" className="ml-auto shrink-0 text-sm tabular-nums text-muted">
-            {values.whyJoin.length} / {LIMITS.whyJoin} characters
-          </p>
-        </div>
       </div>
 
       {/* Hidden from people; bots that fill it in are quietly discarded. */}
@@ -291,7 +185,7 @@ export function RegistrationForm() {
           />
           <div>
             <label htmlFor="consent" className="cursor-pointer leading-relaxed text-ivory">
-              I agree to {site.name} storing the information above to process my registration.
+              I agree to {site.name} storing my name and email to send me the starter guide.
             </label>
             <p id="consent-privacy" className="mt-2 text-sm text-muted">
               Read our{" "}
@@ -311,7 +205,7 @@ export function RegistrationForm() {
         disabled={pending}
         className="label w-full border border-gold px-8 py-4 text-ivory transition-colors duration-500 ease-luxe hover:bg-gold hover:text-background disabled:cursor-wait disabled:opacity-60 sm:w-auto"
       >
-        {pending ? "Submitting…" : site.ctaLabel}
+        {pending ? "Sending…" : "Send Me the Guide"}
       </button>
     </form>
   );
@@ -326,16 +220,5 @@ function FieldError({ field, message }: { field: RegistrationField; message?: st
       </span>
       {message}
     </p>
-  );
-}
-
-function SelectShell({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="relative">
-      {children}
-      <span aria-hidden="true" className="pointer-events-none absolute bottom-0 right-4 flex h-[3.625rem] items-center text-sm text-gold">
-        ▾
-      </span>
-    </div>
   );
 }

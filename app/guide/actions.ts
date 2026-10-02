@@ -9,12 +9,12 @@ import { handleSubmission, type SubmissionResult } from "@/lib/registration/serv
 import { siteUrl } from "@/lib/site-url";
 import type { FieldErrors } from "@/lib/validation/registration";
 
-export type RegisterState = {
+export type GuideRequestState = {
   errors?: FieldErrors;
   formError?: string;
 };
 
-export async function registerAction(_previous: RegisterState, formData: FormData): Promise<RegisterState> {
+export async function requestGuideAction(_previous: GuideRequestState, formData: FormData): Promise<GuideRequestState> {
   let result: SubmissionResult;
   try {
     result = await handleSubmission(formData, {
@@ -25,7 +25,7 @@ export async function registerAction(_previous: RegisterState, formData: FormDat
       rateLimit: { limit: Number(process.env.RATE_LIMIT_MAX || 5), windowMs: 60 * 60 * 1000 },
     });
   } catch (error) {
-    console.error("[register] Submission failed", error);
+    console.error("[guide] Submission failed", error);
     return { formError: "Something went wrong on our side. Please try again in a few minutes." };
   }
 
@@ -34,8 +34,8 @@ export async function registerAction(_previous: RegisterState, formData: FormDat
   }
   if (result.kind === "rate_limited") {
     return {
-      formError: "We have received several registrations from your connection. Please try again in an hour.",
+      formError: "We have received several requests from your connection. Please try again in an hour.",
     };
   }
-  redirect("/register/check-email");
+  redirect("/guide/check-email");
 }

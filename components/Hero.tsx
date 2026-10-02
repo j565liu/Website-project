@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { site } from "@/content/site";
-import { RegisterLink } from "./RegisterLink";
+import { GuideLink } from "./GuideLink";
 
 const POSTER = "/images/hero-fallback.jpg";
 
@@ -118,7 +118,7 @@ export function Hero({ tagline }: { tagline: string }) {
 
       <div className="relative mx-auto w-full max-w-7xl px-6 pb-20 pt-40 md:px-10 md:pb-28">
         <p className="label rise-in text-muted" style={{ animationDelay: "0.1s" }}>
-          {site.city} · Private gatherings
+          Small gatherings, explained
         </p>
         <h1
           className="rise-in mt-6 font-display text-6xl font-light leading-[0.95] tracking-tight text-ivory sm:text-7xl md:text-8xl lg:text-9xl"
@@ -131,7 +131,7 @@ export function Hero({ tagline }: { tagline: string }) {
             {tagline}
           </p>
           <div className="mt-12 h-px w-16 bg-gold" />
-          <RegisterLink className="mt-12" />
+          <GuideLink className="mt-12" />
         </div>
       </div>
     </section>

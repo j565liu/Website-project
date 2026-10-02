@@ -7,7 +7,7 @@ import { site } from "@/content/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "FAQ",
-  description: "Answers to common questions about Ready to Mingle, registration and our events.",
+  description: "Answers to common questions about small, hosted gatherings, finding one near you, starting your own, and the starter guide.",
   path: "/faq",
 });
 
@@ -38,7 +38,7 @@ export default function FaqPage() {
             ))}
           </div>
           <p className="mt-16 leading-relaxed text-muted">
-            Something else? Write to us at{" "}
+            Something else? Write to{" "}
             <a href={`mailto:${site.contactEmail}`} className="text-ivory underline decoration-gold underline-offset-4">
               {site.contactEmail}
             </a>

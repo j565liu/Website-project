@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useActionState } from "react";
-import { confirmAction, type ConfirmState } from "@/app/register/confirm/actions";
+import { confirmAction, type ConfirmState } from "@/app/guide/confirm/actions";
 
 export function ConfirmForm({ token }: { token: string }) {
   const [state, formAction, pending] = useActionState<ConfirmState, FormData>(confirmAction, {});
@@ -11,8 +11,8 @@ export function ConfirmForm({ token }: { token: string }) {
     return (
       <p role="alert" className="text-ivory">
         This link can no longer be used.{" "}
-        <Link href="/register" className="underline decoration-gold underline-offset-4">
-          Register again
+        <Link href="/guide" className="underline decoration-gold underline-offset-4">
+          Request the guide again
         </Link>{" "}
         to receive a fresh one.
       </p>

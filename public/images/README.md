@@ -26,12 +26,12 @@ to read. The list of which photo goes on which page is in `content/backgrounds.t
 export const pageBackgrounds = {
   default: "/images/hero-fallback.jpg",   // used by any page not listed below
   "/": "/images/events.jpg",              // the home page, below the video
-  "/events": "/images/events.jpg",        // example: a different photo for Events
+  "/examples": "/images/events.jpg",      // example: a different photo for Examples
 };
 ```
 
 To change a photo: add the image to this folder, then add or edit its line in that file.
-A page also covers its sub-pages (`"/register"` applies to the confirmation pages too).
+A page also covers its sub-pages (`"/guide"` applies to the confirmation and guide pages too).
 
 - **Dimensions:** at least 2000 px wide, landscape. The photo is cropped to fill the screen,
   so keep the subject near the centre.

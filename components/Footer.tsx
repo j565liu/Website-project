@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { footerNav, site } from "@/content/site";
-import { RegisterLink } from "./RegisterLink";
+import { GuideLink } from "./GuideLink";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -10,9 +10,9 @@ export function Footer() {
         <div className="space-y-6">
           <p className="font-display text-3xl text-ivory">{site.name}</p>
           <p className="max-w-sm text-sm leading-relaxed text-muted">
-            Private gatherings for {site.city}&rsquo;s professionals.
+            A look at small, hosted gatherings: what they involve, why people enjoy them, and how to find or start one.
           </p>
-          <RegisterLink size="sm" />
+          <GuideLink size="sm" />
         </div>
         <nav aria-label="Footer">
           <ul className="flex flex-wrap gap-x-8 gap-y-1">
@@ -31,7 +31,7 @@ export function Footer() {
       </div>
       <div className="border-t border-charcoal">
         <p className="label mx-auto max-w-7xl px-6 py-6 text-muted md:px-10">
-          &copy; {year} {site.name}. {site.city}.
+          &copy; {year} {site.name}.
         </p>
       </div>
     </footer>

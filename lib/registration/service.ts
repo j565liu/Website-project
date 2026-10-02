@@ -2,7 +2,7 @@ import { and, eq, gt, isNull, lt, sql } from "drizzle-orm";
 import type { Database } from "@/lib/db";
 import { registrations, type RegistrationRow } from "@/lib/db/schema";
 import type { SendEmail } from "@/lib/email/send";
-import { alreadyRegisteredEmail, confirmationEmail, registeredEmail } from "@/lib/email/templates";
+import { confirmationEmail, guideAgainEmail, guideEmail } from "@/lib/email/templates";
 import { consumeRateLimit } from "@/lib/rate-limit";
 import {
   formDataToInput,
@@ -48,7 +48,7 @@ export async function handleSubmission(
   const allowed = await consumeRateLimit(ctx.db, ctx.clientKeyHash, { ...ctx.rateLimit, now: ctx.now });
   if (!allowed) return { kind: "rate_limited" };
 
-  await registerInterest(validation.data, ctx);
+  await requestGuide(validation.data, ctx);
   return { kind: "accepted" };
 }
 
@@ -68,7 +68,7 @@ function isUniqueViolation(error: unknown): boolean {
 }
 
 // Every outcome looks identical to the visitor; only the email they receive differs.
-export async function registerInterest(
+export async function requestGuide(
   data: Registration,
   deps: RegistrationDeps,
   attempt = 1,
@@ -87,7 +87,7 @@ export async function registerInterest(
 
   const existing = await findByEmail(db, data.email);
   if (existing?.confirmedAt) {
-    await sendEmail(alreadyRegisteredEmail(existing.email, existing.preferredName));
+    await sendEmail(guideAgainEmail(existing.email, existing.preferredName, guideUrl(baseUrl)));
     return;
   }
 
@@ -95,9 +95,6 @@ export async function registerInterest(
   const fields = {
     preferredName: data.preferredName,
     email: data.email,
-    industry: data.industry,
-    howDidYouHear: data.howDidYouHear ?? null,
-    whyJoin: data.whyJoin,
     consentAcceptedAt: now,
     confirmationTokenHash: hashToken(token),
     confirmationExpiresAt: new Date(now.getTime() + CONFIRMATION_TTL_MS),
@@ -110,14 +107,18 @@ export async function registerInterest(
       await db.insert(registrations).values({ ...fields, createdAt: now, updatedAt: now });
     } catch (error) {
       // Two submissions for the same email raced; the second one takes the "existing" path.
-      if (isUniqueViolation(error) && attempt === 1) return registerInterest(data, deps, 2);
+      if (isUniqueViolation(error) && attempt === 1) return requestGuide(data, deps, 2);
       throw error;
     }
   }
 
-  const confirmUrl = new URL("/register/confirm", baseUrl);
+  const confirmUrl = new URL("/guide/confirm", baseUrl);
   confirmUrl.searchParams.set("token", token);
   await sendEmail(confirmationEmail(data.email, data.preferredName, confirmUrl.toString()));
+}
+
+export function guideUrl(baseUrl: string): string {
+  return new URL("/guide/read", baseUrl).toString();
 }
 
 export type TokenStatus = "pending" | "confirmed" | "expired" | "invalid";
@@ -156,10 +157,10 @@ export async function confirmRegistration(token: unknown, deps: RegistrationDeps
   if (!row) return getTokenStatus(token, deps);
 
   try {
-    await deps.sendEmail(registeredEmail(row.email, row.preferredName));
+    await deps.sendEmail(guideEmail(row.email, row.preferredName, guideUrl(deps.baseUrl)));
   } catch (error) {
-    // The registration is confirmed either way; a missing courtesy email shouldn't undo it.
-    console.error("[registration] Failed to send registered email", error);
+    // The request is confirmed either way, and the visitor lands on the guide page next.
+    console.error("[registration] Failed to send guide email", error);
   }
   return "confirmed";
 }

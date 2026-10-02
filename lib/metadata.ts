@@ -5,7 +5,7 @@ const shareImage = {
   url: "/opengraph-image",
   width: 1200,
   height: 630,
-  alt: `${site.name}: private gatherings for Toronto professionals`,
+  alt: `${site.name}: small, hosted gatherings, explained`,
 };
 
 const sharedOpenGraph = {
@@ -15,7 +15,7 @@ const sharedOpenGraph = {
 } as const;
 
 export const rootMetadata = {
-  title: `${site.name} · Private gatherings in ${site.city}`,
+  title: `${site.name} · Small gatherings, explained`,
   description: site.description,
 };
 

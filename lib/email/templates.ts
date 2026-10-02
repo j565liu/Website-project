@@ -40,26 +40,28 @@ function message(to: string, subject: string, blocks: Block[]): EmailMessage {
 }
 
 export function confirmationEmail(to: string, name: string, confirmUrl: string): EmailMessage {
-  return message(to, `Confirm your email for ${site.name}`, [
+  return message(to, `Confirm your email for the ${site.name} starter guide`, [
     { kind: "p", text: `Hello ${name},` },
-    { kind: "p", text: `Thank you for registering your interest in ${site.name}. Please confirm this is your email address.` },
+    { kind: "p", text: `Thank you for requesting the ${site.name} starter guide. Please confirm this is your email address and we will send you the link.` },
     { kind: "button", label: "Confirm my email", href: confirmUrl },
-    { kind: "p", text: "This link expires in 48 hours. If you did not register, you can ignore this email and nothing further will happen." },
+    { kind: "p", text: "This link expires in 48 hours. If you did not request the guide, you can ignore this email and nothing further will happen." },
   ]);
 }
 
-export function registeredEmail(to: string, name: string): EmailMessage {
-  return message(to, `You're registered with ${site.name}`, [
+export function guideEmail(to: string, name: string, guideUrl: string): EmailMessage {
+  return message(to, `Your ${site.name} starter guide`, [
     { kind: "p", text: `Hello ${name},` },
-    { kind: "p", text: `Your email is confirmed and you are now registered with ${site.name}. Locations for our gatherings are shared with registered guests only.` },
-    { kind: "p", text: `To update or remove your details at any time, reply to this email or write to ${site.contactEmail}.` },
+    { kind: "p", text: "Your email is confirmed. Here is the starter guide to hosting a small gathering. Keep this email if you would like to come back to it." },
+    { kind: "button", label: "Read the guide", href: guideUrl },
+    { kind: "p", text: `This is the only email we will send you. To remove your details at any time, reply to this email or write to ${site.contactEmail}.` },
   ]);
 }
 
-export function alreadyRegisteredEmail(to: string, name: string): EmailMessage {
-  return message(to, `You're already registered with ${site.name}`, [
+export function guideAgainEmail(to: string, name: string, guideUrl: string): EmailMessage {
+  return message(to, `Your ${site.name} starter guide link`, [
     { kind: "p", text: `Hello ${name},` },
-    { kind: "p", text: `Someone, most likely you, just tried to register this email address with ${site.name}. You are already registered, so there is nothing more to do.` },
-    { kind: "p", text: `If you would like to update your details, write to ${site.contactEmail}.` },
+    { kind: "p", text: `Someone, most likely you, just requested the ${site.name} starter guide with this email address. You have already confirmed it, so here is the link again.` },
+    { kind: "button", label: "Read the guide", href: guideUrl },
+    { kind: "p", text: `To remove your details, write to ${site.contactEmail}.` },
   ]);
 }

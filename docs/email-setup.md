@@ -2,9 +2,9 @@
 
 The website sends three kinds of email, all automatically:
 
-1. **Confirm your email**: a link the visitor presses to finish registering (expires in 48 hours).
-2. **You're registered**: sent once they confirm.
-3. **You're already registered**: sent if someone registers again with an email that is already confirmed.
+1. **Confirm your email**: a link the visitor presses to confirm their address before getting the starter guide (expires in 48 hours).
+2. **Your starter guide**: sent once they confirm, with a link to the guide.
+3. **Your starter guide link**: sent if someone requests the guide again with an email that is already confirmed.
 
 Emails go out over **SMTP**, a standard that almost every email provider supports. Switching
 provider means changing five settings; no code changes.
@@ -86,13 +86,13 @@ To switch between Option A and Option B later, replace the five values and redep
 
 ## Checking it works
 
-1. Register on the live site with your own email address.
-2. You should receive "Confirm your email for Ready to Mingle" within a minute.
+1. Request the starter guide on the live site with your own email address.
+2. You should receive "Confirm your email for the Ready to Mingle starter guide" within a minute.
 3. If it lands in spam, finish the domain authentication step for your provider
    (DKIM for Google, the DNS records for Resend). A DMARC record helps too; your provider's
    dashboard explains how to add one.
 4. If nothing arrives, check Vercel → your project → **Logs** for a line starting with
-   `[register] Submission failed`; the message underneath says what the email server rejected.
+   `[guide] Submission failed`; the message underneath says what the email server rejected.
 
 Keep `SMTP_PASSWORD` private. If it is ever exposed, revoke it (delete the app password or API
 key) and create a new one.

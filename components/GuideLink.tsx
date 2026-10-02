@@ -6,11 +6,11 @@ type Props = {
   className?: string;
 };
 
-export function RegisterLink({ size = "lg", className = "" }: Props) {
+export function GuideLink({ size = "lg", className = "" }: Props) {
   const sizing = size === "sm" ? "px-5 py-3.5" : "px-8 py-4";
   return (
     <Link
-      href="/register"
+      href="/guide"
       className={`label inline-block border border-gold text-ivory transition-colors duration-500 ease-luxe hover:bg-gold hover:text-background ${sizing} ${className}`}
     >
       {site.ctaLabel}

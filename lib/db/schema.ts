@@ -9,15 +9,13 @@ const timestamps = {
     .$onUpdate(() => new Date()),
 };
 
+// One row per starter-guide request. The name dates from when the site took registrations.
 export const registrations = pgTable(
   "registrations",
   {
     id: uuid("id").primaryKey().defaultRandom(),
     preferredName: varchar("preferred_name", { length: 80 }).notNull(),
     email: varchar("email", { length: 254 }).notNull(),
-    industry: varchar("industry", { length: 64 }).notNull(),
-    howDidYouHear: varchar("how_did_you_hear", { length: 64 }),
-    whyJoin: varchar("why_join", { length: 500 }).notNull(),
     consentAcceptedAt: timestamp("consent_accepted_at", { withTimezone: true }).notNull(),
     confirmedAt: timestamp("confirmed_at", { withTimezone: true }),
     confirmationTokenHash: text("confirmation_token_hash").notNull(),

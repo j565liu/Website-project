@@ -38,7 +38,7 @@ async function main() {
     mkdirSync(dir, { recursive: true });
     const file = path.join(dir, `registrations-${status}-${date}.csv`);
     writeFileSync(file, toCsv(rows));
-    console.log(`Exported ${rows.length} ${status === "all" ? "" : `${status} `}registration(s) to ${path.relative(process.cwd(), file)}`);
+    console.log(`Exported ${rows.length} ${status === "all" ? "" : `${status} `}guide request(s) to ${path.relative(process.cwd(), file)}`);
   } finally {
     await db.$client.end();
   }

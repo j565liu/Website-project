@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { site } from "@/content/site";
 
-export const alt = `${site.name}: private gatherings for Toronto professionals`;
+export const alt = `${site.name}: small, hosted gatherings, explained`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -26,7 +26,7 @@ export default async function OpengraphImage() {
         }}
       >
         <div style={{ fontSize: 26, letterSpacing: 8, color: "#a39e94", textTransform: "uppercase" }}>
-          {`${site.city} · Private gatherings`}
+          Small gatherings, explained
         </div>
         <div style={{ fontSize: 136, lineHeight: 1, marginTop: 28 }}>{site.name}</div>
         <div style={{ width: 96, height: 2, background: "#b89b5e", marginTop: 56 }} />

@@ -10,12 +10,12 @@ export default function CheckEmailPage() {
   return (
     <StatusMessage label="Almost there" title="Check your inbox." link={{ href: "/", label: "Return home" }}>
       <p>
-        We have sent an email to the address you entered. Open it and follow the link to finish
-        registering. The link expires in 48 hours.
+        We have sent an email to the address you entered. Open it and follow the link to confirm
+        your address and get the guide. The link expires in 48 hours.
       </p>
       <p>
-        Nothing there after a few minutes? Check your spam or promotions folder, or register again
-        with the same email to receive a fresh link.
+        Nothing there after a few minutes? Check your spam or promotions folder, or request the
+        guide again with the same email to receive a fresh link.
       </p>
     </StatusMessage>
   );

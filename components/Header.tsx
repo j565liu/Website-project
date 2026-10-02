@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { primaryNav, site } from "@/content/site";
-import { RegisterLink } from "./RegisterLink";
+import { GuideLink } from "./GuideLink";
 import { MobileMenu } from "./MobileMenu";
 
 export function Header() {
@@ -26,7 +26,7 @@ export function Header() {
               </li>
             ))}
           </ul>
-          <RegisterLink size="sm" />
+          <GuideLink size="sm" />
         </nav>
         <MobileMenu />
       </div>
