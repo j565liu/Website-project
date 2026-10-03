@@ -19,7 +19,7 @@ provider means changing five settings; no code changes.
 
 If `SMTP_HOST` is empty, nothing is sent: each email is saved as a file in `.outbox/` instead.
 That is how development and the automated tests work. **On the live site, `SMTP_HOST` must be set**,
-or registrations will fail with a "something went wrong" message.
+or guide requests will fail with a "something went wrong" message.
 
 ---
 
