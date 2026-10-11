@@ -78,6 +78,7 @@ test("events and registration need an invitation code; public pages don't", asyn
   await page.getByRole("button", { name: "Continue" }).click();
   await expect(page.getByRole("alert").filter({ hasText: "isn’t recognised" })).toBeVisible();
   await expect(page.getByLabel("Invitation code")).toHaveAttribute("aria-invalid", "true");
+  await expect(page.getByLabel("Invitation code")).toHaveValue("wrong-code");
 
   await page.getByLabel("Invitation code").fill(` ${INVITATION_CODE} `);
   await page.getByRole("button", { name: "Continue" }).click();

@@ -21,8 +21,11 @@ export function InvitationForm({ next }: { next: string }) {
           name="code"
           type="text"
           autoComplete="off"
-          autoCapitalize="characters"
+          autoCapitalize="none"
+          autoCorrect="off"
           spellCheck={false}
+          // React resets the form after each submission; this puts the typed code back after an error.
+          defaultValue={state.code}
           required
           aria-invalid={Boolean(state.error)}
           aria-describedby={state.error ? "code-hint code-error" : "code-hint"}
