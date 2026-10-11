@@ -33,8 +33,5 @@ export function formData(fields: Record<string, string>): FormData {
 export const validFields = {
   preferredName: "Alex",
   email: "Alex.Morgan@Example.com",
-  industry: "Law",
-  howDidYouHear: "LinkedIn",
-  whyJoin: "I would love more evenings of real conversation.",
   consent: "on",
 };

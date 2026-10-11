@@ -26,6 +26,7 @@ export default defineConfig({
       SMTP_HOST: "",
       RATE_LIMIT_MAX: "1000",
       RATE_LIMIT_SECRET: process.env.RATE_LIMIT_SECRET || "e2e-secret",
+      INVITATION_CODE: "E2E-INVITE",
     },
   },
 });

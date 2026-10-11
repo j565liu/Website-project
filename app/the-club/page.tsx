@@ -37,8 +37,9 @@ export default function TheClubPage() {
           unhurried, well hosted and held somewhere worth the trip.
         </p>
         <p>
-          Locations are shared with registered guests only, a few days before each evening.
-          We never publish them, which keeps the rooms relaxed and the company genuine.
+          Every gathering is by invitation, and locations are shared with registered guests
+          only, a few days before each evening. We never publish them, which keeps the rooms
+          relaxed and the company genuine.
         </p>
       </TextSection>
 
@@ -50,13 +51,14 @@ export default function TheClubPage() {
           over volume.
         </p>
         <p>
-          If an evening like that sounds right to you, we would be glad to have your name.
+          Invitations are shared personally. If someone has passed this site on to you, we
+          would be glad to have your name.
         </p>
       </TextSection>
 
       <CtaSection
         title="Take a seat at the table."
-        body="Register your interest with a few details about yourself. Locations are shared with registered guests only."
+        body="Gatherings are by invitation. With your code, registering takes a minute, and locations are shared with registered guests only."
       />
     </>
   );

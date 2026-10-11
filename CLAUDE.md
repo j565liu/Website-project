@@ -1,6 +1,6 @@
 # Ready to Mingle
 
-A private events club for high-income professionals in Toronto. This project is the public marketing website only: it is a website, not a mobile app. There is no membership tier, approval process, or login. Visitors learn about the club, see upcoming event teasers, and register their interest with their email address, which they confirm through a link we email them. Brand references: Soho House, The League. Private, understated, highly curated.
+A private, invitation-only events club for high-income professionals in Toronto. This project is the club's website only: it is a website, not a mobile app. There is no membership tier, approval process, or login. Anyone can learn about the club; guests with the shared invitation code can also see upcoming event teasers and register with their email address, which they confirm through a link we email them. Brand references: Soho House, The League. Private, understated, highly curated.
 
 ## Stack
 - Next.js 14+ App Router, TypeScript (strict), Tailwind CSS, Framer Motion
@@ -19,13 +19,22 @@ A private events club for high-income professionals in Toronto. This project is 
 - Export registrations to CSV: `npm run export:registrations -- --status=all|confirmed|unconfirmed` (writes to `exports/`, which is git-ignored)
 
 ## Site Map
-- `/`: cinematic video hero, brief club intro, event teasers preview, closing CTA
+- `/`: cinematic video hero, brief club intro, an "upcoming gatherings are shared with invited guests" teaser (no event details), closing CTA
 - `/the-club`: philosophy, what the club is like, who it's for
-- `/events`: upcoming event teasers (title, date, time, neighborhood only; never venue or address)
-- `/register`: registration form
+- `/invitation?next=…`: invitation code form (noindex); sends the guest on to `/events` or `/register`
+- `/events` (invitation only): upcoming event teasers (title, date, time, neighborhood only; never venue or address)
+- `/register` (invitation only): registration form
 - `/register/check-email`: "Check your inbox" page shown after submitting
 - `/register/confirm?token=…`: landing page from the email link; the visitor presses a button to confirm (a button, not the bare link, so email link scanners can't confirm on their behalf), then lands on `/register/confirmed` ("You're registered")
 - `/faq`, `/privacy`
+- Old URLs from the short-lived explainer version (`/what-it-is`, `/examples`, `/guide/*`) redirect in `next.config.ts`.
+
+## Invitation Code
+- One shared code in the `INVITATION_CODE` environment variable, not case-sensitive. Logic lives in `lib/invitation.ts`.
+- Only `/events` and `/register` need it. `proxy.ts` redirects visitors without a valid cookie to `/invitation`, and `registerAction` checks the cookie again (Server Actions can be called directly). The confirmation pages stay open, since the emailed token is enough.
+- After a correct code, an httpOnly cookie holding an HMAC of the code (signed with `RATE_LIMIT_SECRET`, never the code itself) lasts 30 days. Changing `INVITATION_CODE` invalidates every existing cookie.
+- Code attempts are rate limited per hashed IP (10 per hour) through the same `rate_limit_hits` table.
+- Keep event details off public pages: the home page links to `/events` but never lists events.
 
 ## Content Rules
 - Events live in `content/events.ts` as typed data so they can be edited without touching components. Past events are hidden automatically.
@@ -33,7 +42,7 @@ A private events club for high-income professionals in Toronto. This project is 
 - All times displayed in America/Toronto.
 
 ## Registration Form & Data
-- Fields: preferred_name (what we call them in emails, max 80 chars), email, industry (select), how_did_you_hear (optional select), why_join (short text, max 500 chars), consent checkbox (required). Collect nothing else.
+- Fields: preferred_name (what we call them in emails, max 80 chars), email, consent checkbox (required). Collect nothing else. (Industry, referral source and "why join" were removed in migration 0001.)
 - `registrations` table: id (UUID), the fields above, consent_accepted_at, confirmed_at (null until the email link is used), confirmation_token_hash (never store the raw token), confirmation_expires_at (48 hours), created_at, updated_at. Unique index on lowercased email; index on confirmed_at and created_at.
 - Everyone who confirms is registered: there is no approval status.
 - The only emails the site sends are the confirmation link, a "you're registered" email once confirmed, and the "already registered" email. No announcements, newsletters or reminders, and copy must not promise them.
@@ -59,4 +68,4 @@ A private events club for high-income professionals in Toronto. This project is 
 - Page metadata goes through `pageMetadata()` in `lib/metadata.ts` (Next replaces `openGraph` per page rather than merging it). New public pages also go in `content/routes.ts` for the sitemap.
 - Wrap below-the-fold sections in `components/Reveal.tsx` for scroll reveals; keep above-the-fold content (hero, page headers) on CSS animations or static so it doesn't wait for JavaScript.
 - The project runs Next.js 16, whose APIs differ from older versions: read @AGENTS.md before writing Next-specific code.
-- Out of scope unless explicitly requested: logins or accounts, approval workflows, gated content, admin dashboard, payments, marketing or newsletter emails (only the confirmation emails above), CMS integration.
+- Out of scope unless explicitly requested: logins or accounts, per-guest invitation codes, approval workflows, gated content beyond the invitation code above, admin dashboard, payments, marketing or newsletter emails (only the confirmation emails above), CMS integration.

@@ -1,10 +1,8 @@
 import { z } from "zod";
-import { industries, referralSources } from "@/content/registration";
 
 export const LIMITS = {
   preferredName: 80,
   email: 254,
-  whyJoin: 500,
 } as const;
 
 export const HONEYPOT_FIELD = "company_website";
@@ -22,17 +20,7 @@ export const registrationSchema = z.object({
     .max(LIMITS.email, "That email address is too long.")
     .pipe(z.email("Please enter a valid email address, like name@example.com."))
     .transform((value) => value.toLowerCase()),
-  industry: z.enum(industries, "Please choose the industry closest to yours."),
-  howDidYouHear: z
-    .union([z.enum(referralSources), z.literal("")], "Please choose one of the options.")
-    .optional()
-    .transform((value) => value || undefined),
-  whyJoin: z
-    .string()
-    .trim()
-    .min(1, "Please share a sentence or two about why you are interested.")
-    .max(LIMITS.whyJoin, `Please keep this under ${LIMITS.whyJoin} characters.`),
-  consent: z.literal(true, "Please confirm you agree so we can store your registration."),
+  consent: z.literal(true, "Please confirm you agree so we can store your details and send the guide."),
 });
 
 export type RegistrationInput = z.input<typeof registrationSchema>;
@@ -48,9 +36,6 @@ export function formDataToInput(formData: FormData): RegistrationInput {
   return {
     preferredName: text("preferredName"),
     email: text("email"),
-    industry: text("industry") as RegistrationInput["industry"],
-    howDidYouHear: text("howDidYouHear") as RegistrationInput["howDidYouHear"],
-    whyJoin: text("whyJoin"),
     consent: (formData.get("consent") === "on") as true,
   };
 }

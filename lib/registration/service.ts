@@ -95,9 +95,6 @@ export async function registerInterest(
   const fields = {
     preferredName: data.preferredName,
     email: data.email,
-    industry: data.industry,
-    howDidYouHear: data.howDidYouHear ?? null,
-    whyJoin: data.whyJoin,
     consentAcceptedAt: now,
     confirmationTokenHash: hashToken(token),
     confirmationExpiresAt: new Date(now.getTime() + CONFIRMATION_TTL_MS),

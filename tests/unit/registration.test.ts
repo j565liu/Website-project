@@ -56,8 +56,6 @@ describe("new registration", () => {
     expect(row).toMatchObject({
       preferredName: "Alex",
       email: "alex.morgan@example.com",
-      industry: "Law",
-      howDidYouHear: "LinkedIn",
       confirmedAt: null,
       consentAcceptedAt: baseNow,
       confirmationExpiresAt: new Date(baseNow.getTime() + 48 * HOUR),

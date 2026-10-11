@@ -2,7 +2,7 @@ export const site = {
   name: "Ready to Mingle",
   city: "Toronto",
   description:
-    "Private gatherings for Toronto professionals. Small rooms, good company, and evenings worth leaving the house for.",
+    "Private, invitation-only gatherings for Toronto professionals. Small rooms, good company, and evenings worth leaving the house for.",
   ctaLabel: "Register Your Interest",
   // Placeholder: replace with the real inbox before launch (shown on FAQ and Privacy pages).
   contactEmail: "hello@example.com",

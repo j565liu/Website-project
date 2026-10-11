@@ -118,7 +118,7 @@ export function Hero({ tagline }: { tagline: string }) {
 
       <div className="relative mx-auto w-full max-w-7xl px-6 pb-20 pt-40 md:px-10 md:pb-28">
         <p className="label rise-in text-muted" style={{ animationDelay: "0.1s" }}>
-          {site.city} · Private gatherings
+          {site.city} · By invitation
         </p>
         <h1
           className="rise-in mt-6 font-display text-6xl font-light leading-[0.95] tracking-tight text-ivory sm:text-7xl md:text-8xl lg:text-9xl"

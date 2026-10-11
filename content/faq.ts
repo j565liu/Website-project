@@ -8,7 +8,7 @@ export const faq: FaqItem[] = [
   {
     question: "What is Ready to Mingle?",
     answer: [
-      "A private events club in Toronto. We host a small number of gatherings each season: suppers, tastings, private viewings and late evenings, each in a setting chosen with care.",
+      "A private events club in Toronto. We host a small number of invitation-only gatherings each season: suppers, tastings, private viewings and late evenings, each in a setting chosen with care.",
     ],
   },
   {
@@ -18,9 +18,16 @@ export const faq: FaqItem[] = [
     ],
   },
   {
+    question: "How do I get an invitation?",
+    answer: [
+      "Invitations are shared personally. If someone has passed this site on to you, they can give you the invitation code.",
+    ],
+  },
+  {
     question: "How do I register?",
     answer: [
-      "Complete the short registration form with your preferred name, your email and a few details about yourself. We will email you a link to confirm your address. Once you press the confirm button on that page, you are registered.",
+      "Enter your invitation code, then complete the short form with your preferred name and your email. We will email you a link to confirm your address. Once you press the confirm button on that page, you are registered.",
+      "You only need to enter the code once on each device; it is remembered for 30 days.",
     ],
   },
   {

@@ -29,16 +29,15 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
       <>
         <p>When you register, we collect only:</p>
         <ul className="list-disc space-y-2 pl-5">
-          <li>your preferred name and email address;</li>
-          <li>your industry;</li>
-          <li>how you heard about us (optional);</li>
-          <li>a short note on why you are interested; and</li>
+          <li>your preferred name and email address; and</li>
           <li>the date and time you gave consent and confirmed your email.</li>
         </ul>
         <p>
-          To protect the form from abuse, we briefly keep a scrambled (one-way hashed) version of
+          To protect the forms from abuse, we briefly keep a scrambled (one-way hashed) version of
           the internet address your request came from. It cannot be turned back into your address
-          and is deleted within 24 hours. We do not use advertising or analytics cookies.
+          and is deleted within 24 hours. We do not use advertising or analytics cookies. When you enter an invitation code, one
+          small cookie remembers that on your device for 30 days so you don&rsquo;t have to enter
+          it again; it contains no personal information.
         </p>
       </>
     ),
@@ -48,8 +47,8 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     title: "Why we collect it",
     body: (
       <p>
-        To confirm that your email address belongs to you, to register you as a guest, and to
-        understand who our guests are so we can plan gatherings that suit them. We do not sell,
+        To confirm that your email address belongs to you and to register you as a guest. We do
+        not sell,
         rent or trade your information, and we do not use it for advertising.
       </p>
     ),

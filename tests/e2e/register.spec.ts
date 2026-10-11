@@ -5,6 +5,7 @@ import postgres from "postgres";
 import { testDatabaseUrl } from "../unit/test-db";
 
 const OUTBOX = ".outbox/e2e";
+const INVITATION_CODE = "E2E-INVITE";
 
 async function emailsTo(address: string) {
   const files = await readdir(OUTBOX).catch(() => []);
@@ -20,6 +21,9 @@ test("a visitor registers, confirms by email link, and is registered", async ({ 
 
   try {
     await page.goto("/register");
+    await expect(page).toHaveURL(/\/invitation\?next=%2Fregister$/);
+    await page.getByLabel("Invitation code").fill(INVITATION_CODE.toLowerCase());
+    await page.getByRole("button", { name: "Continue" }).click();
     await expect(page.getByRole("heading", { level: 1, name: "Register your interest" })).toBeVisible();
 
     // Submitting an empty form shows accessible errors and sends nothing.
@@ -30,10 +34,6 @@ test("a visitor registers, confirms by email link, and is registered", async ({ 
 
     await page.getByLabel("Preferred name").fill("Jordan");
     await page.getByLabel("Email", { exact: true }).fill(email.toUpperCase());
-    await page.getByLabel("Industry").selectOption("Technology");
-    await page.getByLabel(/How did you hear about us/).selectOption("Instagram");
-    await page.getByLabel("Why you are interested").fill("Good company and better conversation.");
-    await expect(page.getByText("37 / 500 characters")).toBeVisible();
     await page.getByLabel(/I agree to Ready to Mingle/).check();
     await expect(page.getByLabel("Email", { exact: true })).toHaveAttribute("aria-invalid", "false");
 
@@ -42,7 +42,7 @@ test("a visitor registers, confirms by email link, and is registered", async ({ 
     await expect(page.getByRole("heading", { level: 1, name: "Check your inbox." })).toBeVisible();
 
     const [row] = await sql`select * from registrations where email = ${email}`;
-    expect(row).toMatchObject({ preferred_name: "Jordan", industry: "Technology", confirmed_at: null });
+    expect(row).toMatchObject({ preferred_name: "Jordan", confirmed_at: null });
 
     // Follow the link from the confirmation email (path only: the build's site URL may differ).
     const [confirmation] = await emailsTo(email);
@@ -66,4 +66,26 @@ test("a visitor registers, confirms by email link, and is registered", async ({ 
     await sql`delete from registrations where email = ${email}`;
     await sql.end();
   }
+});
+
+test("events and registration need an invitation code; public pages don't", async ({ page }) => {
+  await page.goto("/the-club");
+  await expect(page).toHaveURL(/\/the-club$/);
+
+  await page.goto("/events");
+  await expect(page).toHaveURL(/\/invitation\?next=%2Fevents$/);
+  await page.getByLabel("Invitation code").fill("wrong-code");
+  await page.getByRole("button", { name: "Continue" }).click();
+  await expect(page.getByRole("alert").filter({ hasText: "isn’t recognised" })).toBeVisible();
+  await expect(page.getByLabel("Invitation code")).toHaveAttribute("aria-invalid", "true");
+  await expect(page.getByLabel("Invitation code")).toHaveValue("wrong-code");
+
+  await page.getByLabel("Invitation code").fill(` ${INVITATION_CODE} `);
+  await page.getByRole("button", { name: "Continue" }).click();
+  await expect(page).toHaveURL(/\/events$/);
+  await expect(page.getByRole("heading", { level: 1, name: "Forthcoming gatherings" })).toBeVisible();
+
+  // The code is remembered, so the registration form opens straight away.
+  await page.goto("/register");
+  await expect(page).toHaveURL(/\/register$/);
 });

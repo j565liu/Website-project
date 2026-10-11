@@ -1,9 +1,10 @@
 "use server";
 
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { getDb } from "@/lib/db";
 import { sendEmail } from "@/lib/email/send";
+import { hasInvitation, INVITATION_COOKIE } from "@/lib/invitation";
 import { clientIpFrom, hashClientKey } from "@/lib/rate-limit";
 import { handleSubmission, type SubmissionResult } from "@/lib/registration/service";
 import { siteUrl } from "@/lib/site-url";
@@ -15,6 +16,11 @@ export type RegisterState = {
 };
 
 export async function registerAction(_previous: RegisterState, formData: FormData): Promise<RegisterState> {
+  // Server Actions can be called directly, so the proxy's invitation check is repeated here.
+  if (!hasInvitation((await cookies()).get(INVITATION_COOKIE)?.value)) {
+    return { formError: "Your invitation code has expired on this device. Please reload the page and enter it again." };
+  }
+
   let result: SubmissionResult;
   try {
     result = await handleSubmission(formData, {

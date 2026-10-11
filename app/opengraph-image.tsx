@@ -26,7 +26,7 @@ export default async function OpengraphImage() {
         }}
       >
         <div style={{ fontSize: 26, letterSpacing: 8, color: "#a39e94", textTransform: "uppercase" }}>
-          {`${site.city} · Private gatherings`}
+          {`${site.city} · By invitation`}
         </div>
         <div style={{ fontSize: 136, lineHeight: 1, marginTop: 28 }}>{site.name}</div>
         <div style={{ width: 96, height: 2, background: "#b89b5e", marginTop: 56 }} />
