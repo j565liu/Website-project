@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { startTransition, useActionState, useEffect, useRef, useState } from "react";
-import { requestGuideAction, type GuideRequestState } from "@/app/guide/actions";
+import { registerAction, type RegisterState } from "@/app/register/actions";
 import { site } from "@/content/site";
 import {
   HONEYPOT_FIELD,
@@ -40,8 +40,8 @@ function validateValues(values: Values): FieldErrors {
   return result.success ? {} : result.errors;
 }
 
-export function GuideRequestForm() {
-  const [state, formAction, pending] = useActionState<GuideRequestState, FormData>(requestGuideAction, {});
+export function RegistrationForm() {
+  const [state, formAction, pending] = useActionState<RegisterState, FormData>(registerAction, {});
   const [values, setValues] = useState<Values>(initialValues);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [summary, setSummary] = useState<string | null>(null);
@@ -144,7 +144,7 @@ export function GuideRequestForm() {
           Email
         </label>
         <p id="email-hint" className="mt-2 text-sm text-muted">
-          We will send a link to this address to confirm it, then a link to the guide.
+          We will send a link to this address to confirm it.
         </p>
         <input
           id="email"
@@ -185,7 +185,7 @@ export function GuideRequestForm() {
           />
           <div>
             <label htmlFor="consent" className="cursor-pointer leading-relaxed text-ivory">
-              I agree to {site.name} storing my name and email to send me the starter guide.
+              I agree to {site.name} storing my name and email to process my registration.
             </label>
             <p id="consent-privacy" className="mt-2 text-sm text-muted">
               Read our{" "}
@@ -205,7 +205,7 @@ export function GuideRequestForm() {
         disabled={pending}
         className="label w-full border border-gold px-8 py-4 text-ivory transition-colors duration-500 ease-luxe hover:bg-gold hover:text-background disabled:cursor-wait disabled:opacity-60 sm:w-auto"
       >
-        {pending ? "Sending…" : "Send Me the Guide"}
+        {pending ? "Submitting…" : site.ctaLabel}
       </button>
     </form>
   );

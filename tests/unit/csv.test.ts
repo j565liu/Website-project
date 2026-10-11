@@ -18,12 +18,12 @@ const row = (overrides: Partial<RegistrationRow> = {}): RegistrationRow => ({
 const lines = (csv: string) => csv.replace(/^﻿/, "").trimEnd().split("\r\n");
 
 describe("CSV export", () => {
-  it("writes a header and one line per request, in Toronto time, without token data", () => {
+  it("writes a header and one line per registration, in Toronto time, without token data", () => {
     const [header, first, second] = lines(
       toCsv([row(), row({ email: "b@example.com", confirmedAt: new Date("2026-10-02T01:30:00Z") })]),
     );
     expect(header).toBe(
-      "Preferred name,Email,Status,Requested (Toronto time),Confirmed (Toronto time),Consent given (Toronto time)",
+      "Preferred name,Email,Status,Registered (Toronto time),Confirmed (Toronto time),Consent given (Toronto time)",
     );
     expect(first).toBe("Alex,alex@example.com,Unconfirmed,2026-10-01 08:00,,2026-10-01 08:00");
     expect(second).toContain("Confirmed,2026-10-01 08:00,2026-10-01 21:30,");

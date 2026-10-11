@@ -13,9 +13,9 @@ export async function confirmAction(_previous: ConfirmState, formData: FormData)
   try {
     status = await confirmRegistration(formData.get("token"), { db: getDb(), sendEmail, baseUrl: siteUrl() });
   } catch (error) {
-    console.error("[guide] Confirmation failed", error);
+    console.error("[register] Confirmation failed", error);
     return { error: "Something went wrong on our side. Please try again in a few minutes." };
   }
-  if (status === "confirmed") redirect("/guide/read");
+  if (status === "confirmed") redirect("/register/confirmed");
   return { status };
 }

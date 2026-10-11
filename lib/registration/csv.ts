@@ -1,6 +1,5 @@
 import type { RegistrationRow } from "@/lib/db/schema";
-
-const TIME_ZONE = "America/Toronto";
+import { TIME_ZONE } from "@/lib/events";
 
 export const exportStatuses = ["all", "confirmed", "unconfirmed"] as const;
 export type ExportStatus = (typeof exportStatuses)[number];
@@ -9,7 +8,7 @@ const columns: { header: string; value: (row: RegistrationRow) => string | Date 
   { header: "Preferred name", value: (r) => r.preferredName },
   { header: "Email", value: (r) => r.email },
   { header: "Status", value: (r) => (r.confirmedAt ? "Confirmed" : "Unconfirmed") },
-  { header: "Requested (Toronto time)", value: (r) => r.createdAt },
+  { header: "Registered (Toronto time)", value: (r) => r.createdAt },
   { header: "Confirmed (Toronto time)", value: (r) => r.confirmedAt },
   { header: "Consent given (Toronto time)", value: (r) => r.consentAcceptedAt },
 ];

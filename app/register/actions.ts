@@ -1,20 +1,26 @@
 "use server";
 
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { getDb } from "@/lib/db";
 import { sendEmail } from "@/lib/email/send";
+import { hasInvitation, INVITATION_COOKIE } from "@/lib/invitation";
 import { clientIpFrom, hashClientKey } from "@/lib/rate-limit";
 import { handleSubmission, type SubmissionResult } from "@/lib/registration/service";
 import { siteUrl } from "@/lib/site-url";
 import type { FieldErrors } from "@/lib/validation/registration";
 
-export type GuideRequestState = {
+export type RegisterState = {
   errors?: FieldErrors;
   formError?: string;
 };
 
-export async function requestGuideAction(_previous: GuideRequestState, formData: FormData): Promise<GuideRequestState> {
+export async function registerAction(_previous: RegisterState, formData: FormData): Promise<RegisterState> {
+  // Server Actions can be called directly, so the proxy's invitation check is repeated here.
+  if (!hasInvitation((await cookies()).get(INVITATION_COOKIE)?.value)) {
+    return { formError: "Your invitation code has expired on this device. Please reload the page and enter it again." };
+  }
+
   let result: SubmissionResult;
   try {
     result = await handleSubmission(formData, {
@@ -25,7 +31,7 @@ export async function requestGuideAction(_previous: GuideRequestState, formData:
       rateLimit: { limit: Number(process.env.RATE_LIMIT_MAX || 5), windowMs: 60 * 60 * 1000 },
     });
   } catch (error) {
-    console.error("[guide] Submission failed", error);
+    console.error("[register] Submission failed", error);
     return { formError: "Something went wrong on our side. Please try again in a few minutes." };
   }
 
@@ -34,8 +40,8 @@ export async function requestGuideAction(_previous: GuideRequestState, formData:
   }
   if (result.kind === "rate_limited") {
     return {
-      formError: "We have received several requests from your connection. Please try again in an hour.",
+      formError: "We have received several registrations from your connection. Please try again in an hour.",
     };
   }
-  redirect("/guide/check-email");
+  redirect("/register/check-email");
 }

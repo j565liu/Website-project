@@ -5,7 +5,7 @@ import { site } from "@/content/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy",
-  description: "How Ready to Mingle collects, uses and protects the personal information you share when requesting the starter guide.",
+  description: "How Ready to Mingle collects, uses and protects your personal information.",
   path: "/privacy",
 });
 
@@ -15,8 +15,8 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     title: "Who we are",
     body: (
       <p>
-        {site.name} (&ldquo;we&rdquo;, &ldquo;us&rdquo;) is an informational website about small,
-        hosted gatherings, operated from Toronto, Ontario. It does not run events. We are responsible for the personal information described here and handle it in
+        {site.name} (&ldquo;we&rdquo;, &ldquo;us&rdquo;) is a private events club in Toronto,
+        Ontario. We are responsible for the personal information described here and handle it in
         accordance with Canada&rsquo;s <em>Personal Information Protection and Electronic
         Documents Act</em> (PIPEDA). [Legal entity name and mailing address to be added.]
       </p>
@@ -27,15 +27,17 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     title: "What we collect",
     body: (
       <>
-        <p>When you request the starter guide, we collect only:</p>
+        <p>When you register, we collect only:</p>
         <ul className="list-disc space-y-2 pl-5">
           <li>your preferred name and email address; and</li>
           <li>the date and time you gave consent and confirmed your email.</li>
         </ul>
         <p>
-          To protect the form from abuse, we briefly keep a scrambled (one-way hashed) version of
+          To protect the forms from abuse, we briefly keep a scrambled (one-way hashed) version of
           the internet address your request came from. It cannot be turned back into your address
-          and is deleted within 24 hours. We do not use advertising or analytics cookies.
+          and is deleted within 24 hours. We do not use advertising or analytics cookies. When you enter an invitation code, one
+          small cookie remembers that on your device for 30 days so you don&rsquo;t have to enter
+          it again; it contains no personal information.
         </p>
       </>
     ),
@@ -45,9 +47,9 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     title: "Why we collect it",
     body: (
       <p>
-        To confirm that your email address belongs to you and to send you a link to the starter
-        guide. We do not sell, rent or trade your information, and we do not use it for
-        advertising.
+        To confirm that your email address belongs to you and to register you as a guest. We do
+        not sell,
+        rent or trade your information, and we do not use it for advertising.
       </p>
     ),
   },
@@ -56,8 +58,8 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     title: "Consent",
     body: (
       <p>
-        We ask for your consent when you request the guide. You may withdraw it at any time by
-        writing to us; we will then delete your details.
+        We ask for your consent when you register. You may withdraw it at any time by writing to
+        us; we will then delete your registration.
       </p>
     ),
   },
@@ -66,9 +68,9 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     title: "Emails we send",
     body: (
       <p>
-        The website sends only transactional emails: a link to confirm your address, a link to
-        the guide once you confirm, and, if you request the guide again with an email that is
-        already confirmed, the guide link again. We do not send newsletters from this website.
+        The website sends only transactional emails: a link to confirm your address, a note once
+        you are registered, and, if you register again with an email we already have, a short
+        reminder that you are already registered. We do not send newsletters from this website.
       </p>
     ),
   },
@@ -81,7 +83,7 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
         [provider names to be added], and our emails are delivered through an email service
         provider. These providers may store or process data outside Canada, including in the
         United States, where it may be accessible to authorities under local law. Access to
-        this data is limited to the people who run the website.
+        registration data is limited to the people who run the club.
       </p>
     ),
   },
@@ -90,10 +92,9 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     title: "How long we keep it",
     body: (
       <p>
-        If you do not confirm your email, your details are deleted automatically after seven
-        days. Confirmed details are kept while the website is active, so a repeat request
-        receives the guide link rather than a new confirmation, or until you ask us to delete
-        them.
+        If you do not confirm your email, your registration is deleted automatically after seven
+        days. Confirmed registrations are kept while the club is active, or until you ask us to
+        delete them.
       </p>
     ),
   },
