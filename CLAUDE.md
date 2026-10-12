@@ -13,7 +13,7 @@ A private, invitation-only events club for high-income professionals in Toronto.
 ## Commands
 <!-- Keep this list in sync with package.json scripts -->
 - Start DB: `docker compose up -d`
-- Migrations (generate / apply / undo last): `npm run db:generate` / `npm run db:migrate` / `npm run db:rollback`. Every migration needs a hand-written `drizzle/rollback/<tag>.down.sql`.
+- Migrations (generate / apply / undo last): `npm run db:generate` / `npm run db:migrate` / `npm run db:rollback`. Every migration needs a hand-written `drizzle/rollback/<tag>.down.sql`. On Vercel, production deployments apply pending migrations automatically before building (`vercel-build` → `scripts/migrate-on-deploy.ts`); preview deployments share the database, so they never migrate. Keep migrations backward compatible with the code currently live, since the migration runs before the new code replaces it.
 - Dev / build / lint / typecheck: `npm run dev` / `npm run build` / `npm run lint` / `npm run typecheck`
 - Unit tests / e2e tests: `npm test` / `npm run test:e2e` (both need the DB running; they use a separate `<db>_test` database, created and migrated automatically)
 - Export registrations to CSV: `npm run export:registrations -- --status=all|confirmed|unconfirmed` (writes to `exports/`, which is git-ignored)
