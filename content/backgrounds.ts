@@ -4,7 +4,7 @@
 export const pageBackgrounds: Record<string, string> & { default: string } = {
   default: "/images/hero-fallback.jpg",
   "/": "/images/events.jpg",
-  // "/the-club": "/images/the-club.jpg",
+  // "/about": "/images/about.jpg",
   "/events": "/images/events.jpg",
   // "/register": "/images/register.jpg",
   // "/faq": "/images/faq.jpg",

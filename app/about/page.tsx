@@ -6,9 +6,9 @@ import { Reveal } from "@/components/Reveal";
 import { TextSection } from "@/components/TextSection";
 
 export const metadata: Metadata = pageMetadata({
-  title: "The Club",
+  title: "About",
   description: "Ready to Mingle hosts a small number of private gatherings each season for Toronto professionals.",
-  path: "/the-club",
+  path: "/about",
 });
 
 const evenings = [
@@ -29,11 +29,11 @@ const evenings = [
   },
 ] as const;
 
-export default function TheClubPage() {
+export default function AboutPage() {
   return (
     <>
       <PageHeader
-        label="The Club"
+        label="About"
         title="An evening is only as good as the people in the room."
         intro="Ready to Mingle began with a simple observation: the best conversations rarely happen at networking events. They happen over a long dinner, at a good bar after the crowd has thinned, in rooms where no one is selling anything."
       />
@@ -73,10 +73,11 @@ export default function TheClubPage() {
           </ul>
           <Reveal className="mt-16 max-w-3xl">
             <p className="text-lg leading-relaxed text-muted">
-              Each gathering is different, but all of them are unhurried, well hosted and held
-              somewhere worth the trip. Every gathering is by invitation, and locations are shared
-              with registered guests only, a few days before each evening. We never publish them,
-              which keeps the rooms relaxed and the company genuine.
+              There is no clubhouse and no fixed address. Each gathering is held somewhere
+              different, chosen for that particular evening, and all of them are unhurried, well
+              hosted and worth the trip. Every gathering is by invitation, and the location is
+              shared with registered guests only, a few days before. We never publish it, which
+              keeps each evening relaxed and the company genuine.
             </p>
           </Reveal>
         </div>

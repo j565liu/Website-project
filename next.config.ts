@@ -2,11 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
-  // URLs from the short-lived explainer version of the site. Query strings carry over,
-  // so confirmation links in emails sent from that version still work.
+  // Old URLs: the short-lived explainer version of the site, and /the-club (renamed to /about
+  // so the site doesn't read as a club with a venue). Query strings carry over, so confirmation
+  // links in emails sent from the explainer version still work.
   async redirects() {
     return [
-      { source: "/what-it-is", destination: "/the-club", permanent: true },
+      { source: "/what-it-is", destination: "/about", permanent: true },
+      { source: "/the-club", destination: "/about", permanent: true },
       { source: "/examples", destination: "/events", permanent: true },
       { source: "/guide", destination: "/register", permanent: true },
       { source: "/guide/check-email", destination: "/register/check-email", permanent: true },

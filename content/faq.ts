@@ -8,7 +8,7 @@ export const faq: FaqItem[] = [
   {
     question: "What is Ready to Mingle?",
     answer: [
-      "A private events club in Toronto. We host a small number of invitation-only gatherings each season: suppers, tastings, private viewings and late evenings, each in a setting chosen with care.",
+      "A series of private, invitation-only gatherings in Toronto. We host a small number of evenings each season: suppers, tastings, private viewings and late evenings, each in a setting chosen for that night.",
     ],
   },
   {
@@ -37,21 +37,27 @@ export const faq: FaqItem[] = [
     ],
   },
   {
-    question: "Why don't you publish event locations?",
+    question: "Is there a clubhouse or permanent venue?",
     answer: [
-      "Keeping locations private keeps the rooms relaxed and the company genuine. Locations are shared with registered guests only.",
+      "No. There is no fixed address: each gathering is held somewhere different, chosen for that particular evening, from a chef's counter to a gallery after hours.",
     ],
   },
   {
-    question: "Are all events in Toronto?",
+    question: "Why don't you publish event locations?",
     answer: [
-      "Yes. Our gatherings take place across the city, from Yorkville and King West to the Distillery District and beyond. All times on this site are Toronto time.",
+      "Keeping locations private keeps each evening relaxed and the company genuine. The location is shared with registered guests only, a few days before.",
+    ],
+  },
+  {
+    question: "Are all gatherings in Toronto?",
+    answer: [
+      "Yes. They move around the city, from Yorkville and King West to the Distillery District and beyond. All times on this site are Toronto time.",
     ],
   },
   {
     question: "How is my information used?",
     answer: [
-      "Only to run the club: to confirm your email and to know who our guests are. We never sell or share it for marketing. The privacy policy explains what we collect and why.",
+      "Only to organise our gatherings: to confirm your email and to know who our guests are. We never sell or share it for marketing. The privacy policy explains what we collect and why.",
     ],
   },
   {

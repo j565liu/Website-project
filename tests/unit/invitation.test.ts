@@ -57,7 +57,7 @@ describe("protected pages", () => {
     expect(isProtectedPath("/events")).toBe(true);
     expect(isProtectedPath("/register")).toBe(true);
     expect(isProtectedPath("/register/confirm")).toBe(false);
-    expect(isProtectedPath("/the-club")).toBe(false);
+    expect(isProtectedPath("/about")).toBe(false);
   });
 
   it.each([

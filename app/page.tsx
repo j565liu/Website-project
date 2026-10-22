@@ -13,22 +13,23 @@ export default function HomePage() {
 
       <section aria-labelledby="intro" className="mx-auto max-w-7xl px-6 py-32 md:px-10 md:py-44">
         <Reveal className="grid gap-16 lg:grid-cols-[1fr_1.4fr] lg:gap-24">
-          <SectionHeading id="intro" label="The Club" title="Fewer people. Better evenings." />
+          <SectionHeading id="intro" label="About" title="Fewer people. Better evenings." />
           <div className="space-y-6 text-lg leading-relaxed text-muted lg:pt-12">
             <p>
-              Ready to Mingle is a private club for professionals who would rather spend an
-              evening in good company than in a crowded room. We host a small number of
-              gatherings each season, across Toronto&rsquo;s most interesting neighbourhoods.
+              Ready to Mingle hosts private gatherings for professionals who would rather spend
+              an evening in good company than in a crowded room. There is no clubhouse: each
+              gathering is held somewhere different, across Toronto&rsquo;s most interesting
+              neighbourhoods.
             </p>
             <p>
               Every gathering is by invitation. If you have a code, registering takes a minute:
               your name and your email. Come curious, and bring your good conversation.
             </p>
             <Link
-              href="/the-club"
+              href="/about"
               className="label inline-block py-3 text-ivory underline decoration-gold underline-offset-8 transition-colors duration-500 hover:text-gold"
             >
-              About the club
+              More about us
             </Link>
           </div>
         </Reveal>

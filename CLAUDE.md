@@ -1,6 +1,6 @@
 # Ready to Mingle
 
-A private, invitation-only events club for high-income professionals in Toronto. This project is the club's website only: it is a website, not a mobile app. There is no membership tier, approval process, or login. Anyone can learn about the club; guests with the shared invitation code can also see upcoming event teasers and register with their email address, which they confirm through a link we email them. Brand references: Soho House, The League. Private, understated, highly curated.
+A series of private, invitation-only gatherings for high-income professionals in Toronto, held somewhere different each time (there is no clubhouse or fixed venue). This project is the club's website only: it is a website, not a mobile app. There is no membership tier, approval process, or login. Anyone can learn about the club; guests with the shared invitation code can also see upcoming event teasers and register with their email address, which they confirm through a link we email them. Brand references: Soho House, The League. Private, understated, highly curated.
 
 ## Stack
 - Next.js 14+ App Router, TypeScript (strict), Tailwind CSS, Framer Motion
@@ -20,7 +20,7 @@ A private, invitation-only events club for high-income professionals in Toronto.
 
 ## Site Map
 - `/`: cinematic video hero, brief club intro, an "upcoming gatherings are shared with invited guests" teaser (no event details), closing CTA
-- `/the-club`: philosophy, what the club is like, who it's for
+- `/about`: philosophy, what the gatherings are like, who they're for (`/the-club` redirects here)
 - `/invitation?next=…`: invitation code form (noindex); sends the guest on to `/events` or `/register`
 - `/events` (invitation only): upcoming event teasers (title, date, time, neighborhood only; never venue or address)
 - `/register` (invitation only): registration form
@@ -37,6 +37,7 @@ A private, invitation-only events club for high-income professionals in Toronto.
 - Keep event details off public pages: the home page links to `/events` but never lists events.
 
 ## Content Rules
+- There is no fixed venue. Never describe a clubhouse, a permanent address or "our space"; say gatherings are held somewhere different each time. Avoid calling it "the club" in visible copy: prefer "gatherings", "evenings" or "Ready to Mingle". Code names like `ClubEvent` are fine.
 - Events live in `content/events.ts` as typed data so they can be edited without touching components. Past events are hidden automatically.
 - Event teasers never include venue names, addresses, or prices. Copy should imply exclusivity ("Location shared with registered guests").
 - All times displayed in America/Toronto.

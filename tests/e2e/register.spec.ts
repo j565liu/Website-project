@@ -69,8 +69,8 @@ test("a visitor registers, confirms by email link, and is registered", async ({ 
 });
 
 test("events and registration need an invitation code; public pages don't", async ({ page }) => {
-  await page.goto("/the-club");
-  await expect(page).toHaveURL(/\/the-club$/);
+  await page.goto("/about");
+  await expect(page).toHaveURL(/\/about$/);
 
   await page.goto("/events");
   await expect(page).toHaveURL(/\/invitation\?next=%2Fevents$/);

@@ -15,7 +15,7 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     title: "Who we are",
     body: (
       <p>
-        {site.name} (&ldquo;we&rdquo;, &ldquo;us&rdquo;) is a private events club in Toronto,
+        {site.name} (&ldquo;we&rdquo;, &ldquo;us&rdquo;) organises private, invitation-only gatherings in Toronto,
         Ontario. We are responsible for the personal information described here and handle it in
         accordance with Canada&rsquo;s <em>Personal Information Protection and Electronic
         Documents Act</em> (PIPEDA). [Legal entity name and mailing address to be added.]
@@ -83,7 +83,7 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
         [provider names to be added], and our emails are delivered through an email service
         provider. These providers may store or process data outside Canada, including in the
         United States, where it may be accessible to authorities under local law. Access to
-        registration data is limited to the people who run the club.
+        registration data is limited to the people who organise the gatherings.
       </p>
     ),
   },
@@ -93,7 +93,7 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     body: (
       <p>
         If you do not confirm your email, your registration is deleted automatically after seven
-        days. Confirmed registrations are kept while the club is active, or until you ask us to
+        days. Confirmed registrations are kept while Ready to Mingle is active, or until you ask us to
         delete them.
       </p>
     ),
