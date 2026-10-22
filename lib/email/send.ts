@@ -48,6 +48,12 @@ async function writeToOutbox(message: EmailMessage) {
 
 export const sendEmail: SendEmail = async (message) => {
   if (!process.env.SMTP_HOST) {
+    // Vercel's file system is read-only, so the outbox can't work there; say what's missing instead.
+    if (process.env.VERCEL) {
+      throw new Error(
+        "SMTP_HOST is not set, so emails cannot be sent. Add SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD and EMAIL_FROM in Vercel (see docs/email-setup.md).",
+      );
+    }
     await writeToOutbox(message);
     return;
   }
