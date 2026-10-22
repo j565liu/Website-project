@@ -131,7 +131,7 @@ export function Hero({ tagline }: { tagline: string }) {
             {tagline}
           </p>
           <div className="mt-12 h-px w-16 bg-gold" />
-          <RegisterLink className="mt-12" />
+          <RegisterLink className="mt-12" withNote />
         </div>
       </div>
     </section>

@@ -18,7 +18,7 @@ export function CtaSection({ title, body }: Props) {
           {title}
         </h2>
         <p className="mt-8 max-w-xl leading-relaxed text-muted">{body}</p>
-        <RegisterLink className="mt-12" />
+        <RegisterLink className="mt-12" withNote />
       </Reveal>
     </section>
   );

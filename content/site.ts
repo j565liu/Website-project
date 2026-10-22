@@ -3,7 +3,12 @@ export const site = {
   city: "Toronto",
   description:
     "Private, invitation-only gatherings for Toronto professionals. Small rooms, good company, and evenings worth leaving the house for.",
-  ctaLabel: "Register Your Interest",
+  // The site-wide button. It leads to /register, which asks for the code first if needed.
+  ctaLabel: "Have an Invitation?",
+  // Shown under the large buttons so visitors without a code know what to do.
+  noInvitationNote: "No invitation yet? Ask a guest who has attended.",
+  // The registration form's own submit button, once the guest is past the code.
+  registerLabel: "Register Your Interest",
   // Placeholder: replace with the real inbox before launch (shown on FAQ and Privacy pages).
   contactEmail: "hello@example.com",
 } as const;

@@ -205,7 +205,7 @@ export function RegistrationForm() {
         disabled={pending}
         className="label w-full border border-gold px-8 py-4 text-ivory transition-colors duration-500 ease-luxe hover:bg-gold hover:text-background disabled:cursor-wait disabled:opacity-60 sm:w-auto"
       >
-        {pending ? "Submitting…" : site.ctaLabel}
+        {pending ? "Submitting…" : site.registerLabel}
       </button>
     </form>
   );
