@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { footerNav, site } from "@/content/site";
-import { RegisterLink } from "./RegisterLink";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -12,7 +11,6 @@ export function Footer() {
           <p className="max-w-sm text-sm leading-relaxed text-muted">
             Private gatherings for {site.city}&rsquo;s professionals.
           </p>
-          <RegisterLink size="sm" />
         </div>
         <nav aria-label="Footer">
           <ul className="flex flex-wrap gap-x-8 gap-y-1">

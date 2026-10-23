@@ -33,6 +33,7 @@ export default function EventsPage() {
       <CtaSection
         title="Take a seat at the table."
         body="Register with your preferred name and email. Locations are shared with registered guests only."
+        forInvitedGuests
       />
     </>
   );

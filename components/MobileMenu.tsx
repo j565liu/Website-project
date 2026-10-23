@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
-import { primaryNav, site } from "@/content/site";
+import { primaryNav, showsInvitationButton, site } from "@/content/site";
 
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
+  const showInvitation = showsInvitationButton(usePathname());
   const panelId = useId();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
@@ -61,15 +63,17 @@ export function MobileMenu() {
                 </Link>
               </li>
             ))}
-            <li className="border-t border-charcoal pt-8">
-              <Link
-                href="/register"
-                onClick={close}
-                className="label inline-block border border-gold px-8 py-4 text-ivory"
-              >
-                {site.ctaLabel}
-              </Link>
-            </li>
+            {showInvitation && (
+              <li className="border-t border-charcoal pt-8">
+                <Link
+                  href="/register"
+                  onClick={close}
+                  className="label inline-block border border-gold px-8 py-4 text-ivory"
+                >
+                  {site.ctaLabel}
+                </Link>
+              </li>
+            )}
           </ul>
         </nav>
       </div>

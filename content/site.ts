@@ -13,6 +13,12 @@ export const site = {
   contactEmail: "hello@example.com",
 } as const;
 
+// Pages where the site-wide "Have an Invitation?" button is hidden: the visitor is already
+// entering their code, registering, or (on /events) has the code.
+export function showsInvitationButton(pathname: string): boolean {
+  return !["/invitation", "/register", "/events"].some((path) => pathname === path || pathname.startsWith(`${path}/`));
+}
+
 export const primaryNav = [
   { href: "/about", label: "About" },
   { href: "/events", label: "Events" },

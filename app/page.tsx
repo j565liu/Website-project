@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { CtaSection } from "@/components/CtaSection";
 import { Hero } from "@/components/Hero";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -59,11 +58,6 @@ export default function HomePage() {
           </Reveal>
         </div>
       </section>
-
-      <CtaSection
-        title="Take a seat at the table."
-        body="Gatherings are by invitation. With your code, registering takes a minute, and locations are shared with registered guests only."
-      />
     </>
   );
 }
