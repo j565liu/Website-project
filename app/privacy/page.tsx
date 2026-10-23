@@ -30,6 +30,7 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
         <p>When you register, we collect only:</p>
         <ul className="list-disc space-y-2 pl-5">
           <li>your preferred name and email address;</li>
+          <li>your phone number, if you choose to give it;</li>
           <li>the date and time you gave consent and confirmed your email; and</li>
           <li>
             whether you asked to hear about upcoming gatherings, and when (this is optional).
@@ -50,8 +51,10 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     title: "Why we collect it",
     body: (
       <p>
-        To confirm that your email address belongs to you, to register you as a guest and, only if
-        you asked us to, to tell you about upcoming gatherings. We do not sell, rent or trade your
+        To confirm that your email address belongs to you, to register you as a guest, to reach you
+        by phone about a gathering you&rsquo;re attending if you gave us your number and, only if
+        you asked us to, to tell you about upcoming gatherings. We never send marketing text
+        messages. We do not sell, rent or trade your
         information, and we do not use it for advertising.
       </p>
     ),

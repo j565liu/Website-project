@@ -16,6 +16,7 @@ describe("registration schema", () => {
       data: {
         preferredName: "Alex",
         email: "alex.morgan@example.com",
+        phone: undefined,
         consent: true,
         eventEmails: false,
       },
@@ -40,8 +41,29 @@ describe("registration schema", () => {
 
   it("ignores fields that are no longer collected", () => {
     const result = validate({ industry: "Law", whyJoin: "Conversation." });
-    expect(result.success && Object.keys(result.data).sort()).toEqual(["consent", "email", "eventEmails", "preferredName"]);
+    expect(result.success && Object.keys(result.data).sort()).toEqual(["consent", "email", "eventEmails", "phone", "preferredName"]);
   });
+
+  it.each(["416-555-0123", "(416) 555 0123", "+1 416 555 0123", "4165550123", "+44 20 7946 0958"])(
+    "accepts the phone number %s",
+    (phone) => {
+      const result = validate({ phone });
+      expect(result.success && result.data.phone).toBe(phone);
+    },
+  );
+
+  it("treats a blank phone number as not given", () => {
+    const result = validate({ phone: "   " });
+    expect(result.success && result.data.phone).toBeUndefined();
+  });
+
+  it.each(["call me", "555-12", "416-555-0123 ext 4", "1".repeat(16), "+1 416 555 0123".repeat(3)])(
+    "rejects the phone number %s",
+    (phone) => {
+      const result = validate({ phone });
+      expect(!result.success && result.errors.phone).toBeTruthy();
+    },
+  );
 
   it("treats the event emails box as optional", () => {
     const ticked = validate({ eventEmails: "on" });

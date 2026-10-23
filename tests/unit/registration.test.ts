@@ -59,6 +59,7 @@ describe("new registration", () => {
       confirmedAt: null,
       consentAcceptedAt: baseNow,
       eventEmailsConsentAt: null,
+      phone: null,
       confirmationExpiresAt: new Date(baseNow.getTime() + 48 * HOUR),
     });
 
@@ -70,6 +71,13 @@ describe("new registration", () => {
     // Only a hash of the token is stored.
     const token = tokenFrom(mailer.sent[0]);
     expect(row.confirmationTokenHash).not.toContain(token);
+  });
+
+  it("stores the optional phone number", async () => {
+    const { ctx } = context();
+    await handleSubmission(formData({ ...validFields, phone: " 416-555-0123 " }), ctx);
+    const [row] = await allRows();
+    expect(row.phone).toBe("416-555-0123");
   });
 
   it("records when the guest asked for event emails", async () => {

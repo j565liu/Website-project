@@ -8,6 +8,7 @@ export type ExportStatus = (typeof exportStatuses)[number];
 const columns: { header: string; value: (row: RegistrationRow) => string | Date | null }[] = [
   { header: "Preferred name", value: (r) => r.preferredName },
   { header: "Email", value: (r) => r.email },
+  { header: "Phone", value: (r) => r.phone },
   { header: "Status", value: (r) => (r.confirmedAt ? "Confirmed" : "Unconfirmed") },
   { header: "Registered (Toronto time)", value: (r) => r.createdAt },
   { header: "Confirmed (Toronto time)", value: (r) => r.confirmedAt },

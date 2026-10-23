@@ -43,13 +43,14 @@ A series of private, invitation-only gatherings for high-income professionals in
 - All times displayed in America/Toronto.
 
 ## Registration Form & Data
-- Fields: preferred_name (what we call them in emails, max 80 chars), email, consent checkbox (required), and an optional, unticked-by-default "Email me about upcoming gatherings." checkbox stored as `event_emails_consent_at` (null = no). Collect nothing else. (Industry, referral source and "why join" were removed in migration 0001.)
+- Fields: preferred_name (what we call them in emails, max 80 chars), email, phone (optional, max 32 chars, lenient format check; only used to reach a guest about a gathering they're attending, never for marketing texts), consent checkbox (required), and an optional, unticked-by-default "Email me about upcoming gatherings." checkbox stored as `event_emails_consent_at` (null = no). Collect nothing else. (Industry, referral source and "why join" were removed in migration 0001.)
 - `registrations` table: id (UUID), the fields above, consent_accepted_at, confirmed_at (null until the email link is used), confirmation_token_hash (never store the raw token), confirmation_expires_at (48 hours), created_at, updated_at. Unique index on lowercased email; index on confirmed_at and created_at.
 - Everyone who confirms is registered: there is no approval status.
 - The only emails the site itself sends are the confirmation link, a "you're registered" email once confirmed, and the "already registered" email. Event invitations are sent by hand from Resend Broadcasts, only to confirmed guests with `event_emails_consent_at` set, with an unsubscribe link and mailing address (CASL); see `docs/event-emails.md`. Never email guests who didn't opt in, and don't build sending into the site. A confirmed guest's details, including this choice, are never changed by a new submission (someone else could have typed their email).
 - After every valid submission, show `/register/check-email` whether or not the email is new, so the form never reveals who has registered. New or unconfirmed email → send a fresh confirmation link. Already confirmed → send a short "you're already registered" email instead.
 - Unconfirmed registrations older than 7 days are deleted.
 - Spam protection: honeypot field + basic rate limiting per IP (hashed with `RATE_LIMIT_SECRET`; never store raw IP addresses).
+- Links in emails, the sitemap and metadata use `siteUrl()` (`lib/site-url.ts`): `NEXT_PUBLIC_SITE_URL`, falling back to Vercel's production domain, then localhost for local development.
 - PIPEDA: collect only what's listed, record consent_accepted_at, and link the privacy policy next to the consent checkbox.
 - No secrets in code; keep `.env.example` current. Schema changes only through migrations.
 

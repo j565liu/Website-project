@@ -6,6 +6,7 @@ const row = (overrides: Partial<RegistrationRow> = {}): RegistrationRow => ({
   id: "00000000-0000-0000-0000-000000000000",
   preferredName: "Alex",
   email: "alex@example.com",
+  phone: null,
   consentAcceptedAt: new Date("2026-10-01T12:00:00Z"),
   confirmedAt: null,
   eventEmailsConsentAt: null,
@@ -24,9 +25,9 @@ describe("CSV export", () => {
       toCsv([row(), row({ email: "b@example.com", confirmedAt: new Date("2026-10-02T01:30:00Z") })]),
     );
     expect(header).toBe(
-      "Preferred name,Email,Status,Registered (Toronto time),Confirmed (Toronto time),Consent given (Toronto time),Event emails,Event emails consent (Toronto time)",
+      "Preferred name,Email,Phone,Status,Registered (Toronto time),Confirmed (Toronto time),Consent given (Toronto time),Event emails,Event emails consent (Toronto time)",
     );
-    expect(first).toBe("Alex,alex@example.com,Unconfirmed,2026-10-01 08:00,,2026-10-01 08:00,No,");
+    expect(first).toBe("Alex,alex@example.com,,Unconfirmed,2026-10-01 08:00,,2026-10-01 08:00,No,");
     expect(second).toContain("Confirmed,2026-10-01 08:00,2026-10-01 21:30,");
     expect(toCsv([row()])).not.toContain("hash");
   });

@@ -15,6 +15,7 @@ import {
 type Values = {
   preferredName: string;
   email: string;
+  phone: string;
   consent: boolean;
   eventEmails: boolean;
 };
@@ -22,15 +23,17 @@ type Values = {
 const initialValues: Values = {
   preferredName: "",
   email: "",
+  phone: "",
   consent: false,
   eventEmails: false,
 };
 
-const fieldOrder: RegistrationField[] = ["preferredName", "email", "consent"];
+const fieldOrder: RegistrationField[] = ["preferredName", "email", "phone", "consent"];
 
 const fieldLabels: Record<RegistrationField, string> = {
   preferredName: "Preferred name",
   email: "Email",
+  phone: "Phone",
   consent: "Consent",
   eventEmails: "Event emails",
 };
@@ -167,6 +170,30 @@ export function RegistrationForm() {
         <FieldError field="email" message={errors.email} />
       </div>
 
+      <div>
+        <label htmlFor="phone" className="text-base font-medium text-ivory">
+          Phone <span className="font-normal text-muted">(optional)</span>
+        </label>
+        <p id="phone-hint" className="mt-2 text-sm text-muted">
+          Only used to reach you about a gathering you&rsquo;re attending.
+        </p>
+        <input
+          id="phone"
+          name="phone"
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          maxLength={LIMITS.phone}
+          value={values.phone}
+          onChange={(e) => update("phone", e.target.value)}
+          onBlur={() => validateField("phone")}
+          aria-invalid={Boolean(errors.phone)}
+          aria-describedby={describedBy("phone", "phone-hint")}
+          className={inputClass}
+        />
+        <FieldError field="phone" message={errors.phone} />
+      </div>
+
       {/* Hidden from people; bots that fill it in are quietly discarded. */}
       <div aria-hidden="true" className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden">
         <label htmlFor={HONEYPOT_FIELD}>Leave this field empty</label>
@@ -188,7 +215,7 @@ export function RegistrationForm() {
           />
           <div>
             <label htmlFor="consent" className="cursor-pointer leading-relaxed text-ivory">
-              I agree to {site.name} storing my name and email to process my registration.
+              I agree to {site.name} storing the details above to process my registration.
             </label>
             <p id="consent-privacy" className="mt-2 text-sm text-muted">
               Read our{" "}

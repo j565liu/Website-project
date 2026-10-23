@@ -3,7 +3,11 @@ import { z } from "zod";
 export const LIMITS = {
   preferredName: 80,
   email: 254,
+  phone: 32,
 } as const;
+
+// Accepts common Canadian and international formats: 416-555-0123, (416) 555 0123, +1 416 555 0123.
+const PHONE_CHARACTERS = /^\+?[0-9 ().-]+$/;
 
 export const HONEYPOT_FIELD = "company_website";
 
@@ -20,6 +24,16 @@ export const registrationSchema = z.object({
     .max(LIMITS.email, "That email address is too long.")
     .pipe(z.email("Please enter a valid email address, like name@example.com."))
     .transform((value) => value.toLowerCase()),
+  phone: z
+    .string()
+    .trim()
+    .max(LIMITS.phone, "That phone number is too long.")
+    .refine(
+      (value) => value === "" || (PHONE_CHARACTERS.test(value) && /^\d{7,15}$/.test(value.replace(/\D/g, ""))),
+      "Please enter a phone number like 416-555-0123, or leave it blank.",
+    )
+    .optional()
+    .transform((value) => value || undefined),
   consent: z.literal(true, "Please confirm you agree so we can store your registration."),
   eventEmails: z.boolean().default(false),
 });
@@ -37,6 +51,7 @@ export function formDataToInput(formData: FormData): RegistrationInput {
   return {
     preferredName: text("preferredName"),
     email: text("email"),
+    phone: text("phone"),
     consent: (formData.get("consent") === "on") as true,
     eventEmails: formData.get("eventEmails") === "on",
   };

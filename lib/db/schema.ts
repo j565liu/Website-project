@@ -16,6 +16,8 @@ export const registrations = pgTable(
     id: uuid("id").primaryKey().defaultRandom(),
     preferredName: varchar("preferred_name", { length: 80 }).notNull(),
     email: varchar("email", { length: 254 }).notNull(),
+    // Optional; only used to reach the guest about a gathering they're attending.
+    phone: varchar("phone", { length: 32 }),
     consentAcceptedAt: timestamp("consent_accepted_at", { withTimezone: true }).notNull(),
     confirmedAt: timestamp("confirmed_at", { withTimezone: true }),
     // Set when the guest ticks "Email me about upcoming gatherings"; null means no event emails.

@@ -15,7 +15,7 @@ export default function RegisterPage() {
       <PageHeader
         label="Register"
         title="Register your interest"
-        intro="It takes about a minute: your preferred name and your email. We will email you a link to confirm your address, and once you confirm, you are registered."
+        intro="It takes about a minute: your preferred name, your email and, if you like, a phone number. We will email you a link to confirm your address, and once you confirm, you are registered."
       />
       <section aria-label="Registration form" className="mx-auto max-w-7xl px-6 pb-32 md:px-10 md:pb-44">
         <div className="relative max-w-2xl">
