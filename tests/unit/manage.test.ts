@@ -44,12 +44,12 @@ afterAll(async () => {
 
 describe("manage links", () => {
   it("are included in the 'registered' email and open the guest's registration", async () => {
-    const { id, sig, registered } = await confirmedGuest({ eventEmails: "on" });
+    const { id, sig, registered } = await confirmedGuest({ eventEmails: "on", phone: "416-555-0123" });
     expect(registered.html).toContain("Manage my registration");
     expect(registered.text).not.toContain("hello@example.com");
     expect(await findManagedRegistration(id, sig, db)).toEqual({
       status: "found",
-      registration: { preferredName: "Alex", email: "alex.morgan@example.com", eventEmails: true },
+      registration: { preferredName: "Alex", email: "alex.morgan@example.com", phone: "416-555-0123", eventEmails: true },
     });
   });
 

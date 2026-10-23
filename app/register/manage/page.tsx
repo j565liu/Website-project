@@ -22,12 +22,18 @@ export default async function ManagePage({ searchParams }: PageProps<"/register/
   }
 
   if (result.status === "found") {
-    const { preferredName, email, eventEmails } = result.registration;
+    const { preferredName, email, phone, eventEmails } = result.registration;
     return (
       <StatusMessage label="Your registration" title="Manage your registration">
-        <p>
-          Registered as <span className="text-ivory">{preferredName}</span> ({email}).
-        </p>
+        <p>These are the details we hold for you:</p>
+        <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2">
+          <dt>Name</dt>
+          <dd className="text-ivory">{preferredName}</dd>
+          <dt>Email</dt>
+          <dd className="break-all text-ivory">{email}</dd>
+          <dt>Phone</dt>
+          <dd className="text-ivory">{phone ?? "Not given"}</dd>
+        </dl>
         <div className="pt-8">
           <ManageRegistration id={id as string} sig={sig as string} eventEmails={eventEmails} />
         </div>

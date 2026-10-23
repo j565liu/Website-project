@@ -115,9 +115,12 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     title: "Your rights",
     body: (
       <p>
-        You may ask to see the information we hold about you, correct it, or have it deleted. If
-        you have a concern we cannot resolve, you may contact the Office of the Privacy
-        Commissioner of Canada.
+        You can see the details we hold about you and delete them yourself at any time, using the
+        &ldquo;Manage my registration&rdquo; link in the email we sent when you registered. If you
+        no longer have that email, register again with the same address and we will send you a
+        fresh link. To change your details, delete your registration and register again. If you
+        have a concern we cannot resolve, you may contact the Office of the Privacy Commissioner of
+        Canada.
       </p>
     ),
   },
@@ -126,14 +129,8 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     title: "Contact",
     body: (
       <p>
-        Questions and requests go to our privacy contact at{" "}
-        <a
-          href={`mailto:${site.contactEmail}`}
-          className="text-ivory underline decoration-gold underline-offset-4"
-        >
-          {site.contactEmail}
-        </a>
-        . We will respond within 30 days.
+        For any other privacy question, write to us at [mailing address to be added]. We will
+        respond within 30 days.
       </p>
     ),
   },

@@ -3,7 +3,6 @@ import { pageMetadata } from "@/lib/metadata";
 import Link from "next/link";
 import { PageHeader } from "@/components/PageHeader";
 import { faq } from "@/content/faq";
-import { site } from "@/content/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "FAQ",
@@ -38,11 +37,7 @@ export default function FaqPage() {
             ))}
           </div>
           <p className="mt-16 leading-relaxed text-muted">
-            Something else? Write to us at{" "}
-            <a href={`mailto:${site.contactEmail}`} className="text-ivory underline decoration-gold underline-offset-4">
-              {site.contactEmail}
-            </a>
-            , or read our{" "}
+            Something else? Ask the guest who invited you, or read our{" "}
             <Link href="/privacy" className="text-ivory underline decoration-gold underline-offset-4">
               privacy policy
             </Link>

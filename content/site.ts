@@ -9,8 +9,6 @@ export const site = {
   noInvitationNote: "No invitation yet? Ask a guest who has attended.",
   // The registration form's own submit button, once the guest is past the code.
   registerLabel: "Register Your Interest",
-  // Placeholder: replace with the real inbox before launch (shown on FAQ and Privacy pages).
-  contactEmail: "hello@example.com",
 } as const;
 
 // Pages where the site-wide "Have an Invitation?" button is hidden: the visitor is already
