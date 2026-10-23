@@ -166,6 +166,32 @@ describe("confirmation", () => {
     expect(mailer.sent).toHaveLength(2);
   });
 
+  it("tells the organiser about a confirmed registration", async () => {
+    const { ctx, mailer } = context();
+    await handleSubmission(formData({ ...validFields, phone: "416-555-0123", eventEmails: "on" }), ctx);
+    const token = tokenFrom(mailer.sent[0]);
+
+    await confirmRegistration(token, { ...ctx, notifyEmail: "organiser@example.com" });
+    const notice = mailer.sent.at(-1)!;
+    expect(notice.to).toBe("organiser@example.com");
+    expect(notice.subject).toBe("New registration: Alex");
+    expect(notice.text).toContain("Email: alex.morgan@example.com");
+    expect(notice.text).toContain("Phone: 416-555-0123");
+    expect(notice.text).toContain("Emails about gatherings: Yes");
+    expect(notice.text).toContain("October 1, 2026");
+
+    // Opening the link again doesn't send a second notice.
+    await confirmRegistration(token, { ...ctx, notifyEmail: "organiser@example.com" });
+    expect(mailer.sent).toHaveLength(3);
+  });
+
+  it("sends no organiser notice when none is configured", async () => {
+    const { ctx, mailer } = context();
+    await handleSubmission(formData(validFields), ctx);
+    await confirmRegistration(tokenFrom(mailer.sent[0]), { ...ctx, notifyEmail: " " });
+    expect(mailer.sent.map((m) => m.to)).toEqual(["alex.morgan@example.com", "alex.morgan@example.com"]);
+  });
+
   it("refuses an expired link", async () => {
     const { ctx, mailer } = context();
     await handleSubmission(formData(validFields), ctx);

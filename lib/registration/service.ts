@@ -2,7 +2,7 @@ import { and, eq, gt, isNull, lt, sql } from "drizzle-orm";
 import type { Database } from "@/lib/db";
 import { registrations, type RegistrationRow } from "@/lib/db/schema";
 import type { SendEmail } from "@/lib/email/send";
-import { alreadyRegisteredEmail, confirmationEmail, registeredEmail } from "@/lib/email/templates";
+import { alreadyRegisteredEmail, confirmationEmail, newRegistrationNotice, registeredEmail } from "@/lib/email/templates";
 import { consumeRateLimit } from "@/lib/rate-limit";
 import {
   formDataToInput,
@@ -23,6 +23,8 @@ export type RegistrationDeps = {
   sendEmail: SendEmail;
   baseUrl: string;
   now?: Date;
+  // Organiser address(es), comma-separated, told about each confirmed registration. Optional.
+  notifyEmail?: string;
 };
 
 export type SubmissionContext = RegistrationDeps & {
@@ -151,15 +153,23 @@ export async function confirmRegistration(token: unknown, deps: RegistrationDeps
         gt(registrations.confirmationExpiresAt, now),
       ),
     )
-    .returning({ id: registrations.id, email: registrations.email, preferredName: registrations.preferredName });
+    .returning();
 
   if (!row) return getTokenStatus(token, deps);
 
+  // The registration is confirmed either way; a missing email shouldn't undo it.
   try {
     await deps.sendEmail(registeredEmail(row.email, row.preferredName, manageUrl(deps.baseUrl, row.id)));
   } catch (error) {
-    // The registration is confirmed either way; a missing courtesy email shouldn't undo it.
     console.error("[registration] Failed to send registered email", error);
+  }
+  const notifyEmail = deps.notifyEmail?.trim();
+  if (notifyEmail) {
+    try {
+      await deps.sendEmail(newRegistrationNotice(notifyEmail, row));
+    } catch (error) {
+      console.error("[registration] Failed to send organiser notice", error);
+    }
   }
   return "confirmed";
 }

@@ -1,4 +1,6 @@
 import { site } from "@/content/site";
+import type { RegistrationRow } from "@/lib/db/schema";
+import { TIME_ZONE } from "@/lib/events";
 import type { EmailMessage } from "./send";
 
 function escapeHtml(value: string): string {
@@ -63,5 +65,23 @@ export function alreadyRegisteredEmail(to: string, name: string, manageLink: str
     { kind: "p", text: `Someone, most likely you, just tried to register this email address with ${site.name}. You are already registered, so there is nothing more to do.` },
     { kind: "p", text: "To stop emails about gatherings or remove your details, use the link below." },
     { kind: "button", label: "Manage my registration", href: manageLink },
+  ]);
+}
+
+const torontoTime = new Intl.DateTimeFormat("en-CA", { timeZone: TIME_ZONE, dateStyle: "long", timeStyle: "short" });
+
+// Sent to the organiser, not the guest.
+export function newRegistrationNotice(
+  to: string,
+  registration: Pick<RegistrationRow, "preferredName" | "email" | "phone" | "eventEmailsConsentAt" | "confirmedAt">,
+): EmailMessage {
+  const { preferredName, email, phone, eventEmailsConsentAt, confirmedAt } = registration;
+  return message(to, `New registration: ${preferredName}`, [
+    { kind: "p", text: "Someone has just confirmed their registration." },
+    { kind: "p", text: `Name: ${preferredName}` },
+    { kind: "p", text: `Email: ${email}` },
+    { kind: "p", text: `Phone: ${phone ?? "Not given"}` },
+    { kind: "p", text: `Emails about gatherings: ${eventEmailsConsentAt ? "Yes" : "No"}` },
+    ...(confirmedAt ? [{ kind: "p" as const, text: `Confirmed: ${torontoTime.format(confirmedAt)} (Toronto time)` }] : []),
   ]);
 }

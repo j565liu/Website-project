@@ -21,6 +21,10 @@ If `SMTP_HOST` is empty, nothing is sent: each email is saved as a file in `.out
 That is how development and the automated tests work. **On the live site, `SMTP_HOST` must be set**,
 or registrations will fail with a "something went wrong" message.
 
+Optional: set `REGISTRATION_NOTIFY_EMAIL` to the organiser's address (several addresses separated
+by commas) to receive each guest's details whenever someone confirms their registration. These
+notices hold personal information, so delete them from the inbox once a guest removes their details.
+
 ---
 
 ## Option A: an email account you already have (Google Workspace)
