@@ -66,6 +66,22 @@ test("a visitor registers, confirms by email link, and is registered", async ({ 
     // Opening the link again is harmless.
     await page.goto(link.pathname + link.search);
     await expect(page.getByRole("heading", { level: 1, name: "You’re already registered." })).toBeVisible();
+
+    // The "registered" email links to a page where the guest manages their own details.
+    const registered = (await emailsTo(email)).find((m) => m.subject === "You're registered with Ready to Mingle");
+    const manage = new URL(registered.text.match(/https?:\/\/\S+\/register\/manage\?\S+/)![0]);
+    await page.goto(manage.pathname + manage.search);
+    await expect(page.getByRole("heading", { level: 1, name: "Manage your registration" })).toBeVisible();
+
+    await page.getByRole("button", { name: "Stop emails about gatherings" }).click();
+    await expect(page.getByText("Done. You won’t receive emails about gatherings.")).toBeVisible();
+    const [stopped] = await sql`select event_emails_consent_at from registrations where email = ${email}`;
+    expect(stopped.event_emails_consent_at).toBeNull();
+
+    await page.getByRole("button", { name: "Delete my registration" }).click();
+    await page.getByRole("button", { name: "Yes, delete my details" }).click();
+    await expect(page.getByText("Your details have been deleted.")).toBeVisible();
+    expect(await sql`select 1 from registrations where email = ${email}`).toHaveLength(0);
   } finally {
     await sql`delete from registrations where email = ${email}`;
     await sql.end();

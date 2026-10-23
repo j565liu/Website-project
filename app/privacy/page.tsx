@@ -65,9 +65,10 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     body: (
       <p>
         We ask for your consent when you register. Agreeing to hear about upcoming gatherings is a
-        separate, optional choice. You may withdraw either at any time: use the unsubscribe link in
-        any email about gatherings, or write to us and we will stop emailing you or delete your
-        registration, as you prefer.
+        separate, optional choice. You may withdraw either at any time, without contacting us: use
+        the unsubscribe link in any email about gatherings, or the &ldquo;Manage my
+        registration&rdquo; link in the email we sent when you registered, which also lets you
+        delete your details.
       </p>
     ),
   },

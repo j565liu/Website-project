@@ -69,7 +69,8 @@ export const faq: FaqItem[] = [
   {
     question: "How do I update or remove my information?",
     answer: [
-      "Email us from the address you registered with and we will update or delete your details.",
+      "Use the \"Manage my registration\" link in the email we sent when you registered. It lets you stop emails about gatherings or delete your details at any time.",
+      "To change your name or phone number, delete your registration and register again.",
     ],
   },
 ];

@@ -11,6 +11,7 @@ import {
   type FieldErrors,
   type Registration,
 } from "@/lib/validation/registration";
+import { manageUrl } from "./manage";
 import { createToken, hashToken, isWellFormedToken } from "./tokens";
 
 const HOUR_MS = 60 * 60 * 1000;
@@ -87,7 +88,7 @@ export async function registerInterest(
 
   const existing = await findByEmail(db, data.email);
   if (existing?.confirmedAt) {
-    await sendEmail(alreadyRegisteredEmail(existing.email, existing.preferredName));
+    await sendEmail(alreadyRegisteredEmail(existing.email, existing.preferredName, manageUrl(baseUrl, existing.id)));
     return;
   }
 
@@ -150,12 +151,12 @@ export async function confirmRegistration(token: unknown, deps: RegistrationDeps
         gt(registrations.confirmationExpiresAt, now),
       ),
     )
-    .returning({ email: registrations.email, preferredName: registrations.preferredName });
+    .returning({ id: registrations.id, email: registrations.email, preferredName: registrations.preferredName });
 
   if (!row) return getTokenStatus(token, deps);
 
   try {
-    await deps.sendEmail(registeredEmail(row.email, row.preferredName));
+    await deps.sendEmail(registeredEmail(row.email, row.preferredName, manageUrl(deps.baseUrl, row.id)));
   } catch (error) {
     // The registration is confirmed either way; a missing courtesy email shouldn't undo it.
     console.error("[registration] Failed to send registered email", error);

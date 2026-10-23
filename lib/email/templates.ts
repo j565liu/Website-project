@@ -48,18 +48,20 @@ export function confirmationEmail(to: string, name: string, confirmUrl: string):
   ]);
 }
 
-export function registeredEmail(to: string, name: string): EmailMessage {
+export function registeredEmail(to: string, name: string, manageLink: string): EmailMessage {
   return message(to, `You're registered with ${site.name}`, [
     { kind: "p", text: `Hello ${name},` },
     { kind: "p", text: `Your email is confirmed and you are now registered with ${site.name}. Locations for our gatherings are shared with registered guests only.` },
-    { kind: "p", text: `To update or remove your details at any time, reply to this email or write to ${site.contactEmail}.` },
+    { kind: "p", text: "To stop emails about gatherings or remove your details at any time, use the link below." },
+    { kind: "button", label: "Manage my registration", href: manageLink },
   ]);
 }
 
-export function alreadyRegisteredEmail(to: string, name: string): EmailMessage {
+export function alreadyRegisteredEmail(to: string, name: string, manageLink: string): EmailMessage {
   return message(to, `You're already registered with ${site.name}`, [
     { kind: "p", text: `Hello ${name},` },
     { kind: "p", text: `Someone, most likely you, just tried to register this email address with ${site.name}. You are already registered, so there is nothing more to do.` },
-    { kind: "p", text: `If you would like to update your details, write to ${site.contactEmail}.` },
+    { kind: "p", text: "To stop emails about gatherings or remove your details, use the link below." },
+    { kind: "button", label: "Manage my registration", href: manageLink },
   ]);
 }

@@ -26,6 +26,7 @@ A series of private, invitation-only gatherings for high-income professionals in
 - `/register` (invitation only): registration form
 - `/register/check-email`: "Check your inbox" page shown after submitting
 - `/register/confirm?token=…`: landing page from the email link; the visitor presses a button to confirm (a button, not the bare link, so email link scanners can't confirm on their behalf), then lands on `/register/confirmed` ("You're registered")
+- `/register/manage?id=…&sig=…`: linked from the "registered" and "already registered" emails ("Manage my registration"). The guest can stop emails about gatherings or delete their registration (two-step confirm), with no login and no inbox needed on our side. The link is an HMAC of the registration id signed with `RATE_LIMIT_SECRET` (`lib/registration/manage.ts`); it doesn't expire, and changing the secret revokes every link.
 - `/faq`, `/privacy`
 - Old URLs from the short-lived explainer version (`/what-it-is`, `/examples`, `/guide/*`) redirect in `next.config.ts`.
 
