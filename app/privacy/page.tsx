@@ -29,8 +29,11 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
       <>
         <p>When you register, we collect only:</p>
         <ul className="list-disc space-y-2 pl-5">
-          <li>your preferred name and email address; and</li>
-          <li>the date and time you gave consent and confirmed your email.</li>
+          <li>your preferred name and email address;</li>
+          <li>the date and time you gave consent and confirmed your email; and</li>
+          <li>
+            whether you asked to hear about upcoming gatherings, and when (this is optional).
+          </li>
         </ul>
         <p>
           To protect the forms from abuse, we briefly keep a scrambled (one-way hashed) version of
@@ -47,9 +50,9 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     title: "Why we collect it",
     body: (
       <p>
-        To confirm that your email address belongs to you and to register you as a guest. We do
-        not sell,
-        rent or trade your information, and we do not use it for advertising.
+        To confirm that your email address belongs to you, to register you as a guest and, only if
+        you asked us to, to tell you about upcoming gatherings. We do not sell, rent or trade your
+        information, and we do not use it for advertising.
       </p>
     ),
   },
@@ -58,8 +61,10 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     title: "Consent",
     body: (
       <p>
-        We ask for your consent when you register. You may withdraw it at any time by writing to
-        us; we will then delete your registration.
+        We ask for your consent when you register. Agreeing to hear about upcoming gatherings is a
+        separate, optional choice. You may withdraw either at any time: use the unsubscribe link in
+        any email about gatherings, or write to us and we will stop emailing you or delete your
+        registration, as you prefer.
       </p>
     ),
   },
@@ -68,9 +73,12 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     title: "Emails we send",
     body: (
       <p>
-        The website sends only transactional emails: a link to confirm your address, a note once
-        you are registered, and, if you register again with an email we already have, a short
-        reminder that you are already registered. We do not send newsletters from this website.
+        When you register, we send a link to confirm your address, a note once you are registered
+        and, if you register again with an email we already have, a short reminder that you are
+        already registered. If you ticked &ldquo;Email me about upcoming gatherings&rdquo;, we may
+        also occasionally invite you to a gathering. Those emails come from {site.name}, are sent
+        through our email service provider, and each one includes a link to unsubscribe. We do not
+        send newsletters or share your address with anyone else.
       </p>
     ),
   },

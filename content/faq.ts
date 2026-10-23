@@ -55,9 +55,15 @@ export const faq: FaqItem[] = [
     ],
   },
   {
+    question: "Will you email me about upcoming gatherings?",
+    answer: [
+      "Only if you tick \"Email me about upcoming gatherings\" when you register. Those emails are occasional, and every one includes a link to unsubscribe. Otherwise we only send the emails needed to confirm your registration.",
+    ],
+  },
+  {
     question: "How is my information used?",
     answer: [
-      "Only to organise our gatherings: to confirm your email and to know who our guests are. We never sell or share it for marketing. The privacy policy explains what we collect and why.",
+      "Only to organise our gatherings: to confirm your email, to know who our guests are and, if you asked, to tell you about upcoming gatherings. We never sell or share it for marketing. The privacy policy explains what we collect and why.",
     ],
   },
   {

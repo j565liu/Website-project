@@ -18,6 +18,8 @@ export const registrations = pgTable(
     email: varchar("email", { length: 254 }).notNull(),
     consentAcceptedAt: timestamp("consent_accepted_at", { withTimezone: true }).notNull(),
     confirmedAt: timestamp("confirmed_at", { withTimezone: true }),
+    // Set when the guest ticks "Email me about upcoming gatherings"; null means no event emails.
+    eventEmailsConsentAt: timestamp("event_emails_consent_at", { withTimezone: true }),
     confirmationTokenHash: text("confirmation_token_hash").notNull(),
     confirmationExpiresAt: timestamp("confirmation_expires_at", { withTimezone: true }).notNull(),
     ...timestamps,

@@ -96,6 +96,7 @@ export async function registerInterest(
     preferredName: data.preferredName,
     email: data.email,
     consentAcceptedAt: now,
+    eventEmailsConsentAt: data.eventEmails ? now : null,
     confirmationTokenHash: hashToken(token),
     confirmationExpiresAt: new Date(now.getTime() + CONFIRMATION_TTL_MS),
   };

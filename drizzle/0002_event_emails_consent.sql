@@ -1,0 +1,1 @@
+ALTER TABLE "registrations" ADD COLUMN "event_emails_consent_at" timestamp with time zone;

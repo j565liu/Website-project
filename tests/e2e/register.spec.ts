@@ -35,6 +35,7 @@ test("a visitor registers, confirms by email link, and is registered", async ({ 
     await page.getByLabel("Preferred name").fill("Jordan");
     await page.getByLabel("Email", { exact: true }).fill(email.toUpperCase());
     await page.getByLabel(/I agree to Ready to Mingle/).check();
+    await page.getByLabel("Email me about upcoming gatherings.").check();
     await expect(page.getByLabel("Email", { exact: true })).toHaveAttribute("aria-invalid", "false");
 
     await page.getByRole("button", { name: "Register Your Interest" }).click();
@@ -43,6 +44,7 @@ test("a visitor registers, confirms by email link, and is registered", async ({ 
 
     const [row] = await sql`select * from registrations where email = ${email}`;
     expect(row).toMatchObject({ preferred_name: "Jordan", confirmed_at: null });
+    expect(row.event_emails_consent_at).not.toBeNull();
 
     // Follow the link from the confirmation email (path only: the build's site URL may differ).
     const [confirmation] = await emailsTo(email);

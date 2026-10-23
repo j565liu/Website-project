@@ -15,6 +15,13 @@
       "when": 1790985143656,
       "tag": "0001_drop_profile_fields",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792776048925,
+      "tag": "0002_event_emails_consent",
+      "breakpoints": true
     }
   ]
 }

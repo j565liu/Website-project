@@ -1,7 +1,8 @@
 import type { RegistrationRow } from "@/lib/db/schema";
 import { TIME_ZONE } from "@/lib/events";
 
-export const exportStatuses = ["all", "confirmed", "unconfirmed"] as const;
+// "event-emails": confirmed guests who asked to hear about upcoming gatherings.
+export const exportStatuses = ["all", "confirmed", "unconfirmed", "event-emails"] as const;
 export type ExportStatus = (typeof exportStatuses)[number];
 
 const columns: { header: string; value: (row: RegistrationRow) => string | Date | null }[] = [
@@ -11,6 +12,8 @@ const columns: { header: string; value: (row: RegistrationRow) => string | Date 
   { header: "Registered (Toronto time)", value: (r) => r.createdAt },
   { header: "Confirmed (Toronto time)", value: (r) => r.confirmedAt },
   { header: "Consent given (Toronto time)", value: (r) => r.consentAcceptedAt },
+  { header: "Event emails", value: (r) => (r.eventEmailsConsentAt ? "Yes" : "No") },
+  { header: "Event emails consent (Toronto time)", value: (r) => r.eventEmailsConsentAt },
 ];
 
 // "sv-SE" formats as "2026-10-01 08:00", which spreadsheets recognise as a date and time.

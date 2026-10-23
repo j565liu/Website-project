@@ -8,6 +8,7 @@ const row = (overrides: Partial<RegistrationRow> = {}): RegistrationRow => ({
   email: "alex@example.com",
   consentAcceptedAt: new Date("2026-10-01T12:00:00Z"),
   confirmedAt: null,
+  eventEmailsConsentAt: null,
   confirmationTokenHash: "hash",
   confirmationExpiresAt: new Date("2026-10-03T12:00:00Z"),
   createdAt: new Date("2026-10-01T12:00:00Z"),
@@ -23,11 +24,16 @@ describe("CSV export", () => {
       toCsv([row(), row({ email: "b@example.com", confirmedAt: new Date("2026-10-02T01:30:00Z") })]),
     );
     expect(header).toBe(
-      "Preferred name,Email,Status,Registered (Toronto time),Confirmed (Toronto time),Consent given (Toronto time)",
+      "Preferred name,Email,Status,Registered (Toronto time),Confirmed (Toronto time),Consent given (Toronto time),Event emails,Event emails consent (Toronto time)",
     );
-    expect(first).toBe("Alex,alex@example.com,Unconfirmed,2026-10-01 08:00,,2026-10-01 08:00");
+    expect(first).toBe("Alex,alex@example.com,Unconfirmed,2026-10-01 08:00,,2026-10-01 08:00,No,");
     expect(second).toContain("Confirmed,2026-10-01 08:00,2026-10-01 21:30,");
     expect(toCsv([row()])).not.toContain("hash");
+  });
+
+  it("shows who asked for event emails, and when", () => {
+    const [, line] = lines(toCsv([row({ eventEmailsConsentAt: new Date("2026-10-01T12:00:00Z") })]));
+    expect(line.endsWith(",Yes,2026-10-01 08:00")).toBe(true);
   });
 
   it("quotes commas, quotes and line breaks", () => {

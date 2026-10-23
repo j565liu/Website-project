@@ -16,12 +16,14 @@ type Values = {
   preferredName: string;
   email: string;
   consent: boolean;
+  eventEmails: boolean;
 };
 
 const initialValues: Values = {
   preferredName: "",
   email: "",
   consent: false,
+  eventEmails: false,
 };
 
 const fieldOrder: RegistrationField[] = ["preferredName", "email", "consent"];
@@ -30,6 +32,7 @@ const fieldLabels: Record<RegistrationField, string> = {
   preferredName: "Preferred name",
   email: "Email",
   consent: "Consent",
+  eventEmails: "Event emails",
 };
 
 const inputClass =
@@ -198,6 +201,25 @@ export function RegistrationForm() {
           </div>
         </div>
         <FieldError field="consent" message={errors.consent} />
+        <div className="mt-8 flex items-start gap-4">
+          <input
+            id="eventEmails"
+            name="eventEmails"
+            type="checkbox"
+            checked={values.eventEmails}
+            onChange={(e) => update("eventEmails", e.target.checked)}
+            aria-describedby="eventEmails-hint"
+            className="mt-1 size-6 shrink-0 cursor-pointer accent-gold"
+          />
+          <div>
+            <label htmlFor="eventEmails" className="cursor-pointer leading-relaxed text-ivory">
+              Email me about upcoming gatherings.
+            </label>
+            <p id="eventEmails-hint" className="mt-2 text-sm text-muted">
+              Optional. Every email includes a link to unsubscribe.
+            </p>
+          </div>
+        </div>
       </div>
 
       <button

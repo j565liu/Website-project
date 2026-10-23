@@ -17,6 +17,7 @@ describe("registration schema", () => {
         preferredName: "Alex",
         email: "alex.morgan@example.com",
         consent: true,
+        eventEmails: false,
       },
     });
   });
@@ -39,7 +40,14 @@ describe("registration schema", () => {
 
   it("ignores fields that are no longer collected", () => {
     const result = validate({ industry: "Law", whyJoin: "Conversation." });
-    expect(result.success && Object.keys(result.data).sort()).toEqual(["consent", "email", "preferredName"]);
+    expect(result.success && Object.keys(result.data).sort()).toEqual(["consent", "email", "eventEmails", "preferredName"]);
+  });
+
+  it("treats the event emails box as optional", () => {
+    const ticked = validate({ eventEmails: "on" });
+    expect(ticked.success && ticked.data.eventEmails).toBe(true);
+    const unticked = validate();
+    expect(unticked.success && unticked.data.eventEmails).toBe(false);
   });
 
   it("requires consent", () => {

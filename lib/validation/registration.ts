@@ -20,7 +20,8 @@ export const registrationSchema = z.object({
     .max(LIMITS.email, "That email address is too long.")
     .pipe(z.email("Please enter a valid email address, like name@example.com."))
     .transform((value) => value.toLowerCase()),
-  consent: z.literal(true, "Please confirm you agree so we can store your details and send the guide."),
+  consent: z.literal(true, "Please confirm you agree so we can store your registration."),
+  eventEmails: z.boolean().default(false),
 });
 
 export type RegistrationInput = z.input<typeof registrationSchema>;
@@ -37,6 +38,7 @@ export function formDataToInput(formData: FormData): RegistrationInput {
     preferredName: text("preferredName"),
     email: text("email"),
     consent: (formData.get("consent") === "on") as true,
+    eventEmails: formData.get("eventEmails") === "on",
   };
 }
 

@@ -16,7 +16,7 @@ A series of private, invitation-only gatherings for high-income professionals in
 - Migrations (generate / apply / undo last): `npm run db:generate` / `npm run db:migrate` / `npm run db:rollback`. Every migration needs a hand-written `drizzle/rollback/<tag>.down.sql`. On Vercel, production deployments apply pending migrations automatically before building (`vercel-build` → `scripts/migrate-on-deploy.ts`); preview deployments share the database, so they never migrate. Keep migrations backward compatible with the code currently live, since the migration runs before the new code replaces it.
 - Dev / build / lint / typecheck: `npm run dev` / `npm run build` / `npm run lint` / `npm run typecheck`
 - Unit tests / e2e tests: `npm test` / `npm run test:e2e` (both need the DB running; they use a separate `<db>_test` database, created and migrated automatically)
-- Export registrations to CSV: `npm run export:registrations -- --status=all|confirmed|unconfirmed` (writes to `exports/`, which is git-ignored)
+- Export registrations to CSV: `npm run export:registrations -- --status=all|confirmed|unconfirmed|event-emails` (writes to `exports/`, which is git-ignored)
 
 ## Site Map
 - `/`: cinematic video hero, brief club intro, an "upcoming gatherings are shared with invited guests" teaser (no event details), closing CTA
@@ -43,10 +43,10 @@ A series of private, invitation-only gatherings for high-income professionals in
 - All times displayed in America/Toronto.
 
 ## Registration Form & Data
-- Fields: preferred_name (what we call them in emails, max 80 chars), email, consent checkbox (required). Collect nothing else. (Industry, referral source and "why join" were removed in migration 0001.)
+- Fields: preferred_name (what we call them in emails, max 80 chars), email, consent checkbox (required), and an optional, unticked-by-default "Email me about upcoming gatherings." checkbox stored as `event_emails_consent_at` (null = no). Collect nothing else. (Industry, referral source and "why join" were removed in migration 0001.)
 - `registrations` table: id (UUID), the fields above, consent_accepted_at, confirmed_at (null until the email link is used), confirmation_token_hash (never store the raw token), confirmation_expires_at (48 hours), created_at, updated_at. Unique index on lowercased email; index on confirmed_at and created_at.
 - Everyone who confirms is registered: there is no approval status.
-- The only emails the site sends are the confirmation link, a "you're registered" email once confirmed, and the "already registered" email. No announcements, newsletters or reminders, and copy must not promise them.
+- The only emails the site itself sends are the confirmation link, a "you're registered" email once confirmed, and the "already registered" email. Event invitations are sent by hand from Resend Broadcasts, only to confirmed guests with `event_emails_consent_at` set, with an unsubscribe link and mailing address (CASL); see `docs/event-emails.md`. Never email guests who didn't opt in, and don't build sending into the site. A confirmed guest's details, including this choice, are never changed by a new submission (someone else could have typed their email).
 - After every valid submission, show `/register/check-email` whether or not the email is new, so the form never reveals who has registered. New or unconfirmed email → send a fresh confirmation link. Already confirmed → send a short "you're already registered" email instead.
 - Unconfirmed registrations older than 7 days are deleted.
 - Spam protection: honeypot field + basic rate limiting per IP (hashed with `RATE_LIMIT_SECRET`; never store raw IP addresses).
@@ -70,4 +70,4 @@ A series of private, invitation-only gatherings for high-income professionals in
 - Page metadata goes through `pageMetadata()` in `lib/metadata.ts` (Next replaces `openGraph` per page rather than merging it). New public pages also go in `content/routes.ts` for the sitemap.
 - Wrap below-the-fold sections in `components/Reveal.tsx` for scroll reveals; keep above-the-fold content (hero, page headers) on CSS animations or static so it doesn't wait for JavaScript.
 - The project runs Next.js 16, whose APIs differ from older versions: read @AGENTS.md before writing Next-specific code.
-- Out of scope unless explicitly requested: logins or accounts, per-guest invitation codes, approval workflows, gated content beyond the invitation code above, admin dashboard, payments, marketing or newsletter emails (only the confirmation emails above), CMS integration.
+- Out of scope unless explicitly requested: logins or accounts, per-guest invitation codes, approval workflows, gated content beyond the invitation code above, admin dashboard, payments, marketing or newsletter emails sent by the site (event invitations go through Resend by hand, as above), CMS integration.

@@ -58,6 +58,7 @@ describe("new registration", () => {
       email: "alex.morgan@example.com",
       confirmedAt: null,
       consentAcceptedAt: baseNow,
+      eventEmailsConsentAt: null,
       confirmationExpiresAt: new Date(baseNow.getTime() + 48 * HOUR),
     });
 
@@ -69,6 +70,21 @@ describe("new registration", () => {
     // Only a hash of the token is stored.
     const token = tokenFrom(mailer.sent[0]);
     expect(row.confirmationTokenHash).not.toContain(token);
+  });
+
+  it("records when the guest asked for event emails", async () => {
+    const { ctx } = context();
+    await handleSubmission(formData({ ...validFields, eventEmails: "on" }), ctx);
+    const [row] = await allRows();
+    expect(row.eventEmailsConsentAt).toEqual(baseNow);
+  });
+
+  it("clears the event emails choice when an unconfirmed guest registers again without it", async () => {
+    const { ctx } = context();
+    await handleSubmission(formData({ ...validFields, eventEmails: "on" }), ctx);
+    await handleSubmission(formData(validFields), { ...ctx, now: new Date(baseNow.getTime() + HOUR) });
+    const [row] = await allRows();
+    expect(row.eventEmailsConsentAt).toBeNull();
   });
 
   it("returns field errors and stores nothing for invalid input", async () => {
@@ -111,7 +127,8 @@ describe("duplicate email", () => {
     const [before] = await allRows();
 
     const result = await handleSubmission(
-      formData({ ...validFields, email: "alex.morgan@EXAMPLE.com", preferredName: "Someone Else" }),
+      // Someone else can't change a confirmed guest's details, including the event emails choice.
+      formData({ ...validFields, email: "alex.morgan@EXAMPLE.com", preferredName: "Someone Else", eventEmails: "on" }),
       ctx,
     );
 

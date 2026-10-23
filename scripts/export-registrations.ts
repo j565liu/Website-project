@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { loadEnvConfig } from "@next/env";
-import { asc, isNotNull, isNull } from "drizzle-orm";
+import { and, asc, isNotNull, isNull } from "drizzle-orm";
 import { createDb } from "@/lib/db";
 import { registrations } from "@/lib/db/schema";
 import { exportStatuses, toCsv, type ExportStatus } from "@/lib/registration/csv";
@@ -30,7 +30,9 @@ async function main() {
         ? isNotNull(registrations.confirmedAt)
         : status === "unconfirmed"
           ? isNull(registrations.confirmedAt)
-          : undefined;
+          : status === "event-emails"
+            ? and(isNotNull(registrations.confirmedAt), isNotNull(registrations.eventEmailsConsentAt))
+            : undefined;
     const rows = await db.select().from(registrations).where(filter).orderBy(asc(registrations.createdAt));
 
     const date = new Date().toISOString().slice(0, 10);
