@@ -11,24 +11,6 @@ export const metadata: Metadata = pageMetadata({
   path: "/about",
 });
 
-const evenings = [
-  {
-    neighbourhood: "Ossington",
-    title: "Suppers",
-    body: "A chef’s counter, a long table, a menu chosen for the evening rather than the crowd.",
-  },
-  {
-    neighbourhood: "Yorkville",
-    title: "Private viewings",
-    body: "Quiet hours in a gallery, with the artist or curator in the room to talk about the work.",
-  },
-  {
-    neighbourhood: "Distillery District",
-    title: "Late evenings",
-    body: "Low light and live jazz, for the hour after dinner when the best conversations start.",
-  },
-] as const;
-
 export default function AboutPage() {
   return (
     <>
@@ -60,18 +42,7 @@ export default function AboutPage() {
               What to expect
             </h2>
           </Reveal>
-          <ul className="mt-16 grid gap-12 md:grid-cols-3 md:gap-10">
-            {evenings.map((evening, index) => (
-              <li key={evening.title}>
-                <Reveal delay={index * 0.12} className="border-t border-gold/60 pt-8">
-                  <p className="label text-muted">{evening.neighbourhood}</p>
-                  <h3 className="mt-4 font-display text-3xl font-medium text-ivory">{evening.title}</h3>
-                  <p className="mt-4 text-lg leading-relaxed text-muted">{evening.body}</p>
-                </Reveal>
-              </li>
-            ))}
-          </ul>
-          <Reveal className="mt-16 max-w-3xl">
+          <Reveal className="mt-8 max-w-3xl">
             <p className="text-lg leading-relaxed text-muted">
               There is no clubhouse and no fixed address. Each gathering is held somewhere
               different, chosen for that particular evening, and all of them are unhurried, well

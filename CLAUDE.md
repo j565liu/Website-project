@@ -40,7 +40,8 @@ A series of private, invitation-only gatherings for high-income professionals in
 ## Content Rules
 - There is no fixed venue. Never describe a clubhouse, a permanent address or "our space"; say gatherings are held somewhere different each time. Avoid calling it "the club" in visible copy: prefer "gatherings", "evenings" or "Ready to Mingle". Code names like `ClubEvent` are fine.
 - Events live in `content/events.ts` as typed data so they can be edited without touching components. Past events are hidden automatically.
-- Event teasers never include venue names, addresses, or prices. Copy should imply exclusivity ("Location shared with registered guests").
+- Event teasers never include venue names, addresses, or prices. The line under the date defaults to "Location shared with registered guests"; an event can override it with `locationNote` (e.g. "Location TBD"), never with a venue or address.
+- `content/events.ts` holds real events only, no samples. The About page describes the gatherings in prose without example evenings.
 - All times displayed in America/Toronto.
 
 ## Registration Form & Data
