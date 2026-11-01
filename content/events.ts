@@ -1,6 +1,6 @@
 // Teasers only: never add venue names, addresses or prices here.
 // `startsAt` must include the Toronto UTC offset: -04:00 until Nov 1, 2026, then -05:00.
-// Events disappear from the site automatically once their start time has passed.
+// Events move to "Past gatherings" once they start; keep past events in this list.
 
 export type ClubEvent = {
   id: string;

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { ClubEvent } from "@/content/events";
-import { formatEventDate, formatEventTime, getUpcomingEvents } from "@/lib/events";
+import { formatEventDate, formatEventTime, formatPastEventDate, getPastEvents, getUpcomingEvents } from "@/lib/events";
 
 const events: ClubEvent[] = [
   { id: "later", title: "Later", startsAt: "2026-11-13T21:00:00-05:00", neighborhood: "Distillery District" },
@@ -17,6 +17,15 @@ describe("events", () => {
   it("hides an event once it has started", () => {
     const upcoming = getUpcomingEvents(new Date("2026-10-15T23:00:00Z"), events);
     expect(upcoming.map((e) => e.id)).toEqual(["later"]);
+  });
+
+  it("keeps started events as past, newest first", () => {
+    expect(getPastEvents(new Date("2026-09-23T12:00:00Z"), events).map((e) => e.id)).toEqual(["past"]);
+    expect(getPastEvents(new Date("2026-11-20T12:00:00Z"), events).map((e) => e.id)).toEqual(["later", "soon", "past"]);
+  });
+
+  it("formats past events with the year", () => {
+    expect(formatPastEventDate("2026-11-27T00:30:00Z")).toBe("November 26, 2026");
   });
 
   it("formats in Toronto time regardless of the server's time zone", () => {

@@ -2,7 +2,7 @@ import type { ClubEvent } from "@/content/events";
 import { EventTeaser } from "./EventTeaser";
 import { Reveal } from "./Reveal";
 
-export function EventList({ events }: { events: ClubEvent[] }) {
+export function EventList({ events, past = false }: { events: ClubEvent[]; past?: boolean }) {
   if (events.length === 0) {
     return (
       <p className="border-t border-charcoal pt-10 font-display text-2xl font-normal text-muted">
@@ -16,7 +16,7 @@ export function EventList({ events }: { events: ClubEvent[] }) {
       {events.map((event, index) => (
         <li key={event.id}>
           <Reveal className="h-full" delay={(index % 3) * 0.12}>
-            <EventTeaser event={event} />
+            <EventTeaser event={event} past={past} />
           </Reveal>
         </li>
       ))}

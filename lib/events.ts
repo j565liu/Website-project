@@ -11,6 +11,16 @@ export function getUpcomingEvents(
     .sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime());
 }
 
+// Started events count as past, newest first.
+export function getPastEvents(
+  now: Date = new Date(),
+  events: readonly ClubEvent[] = allEvents,
+): ClubEvent[] {
+  return events
+    .filter((event) => new Date(event.startsAt).getTime() <= now.getTime())
+    .sort((a, b) => new Date(b.startsAt).getTime() - new Date(a.startsAt).getTime());
+}
+
 const dateFormatter = new Intl.DateTimeFormat("en-CA", {
   timeZone: TIME_ZONE,
   weekday: "long",
@@ -30,4 +40,15 @@ export function formatEventDate(startsAt: string): string {
 
 export function formatEventTime(startsAt: string): string {
   return timeFormatter.format(new Date(startsAt));
+}
+
+const pastDateFormatter = new Intl.DateTimeFormat("en-CA", {
+  timeZone: TIME_ZONE,
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+});
+
+export function formatPastEventDate(startsAt: string): string {
+  return pastDateFormatter.format(new Date(startsAt));
 }

@@ -22,7 +22,7 @@ A series of private, invitation-only gatherings for high-income professionals in
 - `/`: cinematic video hero, brief club intro, an "upcoming gatherings are shared with invited guests" teaser (no event details), closing CTA
 - `/about`: philosophy, what the gatherings are like, who they're for (`/the-club` redirects here)
 - `/invitation?next=…`: invitation code form (noindex); sends the guest on to `/events` or `/register`
-- `/events` (invitation only): upcoming event teasers (title, date, time, neighborhood only; never venue or address)
+- `/events` (invitation only): upcoming event teasers (title, date, time, neighborhood only; never venue or address), then a "Past gatherings" section (dimmed cards with title, neighborhood and date, newest first). Cards are not clickable yet; a detail page with deposits may come later.
 - `/register` (invitation only): registration form
 - `/register/check-email`: "Check your inbox" page shown after submitting
 - `/register/confirm?token=…`: landing page from the email link; the visitor presses a button to confirm (a button, not the bare link, so email link scanners can't confirm on their behalf), then lands on `/register/confirmed` ("You're registered")
@@ -39,7 +39,7 @@ A series of private, invitation-only gatherings for high-income professionals in
 
 ## Content Rules
 - There is no fixed venue. Never describe a clubhouse, a permanent address or "our space"; say gatherings are held somewhere different each time. Avoid calling it "the club" in visible copy: prefer "gatherings", "evenings" or "Ready to Mingle". Code names like `ClubEvent` are fine.
-- Events live in `content/events.ts` as typed data so they can be edited without touching components. Past events are hidden automatically.
+- Events live in `content/events.ts` as typed data so they can be edited without touching components. Events move to "Past gatherings" automatically once they start; never delete past events.
 - Event teasers never include venue names, addresses, or prices. The line under the date defaults to "Location shared with registered guests"; an event can override it with `locationNote` (e.g. "Location TBD"), never with a venue or address.
 - `content/events.ts` holds real events only, no samples. The About page describes the gatherings in prose without example evenings.
 - All times displayed in America/Toronto.
