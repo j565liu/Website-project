@@ -34,16 +34,29 @@ From that list, pick the guests you want for this gathering. You don't have to i
 
 ## 3. Add them to Resend
 
-1. Resend → **Audiences** → create an audience for this gathering, e.g. "Supper, 13 Nov".
-2. Add only the guests you chose in step 2 (one by one, or import a CSV with `email` and
-   `first_name` columns). Put the preferred name in **First name** so the email can greet them.
+Resend keeps one list of contacts under **Audience**, and you group them with **Segments**.
+
+1. Resend → **Audience** → **Contacts** → **Add contacts**. Add the guests you chose in step 2,
+   one by one or by importing a CSV with `email` and `first_name` columns. Put the preferred name
+   in **First name** so the email can greet them. To get that CSV from Neon, run:
+
+   ```sql
+   select email, preferred_name as first_name
+   from registrations
+   where confirmed_at is not null
+     and event_emails_consent_at is not null
+   order by preferred_name;
+   ```
+
+2. Resend → **Audience** → **Segments** → create a segment for this gathering, e.g.
+   "Evening Downtown, 26 Nov", and put the guests you chose in it.
 
 The list in step 1 is the source of truth: only ever add people from it, and keep it current as
 described in step 5.
 
 ## 4. Write and send the broadcast
 
-Resend → **Broadcasts** → **Create**, choose the audience, then write the email.
+Resend → **Broadcasts** → **Create**, send it to this gathering's segment, then write the email.
 
 Every invitation must include (Canada's anti-spam law, CASL):
 
@@ -62,7 +75,7 @@ Send yourself a test first, then send.
 
 Do this after every broadcast, so the list in step 1 stays correct:
 
-1. In Resend, open the broadcast's audience and look for contacts marked **Unsubscribed**.
+1. In Resend → **Audience** → **Contacts**, filter for unsubscribed contacts.
 2. For each of them, and for anyone who asks you directly (reply, phone, in person), clear their
    choice in Neon so they are never picked again:
 
