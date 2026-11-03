@@ -7,6 +7,9 @@ const row = (overrides: Partial<RegistrationRow> = {}): RegistrationRow => ({
   preferredName: "Alex",
   email: "alex@example.com",
   phone: null,
+  ageGroup: null,
+  gender: null,
+  genderDescription: null,
   consentAcceptedAt: new Date("2026-10-01T12:00:00Z"),
   confirmedAt: null,
   eventEmailsConsentAt: null,
@@ -25,11 +28,18 @@ describe("CSV export", () => {
       toCsv([row(), row({ email: "b@example.com", confirmedAt: new Date("2026-10-02T01:30:00Z") })]),
     );
     expect(header).toBe(
-      "Preferred name,Email,Phone,Status,Registered (Toronto time),Confirmed (Toronto time),Consent given (Toronto time),Event emails,Event emails consent (Toronto time)",
+      "Preferred name,Email,Phone,Age group,Gender,Status,Registered (Toronto time),Confirmed (Toronto time),Consent given (Toronto time),Event emails,Event emails consent (Toronto time)",
     );
-    expect(first).toBe("Alex,alex@example.com,,Unconfirmed,2026-10-01 08:00,,2026-10-01 08:00,No,");
+    expect(first).toBe("Alex,alex@example.com,,,,Unconfirmed,2026-10-01 08:00,,2026-10-01 08:00,No,");
     expect(second).toContain("Confirmed,2026-10-01 08:00,2026-10-01 21:30,");
     expect(toCsv([row()])).not.toContain("hash");
+  });
+
+  it("writes age group and gender as readable labels", () => {
+    const [, line] = lines(
+      toCsv([row({ ageGroup: "gen_x", gender: "self_described", genderDescription: "Non-binary" })]),
+    );
+    expect(line).toContain(",Generation X (Gen X): Ages 46–61,Non-binary,");
   });
 
   it("shows who asked for event emails, and when", () => {

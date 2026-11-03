@@ -33,5 +33,7 @@ export function formData(fields: Record<string, string>): FormData {
 export const validFields = {
   preferredName: "Alex",
   email: "Alex.Morgan@Example.com",
+  ageGroup: "gen_x",
+  gender: "woman",
   consent: "on",
 };

@@ -1,6 +1,7 @@
 import { site } from "@/content/site";
 import type { RegistrationRow } from "@/lib/db/schema";
 import { TIME_ZONE } from "@/lib/events";
+import { ageGroupLabel, genderLabel } from "@/lib/validation/registration";
 import type { EmailMessage } from "./send";
 
 function escapeHtml(value: string): string {
@@ -73,13 +74,19 @@ const torontoTime = new Intl.DateTimeFormat("en-CA", { timeZone: TIME_ZONE, date
 // Sent to the organiser, not the guest.
 export function newRegistrationNotice(
   to: string,
-  registration: Pick<RegistrationRow, "preferredName" | "email" | "phone" | "eventEmailsConsentAt" | "confirmedAt">,
+  registration: Pick<
+    RegistrationRow,
+    "preferredName" | "email" | "phone" | "ageGroup" | "gender" | "genderDescription" | "eventEmailsConsentAt" | "confirmedAt"
+  >,
 ): EmailMessage {
-  const { preferredName, email, phone, eventEmailsConsentAt, confirmedAt } = registration;
+  const { preferredName, email, phone, ageGroup, gender, genderDescription, eventEmailsConsentAt, confirmedAt } =
+    registration;
   return message(to, `New registration: ${preferredName}`, [
     { kind: "p", text: "Someone has just confirmed their registration." },
     { kind: "p", text: `Name: ${preferredName}` },
     { kind: "p", text: `Email: ${email}` },
+    { kind: "p", text: `Age group: ${ageGroupLabel(ageGroup)}` },
+    { kind: "p", text: `Gender: ${genderLabel(gender, genderDescription)}` },
     { kind: "p", text: `Phone: ${phone ?? "Not given"}` },
     { kind: "p", text: `Emails about gatherings: ${eventEmailsConsentAt ? "Yes" : "No"}` },
     ...(confirmedAt ? [{ kind: "p" as const, text: `Confirmed: ${torontoTime.format(confirmedAt)} (Toronto time)` }] : []),

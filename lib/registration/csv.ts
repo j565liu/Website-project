@@ -1,4 +1,5 @@
 import type { RegistrationRow } from "@/lib/db/schema";
+import { ageGroupLabel, genderLabel } from "@/lib/validation/registration";
 import { TIME_ZONE } from "@/lib/events";
 
 // "event-emails": confirmed guests who asked to hear about upcoming gatherings.
@@ -9,6 +10,8 @@ const columns: { header: string; value: (row: RegistrationRow) => string | Date 
   { header: "Preferred name", value: (r) => r.preferredName },
   { header: "Email", value: (r) => r.email },
   { header: "Phone", value: (r) => r.phone },
+  { header: "Age group", value: (r) => (r.ageGroup ? ageGroupLabel(r.ageGroup) : null) },
+  { header: "Gender", value: (r) => (r.gender ? genderLabel(r.gender, r.genderDescription) : null) },
   { header: "Status", value: (r) => (r.confirmedAt ? "Confirmed" : "Unconfirmed") },
   { header: "Registered (Toronto time)", value: (r) => r.createdAt },
   { header: "Confirmed (Toronto time)", value: (r) => r.confirmedAt },

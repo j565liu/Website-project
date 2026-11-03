@@ -17,6 +17,9 @@ describe("registration schema", () => {
         preferredName: "Alex",
         email: "alex.morgan@example.com",
         phone: undefined,
+        ageGroup: "gen_x",
+        gender: "woman",
+        genderDescription: undefined,
         consent: true,
         eventEmails: false,
       },
@@ -35,13 +38,50 @@ describe("registration schema", () => {
     expect(!result.success && result.errors).toHaveProperty(field);
   });
 
+  it.each([
+    ["ageGroup", {}, ["ageGroup"]],
+    ["ageGroup", { ageGroup: "teens" }, []],
+    ["gender", {}, ["gender"]],
+    ["gender", { gender: "other" }, []],
+  ])("requires a valid %s", (field, overrides, omit) => {
+    const result = validate(overrides, omit);
+    expect(!result.success && result.errors).toHaveProperty(field);
+  });
+
+  it("asks for a description only when the guest prefers to self-describe", () => {
+    const missing = validate({ gender: "self_described" });
+    expect(!missing.success && missing.errors.genderDescription).toMatch(/describe your gender/);
+
+    const described = validate({ gender: "self_described", genderDescription: "  Non-binary " });
+    expect(described.success && described.data).toMatchObject({ gender: "self_described", genderDescription: "Non-binary" });
+
+    const stale = validate({ gender: "man", genderDescription: "left over" });
+    expect(stale.success && stale.data.genderDescription).toBeUndefined();
+
+    expect(validate({ gender: "self_described", genderDescription: "x".repeat(61) }).success).toBe(false);
+  });
+
+  it("reports the gender description together with other errors", () => {
+    const result = validate({ gender: "self_described", email: "" });
+    expect(!result.success && Object.keys(result.errors).sort()).toEqual(["email", "genderDescription"]);
+  });
+
   it("accepts a preferred name at exactly 80 characters", () => {
     expect(validate({ preferredName: "x".repeat(80) }).success).toBe(true);
   });
 
   it("ignores fields that are no longer collected", () => {
     const result = validate({ industry: "Law", whyJoin: "Conversation." });
-    expect(result.success && Object.keys(result.data).sort()).toEqual(["consent", "email", "eventEmails", "phone", "preferredName"]);
+    expect(result.success && Object.keys(result.data).sort()).toEqual([
+      "ageGroup",
+      "consent",
+      "email",
+      "eventEmails",
+      "gender",
+      "genderDescription",
+      "phone",
+      "preferredName",
+    ]);
   });
 
   it.each(["416-555-0123", "(416) 555 0123", "+1 416 555 0123", "4165550123", "+44 20 7946 0958"])(

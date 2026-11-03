@@ -63,7 +63,7 @@ export const faq: FaqItem[] = [
   {
     question: "How is my information used?",
     answer: [
-      "Only to organise our gatherings: to confirm your email, to know who our guests are, to reach you by phone about a gathering you're attending if you gave us your number and, if you asked, to tell you about upcoming gatherings. We never sell or share it for marketing. The privacy policy explains what we collect and why.",
+      "Only to organise our gatherings: to confirm your email, to know who our guests are, to keep each evening balanced by age group and between women and men, to reach you by phone about a gathering you're attending if you gave us your number and, if you asked, to tell you about upcoming gatherings. We never sell or share it for marketing. The privacy policy explains what we collect and why.",
     ],
   },
   {
@@ -71,7 +71,7 @@ export const faq: FaqItem[] = [
     answer: [
       "Use the \"Manage my registration\" link in the email we sent when you registered. It lets you stop emails about gatherings or delete your details at any time.",
       "If you no longer have that email, register again with the same address and we will send you a fresh link.",
-      "To change your name or phone number, delete your registration and register again.",
+      "To change any of your details, delete your registration and register again.",
     ],
   },
 ];

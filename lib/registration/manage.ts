@@ -27,7 +27,15 @@ export function isValidManageLink(id: unknown, sig: unknown): id is string {
   return expected.length === given.length && timingSafeEqual(expected, given);
 }
 
-export type ManagedRegistration = { preferredName: string; email: string; phone: string | null; eventEmails: boolean };
+export type ManagedRegistration = {
+  preferredName: string;
+  email: string;
+  phone: string | null;
+  ageGroup: string | null;
+  gender: string | null;
+  genderDescription: string | null;
+  eventEmails: boolean;
+};
 
 export type LookupResult =
   | { status: "invalid" }
@@ -41,6 +49,9 @@ export async function findManagedRegistration(id: unknown, sig: unknown, db: Dat
       preferredName: registrations.preferredName,
       email: registrations.email,
       phone: registrations.phone,
+      ageGroup: registrations.ageGroup,
+      gender: registrations.gender,
+      genderDescription: registrations.genderDescription,
       eventEmailsConsentAt: registrations.eventEmailsConsentAt,
     })
     .from(registrations)
@@ -53,6 +64,9 @@ export async function findManagedRegistration(id: unknown, sig: unknown, db: Dat
       preferredName: row.preferredName,
       email: row.email,
       phone: row.phone,
+      ageGroup: row.ageGroup,
+      gender: row.gender,
+      genderDescription: row.genderDescription,
       eventEmails: row.eventEmailsConsentAt !== null,
     },
   };

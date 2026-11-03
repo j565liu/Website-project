@@ -5,17 +5,23 @@ import { startTransition, useActionState, useEffect, useRef, useState } from "re
 import { registerAction, type RegisterState } from "@/app/register/actions";
 import { site } from "@/content/site";
 import {
+  AGE_GROUPS,
+  GENDERS,
   HONEYPOT_FIELD,
   LIMITS,
   validateRegistration,
   type FieldErrors,
   type RegistrationField,
+  type RegistrationInput,
 } from "@/lib/validation/registration";
 
 type Values = {
   preferredName: string;
   email: string;
   phone: string;
+  ageGroup: string;
+  gender: string;
+  genderDescription: string;
   consent: boolean;
   eventEmails: boolean;
 };
@@ -24,16 +30,30 @@ const initialValues: Values = {
   preferredName: "",
   email: "",
   phone: "",
+  ageGroup: "",
+  gender: "",
+  genderDescription: "",
   consent: false,
   eventEmails: false,
 };
 
-const fieldOrder: RegistrationField[] = ["preferredName", "email", "phone", "consent"];
+const fieldOrder: RegistrationField[] = [
+  "preferredName",
+  "email",
+  "ageGroup",
+  "gender",
+  "genderDescription",
+  "phone",
+  "consent",
+];
 
 const fieldLabels: Record<RegistrationField, string> = {
   preferredName: "Preferred name",
   email: "Email",
   phone: "Phone",
+  ageGroup: "Age group",
+  gender: "Gender",
+  genderDescription: "Gender",
   consent: "Consent",
   eventEmails: "Event emails",
 };
@@ -42,7 +62,12 @@ const inputClass =
   "mt-3 block w-full border border-charcoal bg-surface px-4 py-3.5 text-base text-ivory transition-colors duration-500 placeholder:text-muted/60 hover:border-muted/50 focus:border-gold focus:outline-none aria-[invalid=true]:border-gold";
 
 function validateValues(values: Values): FieldErrors {
-  const result = validateRegistration({ ...values, consent: values.consent as true });
+  const result = validateRegistration({
+    ...values,
+    ageGroup: values.ageGroup as RegistrationInput["ageGroup"],
+    gender: values.gender as RegistrationInput["gender"],
+    consent: values.consent as true,
+  });
   return result.success ? {} : result.errors;
 }
 
@@ -170,6 +195,49 @@ export function RegistrationForm() {
         <FieldError field="email" message={errors.email} />
       </div>
 
+      <RadioGroup
+        field="ageGroup"
+        legend="Age group"
+        hint="So we can invite you to evenings with guests at a similar stage of life."
+        options={AGE_GROUPS}
+        value={values.ageGroup}
+        error={errors.ageGroup}
+        onChange={(value) => update("ageGroup", value)}
+      />
+
+      <div>
+        <RadioGroup
+          field="gender"
+          legend="Gender"
+          hint="So we can keep each evening balanced."
+          options={GENDERS}
+          value={values.gender}
+          error={errors.gender}
+          onChange={(value) => update("gender", value)}
+        />
+        {values.gender === "self_described" && (
+          <div className="mt-6 sm:pl-10">
+            <label htmlFor="genderDescription" className="text-base font-medium text-ivory">
+              How do you describe your gender?
+            </label>
+            <input
+              id="genderDescription"
+              name="genderDescription"
+              type="text"
+              maxLength={LIMITS.genderDescription}
+              required
+              value={values.genderDescription}
+              onChange={(e) => update("genderDescription", e.target.value)}
+              onBlur={() => validateField("genderDescription")}
+              aria-invalid={Boolean(errors.genderDescription)}
+              aria-describedby={describedBy("genderDescription")}
+              className={inputClass}
+            />
+            <FieldError field="genderDescription" message={errors.genderDescription} />
+          </div>
+        )}
+      </div>
+
       <div>
         <label htmlFor="phone" className="text-base font-medium text-ivory">
           Phone <span className="font-normal text-muted">(optional)</span>
@@ -257,6 +325,54 @@ export function RegistrationForm() {
         {pending ? "Submitting…" : site.registerLabel}
       </button>
     </form>
+  );
+}
+
+function RadioGroup({
+  field,
+  legend,
+  hint,
+  options,
+  value,
+  error,
+  onChange,
+}: {
+  field: RegistrationField;
+  legend: string;
+  hint: string;
+  options: readonly { value: string; label: string }[];
+  value: string;
+  error?: string;
+  onChange: (value: string) => void;
+}) {
+  const describedBy = [`${field}-hint`, error ? `${field}-error` : undefined].filter(Boolean).join(" ");
+  return (
+    <fieldset>
+      <legend className="text-base font-medium text-ivory">{legend}</legend>
+      <p id={`${field}-hint`} className="mt-2 text-sm text-muted">
+        {hint}
+      </p>
+      <div className="mt-4 space-y-1">
+        {options.map((option, index) => (
+          <label key={option.value} className="flex min-h-11 cursor-pointer items-center gap-4 text-ivory">
+            <input
+              // The first option carries the field's id so the error summary can link to the group.
+              id={index === 0 ? field : `${field}-${option.value}`}
+              type="radio"
+              name={field}
+              value={option.value}
+              required
+              checked={value === option.value}
+              onChange={() => onChange(option.value)}
+              aria-describedby={describedBy}
+              className="size-6 shrink-0 cursor-pointer accent-gold"
+            />
+            {option.label}
+          </label>
+        ))}
+      </div>
+      <FieldError field={field} message={error} />
+    </fieldset>
   );
 }
 

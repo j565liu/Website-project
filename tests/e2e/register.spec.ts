@@ -35,6 +35,9 @@ test("a visitor registers, confirms by email link, and is registered", async ({ 
     await page.getByLabel("Preferred name").fill("Jordan");
     await page.getByLabel("Email", { exact: true }).fill(email.toUpperCase());
     await page.getByLabel(/I agree to Ready to Mingle/).check();
+    await page.getByLabel("Generation X (Gen X): Ages 46–61").check();
+    await page.getByLabel("Prefer to self-describe").check();
+    await page.getByLabel("How do you describe your gender?").fill("Non-binary");
     await page.getByLabel(/^Phone/).fill("416-555-0123");
     await page.getByLabel("Email me about upcoming gatherings.").check();
     await expect(page.getByLabel("Email", { exact: true })).toHaveAttribute("aria-invalid", "false");
@@ -47,6 +50,7 @@ test("a visitor registers, confirms by email link, and is registered", async ({ 
     expect(row).toMatchObject({ preferred_name: "Jordan", confirmed_at: null });
     expect(row.event_emails_consent_at).not.toBeNull();
     expect(row.phone).toBe("416-555-0123");
+    expect(row).toMatchObject({ age_group: "gen_x", gender: "self_described", gender_description: "Non-binary" });
 
     // Follow the link from the confirmation email (path only: the build's site URL may differ).
     const [confirmation] = await emailsTo(email);

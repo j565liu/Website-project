@@ -18,6 +18,11 @@ export const registrations = pgTable(
     email: varchar("email", { length: 254 }).notNull(),
     // Optional; only used to reach the guest about a gathering they're attending.
     phone: varchar("phone", { length: 32 }),
+    // Required on the form since migration 0004; null for guests who registered before then.
+    ageGroup: varchar("age_group", { length: 16 }),
+    gender: varchar("gender", { length: 16 }),
+    // Only set when gender is "self_described".
+    genderDescription: varchar("gender_description", { length: 60 }),
     consentAcceptedAt: timestamp("consent_accepted_at", { withTimezone: true }).notNull(),
     confirmedAt: timestamp("confirmed_at", { withTimezone: true }),
     // Set when the guest ticks "Email me about upcoming gatherings"; null means no event emails.

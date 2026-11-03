@@ -60,6 +60,9 @@ describe("new registration", () => {
       consentAcceptedAt: baseNow,
       eventEmailsConsentAt: null,
       phone: null,
+      ageGroup: "gen_x",
+      gender: "woman",
+      genderDescription: null,
       confirmationExpiresAt: new Date(baseNow.getTime() + 48 * HOUR),
     });
 
@@ -177,6 +180,8 @@ describe("confirmation", () => {
     expect(notice.subject).toBe("New registration: Alex");
     expect(notice.text).toContain("Email: alex.morgan@example.com");
     expect(notice.text).toContain("Phone: 416-555-0123");
+    expect(notice.text).toContain("Age group: Generation X (Gen X): Ages 46–61");
+    expect(notice.text).toContain("Gender: Woman");
     expect(notice.text).toContain("Emails about gatherings: Yes");
     expect(notice.text).toContain("October 1, 2026");
 

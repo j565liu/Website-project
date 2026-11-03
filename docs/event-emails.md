@@ -11,7 +11,7 @@ This uses the same Resend account as the confirmation emails (see `docs/email-se
 **In Neon** (Vercel → Storage → your database → Data Editor or Query):
 
 ```sql
-select preferred_name, email, event_emails_consent_at
+select preferred_name, email, age_group, gender, gender_description, event_emails_consent_at
 from registrations
 where confirmed_at is not null
   and event_emails_consent_at is not null
@@ -31,6 +31,8 @@ Never add anyone to a mailing who isn't on this list.
 ## 2. Choose who to invite this time
 
 From that list, pick the guests you want for this gathering. You don't have to invite everyone.
+Use `age_group` (`millennials`, `gen_x`, `baby_boomers`) and `gender` to keep the room balanced;
+guests who registered before these were asked have them empty.
 
 ## 3. Add them to Resend
 

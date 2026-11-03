@@ -49,7 +49,15 @@ describe("manage links", () => {
     expect(registered.text).not.toContain("hello@example.com");
     expect(await findManagedRegistration(id, sig, db)).toEqual({
       status: "found",
-      registration: { preferredName: "Alex", email: "alex.morgan@example.com", phone: "416-555-0123", eventEmails: true },
+      registration: {
+        preferredName: "Alex",
+        email: "alex.morgan@example.com",
+        phone: "416-555-0123",
+        ageGroup: "gen_x",
+        gender: "woman",
+        genderDescription: null,
+        eventEmails: true,
+      },
     });
   });
 
