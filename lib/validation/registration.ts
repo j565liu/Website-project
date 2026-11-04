@@ -39,19 +39,21 @@ const PHONE_CHARACTERS = /^\+?[0-9 ().-]+$/;
 
 export const HONEYPOT_FIELD = "company_website";
 
+export const emailSchema = z
+  .string()
+  .trim()
+  .min(1, "Please enter your email address.")
+  .max(LIMITS.email, "That email address is too long.")
+  .pipe(z.email("Please enter a valid email address, like name@example.com."))
+  .transform((value) => value.toLowerCase());
+
 export const registrationSchema = z.object({
   preferredName: z
     .string()
     .trim()
     .min(1, "Please tell us what you would like to be called.")
     .max(LIMITS.preferredName, `Please keep this under ${LIMITS.preferredName} characters.`),
-  email: z
-    .string()
-    .trim()
-    .min(1, "Please enter your email address.")
-    .max(LIMITS.email, "That email address is too long.")
-    .pipe(z.email("Please enter a valid email address, like name@example.com."))
-    .transform((value) => value.toLowerCase()),
+  email: emailSchema,
   phone: z
     .string()
     .trim()

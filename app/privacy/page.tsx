@@ -31,6 +31,7 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
         <ul className="list-disc space-y-2 pl-5">
           <li>your preferred name and email address;</li>
           <li>your age group and gender;</li>
+          <li>the gatherings you reserve a place at, and when you reserve or cancel;</li>
           <li>your phone number, if you choose to give it;</li>
           <li>the date and time you gave consent and confirmed your email; and</li>
           <li>
@@ -82,7 +83,9 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
       <p>
         When you register, we send a link to confirm your address, a note once you are registered
         and, if you register again with an email we already have, a short reminder that you are
-        already registered. If you ticked &ldquo;Email me about upcoming gatherings&rdquo;, we may
+        already registered. When you reserve a place at a gathering, we send a link to confirm it,
+        a note once your place is confirmed with a link to cancel and, if you ask again, a reminder
+        that you already have a place. If you ticked &ldquo;Email me about upcoming gatherings&rdquo;, we may
         also occasionally invite you to a gathering. Those emails come from {site.name}, are sent
         through our email service provider, and each one includes a link to unsubscribe. We do not
         send newsletters or share your address with anyone else.

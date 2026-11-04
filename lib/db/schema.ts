@@ -39,6 +39,26 @@ export const registrations = pgTable(
   ],
 );
 
+// A registered guest's place at one gathering. `event_id` is the id in content/events.ts.
+// Cancelling keeps the row (cancelled_at set) so a later reservation can reuse it.
+export const eventReservations = pgTable(
+  "event_reservations",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    eventId: varchar("event_id", { length: 100 }).notNull(),
+    registrationId: uuid("registration_id")
+      .notNull()
+      .references(() => registrations.id, { onDelete: "cascade" }),
+    reservedAt: timestamp("reserved_at", { withTimezone: true }).notNull(),
+    cancelledAt: timestamp("cancelled_at", { withTimezone: true }),
+    ...timestamps,
+  },
+  (table) => [
+    uniqueIndex("event_reservations_event_registration_key").on(table.eventId, table.registrationId),
+    index("event_reservations_event_id_idx").on(table.eventId),
+  ],
+);
+
 // One row per counted form submission. `key_hash` is an HMAC of the visitor's IP,
 // so raw addresses are never stored. Rows older than 24 hours are purged.
 export const rateLimitHits = pgTable(
@@ -52,3 +72,4 @@ export const rateLimitHits = pgTable(
 );
 
 export type RegistrationRow = typeof registrations.$inferSelect;
+export type EventReservationRow = typeof eventReservations.$inferSelect;

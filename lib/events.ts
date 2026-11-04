@@ -11,6 +11,14 @@ export function getUpcomingEvents(
     .sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime());
 }
 
+export function getEventById(id: unknown, events: readonly ClubEvent[] = allEvents): ClubEvent | undefined {
+  return typeof id === "string" ? events.find((event) => event.id === id) : undefined;
+}
+
+export function hasStarted(event: ClubEvent, now: Date = new Date()): boolean {
+  return new Date(event.startsAt).getTime() <= now.getTime();
+}
+
 // Started events count as past, newest first.
 export function getPastEvents(
   now: Date = new Date(),

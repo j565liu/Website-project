@@ -26,8 +26,15 @@ export const faq: FaqItem[] = [
   {
     question: "How do I register?",
     answer: [
-      "Enter your invitation code, then complete the short form with your preferred name and your email. We will email you a link to confirm your address. Once you press the confirm button on that page, you are registered.",
+      "Enter your invitation code, then complete the short form with your preferred name, email, age group and gender. We will email you a link to confirm your address. Once you press the confirm button on that page, you are registered.",
       "You only need to enter the code once on each device; it is remembered for 30 days.",
+    ],
+  },
+  {
+    question: "How do I reserve a place at a gathering?",
+    answer: [
+      "Register first. Then open the gathering on the Events page, enter the email you registered with and press \"Reserve My Place\". We will email you a link to confirm. Once you press it, your place is reserved.",
+      "If your plans change, the email confirming your place has a link to cancel, so we can offer the place to another guest.",
     ],
   },
   {

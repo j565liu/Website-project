@@ -6,10 +6,12 @@ export const INVITATION_MAX_AGE_SECONDS = 30 * 24 * 60 * 60;
 // Pages that need an invitation code. The confirmation pages stay open: the emailed token
 // is proof enough, and guests often confirm on a different device.
 const PROTECTED_PATHS = ["/events", "/register"] as const;
+// Each gathering's own page, /events/<id>. The reservation links under /reservations stay open.
+const EVENT_PAGE = /^\/events\/[a-z0-9-]{1,100}$/;
 const DEFAULT_NEXT = "/events";
 
 export function isProtectedPath(pathname: string): boolean {
-  return (PROTECTED_PATHS as readonly string[]).includes(pathname);
+  return (PROTECTED_PATHS as readonly string[]).includes(pathname) || EVENT_PAGE.test(pathname);
 }
 
 // Only ever redirect to a protected page, so the `next` parameter can't send visitors elsewhere.

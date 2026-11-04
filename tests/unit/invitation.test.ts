@@ -53,9 +53,12 @@ describe("invitation cookie", () => {
 });
 
 describe("protected pages", () => {
-  it("covers only the events page and the registration form", () => {
+  it("covers the events pages and the registration form", () => {
     expect(isProtectedPath("/events")).toBe(true);
     expect(isProtectedPath("/register")).toBe(true);
+    expect(isProtectedPath("/events/evening-downtown-2026-11")).toBe(true);
+    expect(isProtectedPath("/events/a/b")).toBe(false);
+    expect(isProtectedPath("/reservations/confirm")).toBe(false);
     expect(isProtectedPath("/register/confirm")).toBe(false);
     expect(isProtectedPath("/about")).toBe(false);
   });

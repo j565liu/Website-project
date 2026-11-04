@@ -89,3 +89,21 @@ Do this after every broadcast, so the list in step 1 stays correct:
 
 If someone asks to be deleted entirely, delete their row from `registrations` and their contacts
 from Resend.
+
+## Who has reserved a place at a gathering
+
+Guests reserve from each gathering's page on the site. To see the list for one gathering, run
+this in Neon, with the event's `id` from `content/events.ts`:
+
+```sql
+select g.preferred_name, g.email, g.gender, g.age_group, g.phone, r.reserved_at
+from event_reservations r
+join registrations g on g.id = r.registration_id
+where r.event_id = 'evening-downtown-2026-11'
+  and r.cancelled_at is null
+order by r.reserved_at;
+```
+
+Use it to send the location and any details before the evening (add these guests to a Resend
+segment for this gathering). Emails about a place a guest reserved are fine to send to everyone
+on this list, whether or not they ticked "Email me about upcoming gatherings".

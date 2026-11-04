@@ -1,6 +1,7 @@
 import { site } from "@/content/site";
 import type { RegistrationRow } from "@/lib/db/schema";
-import { TIME_ZONE } from "@/lib/events";
+import type { ClubEvent } from "@/content/events";
+import { formatEventDate, formatEventTime, TIME_ZONE } from "@/lib/events";
 import { ageGroupLabel, genderLabel } from "@/lib/validation/registration";
 import type { EmailMessage } from "./send";
 
@@ -91,4 +92,90 @@ export function newRegistrationNotice(
     { kind: "p", text: `Emails about gatherings: ${eventEmailsConsentAt ? "Yes" : "No"}` },
     ...(confirmedAt ? [{ kind: "p" as const, text: `Confirmed: ${torontoTime.format(confirmedAt)} (Toronto time)` }] : []),
   ]);
+}
+
+function when(event: ClubEvent): string {
+  return `${formatEventDate(event.startsAt)} at ${formatEventTime(event.startsAt)}`;
+}
+
+export function registerFirstEmail(to: string, event: ClubEvent, registerUrl: string): EmailMessage {
+  return message(to, `Your request for ${event.title}`, [
+    { kind: "p", text: "Hello," },
+    {
+      kind: "p",
+      text: `Someone, most likely you, asked for a place at ${event.title} on ${when(event)} with this email address. Places are for registered guests, and we couldn't find a confirmed registration for this address.`,
+    },
+    {
+      kind: "p",
+      text: "If you registered recently, please confirm your email using the link we sent you first. Otherwise, register below, then ask for your place again.",
+    },
+    { kind: "button", label: "Register", href: registerUrl },
+    { kind: "p", text: "If you did not ask for this, you can ignore this email." },
+  ]);
+}
+
+export function confirmReservationEmail(to: string, name: string, event: ClubEvent, confirmUrl: string): EmailMessage {
+  return message(to, `Confirm your place at ${event.title}`, [
+    { kind: "p", text: `Hello ${name},` },
+    { kind: "p", text: `Please confirm you would like a place at ${event.title} on ${when(event)}.` },
+    { kind: "button", label: "Confirm my place", href: confirmUrl },
+    { kind: "p", text: "This link expires in 48 hours. If you did not ask for a place, you can ignore this email." },
+  ]);
+}
+
+export function reservedEmail(to: string, name: string, event: ClubEvent, cancelUrl: string): EmailMessage {
+  return message(to, `You're on the list for ${event.title}`, [
+    { kind: "p", text: `Hello ${name},` },
+    {
+      kind: "p",
+      text: `Your place at ${event.title} on ${when(event)} is confirmed. We will send you the location and any details before the evening.`,
+    },
+    { kind: "p", text: "If your plans change, please let us know by cancelling below, so we can offer the place to another guest." },
+    { kind: "button", label: "Cancel my place", href: cancelUrl },
+  ]);
+}
+
+export function alreadyReservedEmail(to: string, name: string, event: ClubEvent, cancelUrl: string): EmailMessage {
+  return message(to, `You already have a place at ${event.title}`, [
+    { kind: "p", text: `Hello ${name},` },
+    {
+      kind: "p",
+      text: `Someone, most likely you, just asked for a place at ${event.title} on ${when(event)}. You already have one, so there is nothing more to do.`,
+    },
+    { kind: "p", text: "If your plans have changed, you can cancel below." },
+    { kind: "button", label: "Cancel my place", href: cancelUrl },
+  ]);
+}
+
+export type PlaceCounts = { women: number; men: number; other: number };
+
+// Sent to the organiser, not the guest.
+export function reservationNotice(
+  to: string,
+  kind: "reserved" | "cancelled",
+  registration: Pick<RegistrationRow, "preferredName" | "email" | "phone" | "ageGroup" | "gender" | "genderDescription">,
+  event: ClubEvent,
+  { women, men, other }: PlaceCounts,
+): EmailMessage {
+  const { preferredName, email, phone, ageGroup, gender, genderDescription } = registration;
+  const places = [`${women} ${women === 1 ? "woman" : "women"}`, `${men} ${men === 1 ? "man" : "men"}`];
+  if (other > 0) places.push(`${other} other`);
+  return message(
+    to,
+    kind === "reserved" ? `New reservation: ${preferredName} for ${event.title}` : `Cancelled: ${preferredName} for ${event.title}`,
+    [
+      {
+        kind: "p",
+        text:
+          kind === "reserved"
+            ? `${preferredName} has reserved a place at ${event.title} on ${when(event)}.`
+            : `${preferredName} has cancelled their place at ${event.title} on ${when(event)}.`,
+      },
+      { kind: "p", text: `Email: ${email}` },
+      { kind: "p", text: `Age group: ${ageGroupLabel(ageGroup)}` },
+      { kind: "p", text: `Gender: ${genderLabel(gender, genderDescription)}` },
+      { kind: "p", text: `Phone: ${phone ?? "Not given"}` },
+      { kind: "p", text: `Places now: ${places.join(", ")} (${women + men + other} in total)` },
+    ],
+  );
 }

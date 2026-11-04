@@ -9,6 +9,9 @@ export type ClubEvent = {
   neighborhood: string;
   // Shown under the date. Defaults to "Location shared with registered guests".
   locationNote?: string;
+  // Optional, shown on the event's own page: one string per paragraph.
+  description?: string[];
+  dressCode?: string;
 };
 
 export const events: ClubEvent[] = [
