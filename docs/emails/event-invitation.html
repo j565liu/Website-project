@@ -1,0 +1,125 @@
+<!doctype html>
+<!--
+  Invitation email for Resend Broadcasts, in the website's dark style.
+  Before sending, replace every [[...]] placeholder. {{{FIRST_NAME|friend}}} and
+  {{{RESEND_UNSUBSCRIBE_URL}}} are filled in by Resend for each guest; check both in a test send.
+  See docs/event-emails.md for who may receive it.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="supported-color-schemes" content="dark">
+<title>An invitation from Ready to Mingle</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; padding: 0; background: #0a0a0a; }
+  a { color: #f5f3ef; }
+  @media (max-width: 620px) {
+    .card { padding: 40px 24px !important; }
+    .title { font-size: 34px !important; }
+  }
+</style>
+</head>
+<body style="margin:0;padding:0;background:#0a0a0a;">
+  <!-- Preview text shown next to the subject in the inbox. -->
+  <div style="display:none;max-height:0;overflow:hidden;color:#0a0a0a;">Dinner downtown, Thursday, November 26 at 6:30 p.m. Places are limited.</div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0a0a0a" style="background:#0a0a0a;">
+    <tr>
+      <td align="center" style="padding:40px 12px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;">
+
+          <!-- Name, as in the site header -->
+          <tr>
+            <td style="padding:0 8px 32px;font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-size:26px;color:#f5f3ef;">
+              Ready to Mingle
+            </td>
+          </tr>
+
+          <tr>
+            <td class="card" bgcolor="#141414" style="background:#141414;border:1px solid #2a2a2a;padding:56px 48px;">
+
+              <p style="margin:0;font-family:Inter,Helvetica,Arial,sans-serif;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:#c2bcb1;">
+                Toronto &middot; By invitation
+              </p>
+              <h1 class="title" style="margin:20px 0 0;font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-size:40px;font-weight:500;line-height:1.1;color:#f5f3ef;">
+                Dinner downtown
+              </h1>
+              <div style="margin:32px 0;width:64px;height:1px;background:#b89b5e;line-height:1px;font-size:1px;">&nbsp;</div>
+
+              <div style="font-family:Inter,Helvetica,Arial,sans-serif;font-size:18px;line-height:1.7;color:#c2bcb1;">
+                <p style="margin:0 0 20px;color:#f5f3ef;">Dear {{{FIRST_NAME|friend}}},</p>
+                <p style="margin:0 0 20px;">Thank you for registering with Ready to Mingle. We would be delighted to have you join us for our next dinner.</p>
+                <p style="margin:0 0 20px;">Ready to Mingle brings together single men and women in a relaxed, welcoming setting, where good conversation and genuine connections can happen naturally. This evening is for singles approximately 35 to 65.</p>
+              </div>
+
+              <h2 style="margin:36px 0 12px;font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-size:26px;font-weight:500;color:#f5f3ef;">Bring a friend</h2>
+              <p style="margin:0 0 20px;font-family:Inter,Helvetica,Arial,sans-serif;font-size:18px;line-height:1.7;color:#c2bcb1;">
+                We care more about the right mix of people than a large crowd, and a balanced table makes for a better evening. If you have a single friend of the opposite gender who would enjoy it, we warmly encourage you to bring them along: ladies, perhaps a gentleman from your circle; gentlemen, a lady from yours. Please ask your friend to reserve their own place using the link below, so we can welcome them properly.
+              </p>
+
+              <h2 style="margin:36px 0 16px;font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-size:26px;font-weight:500;color:#f5f3ef;">The details</h2>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid #2a2a2a;font-family:Inter,Helvetica,Arial,sans-serif;font-size:18px;line-height:1.5;">
+                <tr>
+                  <td width="110" valign="top" style="padding:14px 16px 0 0;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#c2bcb1;">Date</td>
+                  <td valign="top" style="padding:14px 0 0;color:#f5f3ef;">Thursday, November 26, 2026</td>
+                </tr>
+                <tr>
+                  <td valign="top" style="padding:14px 16px 0 0;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#c2bcb1;">Time</td>
+                  <td valign="top" style="padding:14px 0 0;color:#f5f3ef;">6:30 p.m.</td>
+                </tr>
+                <tr>
+                  <td valign="top" style="padding:14px 16px 0 0;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#c2bcb1;">Where</td>
+                  <td valign="top" style="padding:14px 0 0;color:#f5f3ef;">An upscale restaurant in downtown Toronto. We will share the address with confirmed guests a few days before.</td>
+                </tr>
+                <tr>
+                  <td valign="top" style="padding:14px 16px 0 0;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#c2bcb1;">Dinner</td>
+                  <td valign="top" style="padding:14px 0 0;color:#f5f3ef;">Each guest orders and pays for their own dinner at the restaurant (about [[PRICE]] per person).</td>
+                </tr>
+                <tr>
+                  <td valign="top" style="padding:14px 16px 0 0;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#c2bcb1;">Dress</td>
+                  <td valign="top" style="padding:14px 0 0;color:#f5f3ef;">[[DRESS CODE, e.g. Smart casual]]</td>
+                </tr>
+              </table>
+
+              <h2 style="margin:40px 0 12px;font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-size:26px;font-weight:500;color:#f5f3ef;">Reserve your place</h2>
+              <p style="margin:0;font-family:Inter,Helvetica,Arial,sans-serif;font-size:18px;line-height:1.7;color:#c2bcb1;">
+                Places are limited. Please reserve by [[DEADLINE, e.g. Thursday, November 19]].
+              </p>
+
+              <!-- Button: gold hairline border, as on the site -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:28px 0 8px;">
+                <tr>
+                  <td style="border:1px solid #b89b5e;">
+                    <a href="[[EVENTBRITE LINK]]" target="_blank" style="display:inline-block;padding:16px 36px;font-family:Inter,Helvetica,Arial,sans-serif;font-size:13px;letter-spacing:0.22em;text-transform:uppercase;color:#f5f3ef;text-decoration:none;">Reserve your place</a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin:40px 0 0;font-family:Inter,Helvetica,Arial,sans-serif;font-size:18px;line-height:1.7;color:#c2bcb1;">
+                We look forward to an evening of good company and good conversation, and perhaps the start of something more.
+              </p>
+              <p style="margin:28px 0 0;font-family:Inter,Helvetica,Arial,sans-serif;font-size:18px;line-height:1.7;color:#f5f3ef;">
+                Warm regards,<br>The Ready to Mingle team
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer: unsubscribe link and mailing address are required (CASL) -->
+          <tr>
+            <td style="padding:28px 8px 0;font-family:Inter,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.7;color:#c2bcb1;">
+              <a href="https://www.readytomingle.ca" style="color:#f5f3ef;text-decoration:underline;">readytomingle.ca</a><br>
+              You are receiving this because you asked to hear about upcoming gatherings when you registered.
+              <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:#f5f3ef;text-decoration:underline;">Unsubscribe</a><br>
+              Ready to Mingle &middot; [[MAILING ADDRESS]]
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

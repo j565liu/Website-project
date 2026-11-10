@@ -59,6 +59,9 @@ described in step 5.
 ## 4. Write and send the broadcast
 
 Resend → **Broadcasts** → **Create**, send it to this gathering's segment, then write the email.
+`docs/emails/event-invitation.html` is a ready-made invitation in the website's dark style: replace
+its `[[...]]` placeholders and paste it in as HTML. Set **Reply-To** to `hello@readytomingle.ca`, so
+replies arrive under Emails → Receiving in Resend.
 
 Every invitation must include (Canada's anti-spam law, CASL):
 
