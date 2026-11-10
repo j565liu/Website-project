@@ -9,6 +9,9 @@ export const site = {
   noInvitationNote: "No invitation yet? Ask a guest who has attended.",
   // The registration form's own submit button, once the guest is past the code.
   registerLabel: "Register Your Interest",
+  // Off while places are booked elsewhere (Eventbrite). Turning it back on restores the
+  // "Reserve My Place" form on event pages; links already emailed keep working either way.
+  reservationsOpen: false as boolean,
 } as const;
 
 // Pages where the site-wide "Have an Invitation?" button is hidden: the visitor is already

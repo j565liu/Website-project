@@ -2,6 +2,7 @@
 
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { site } from "@/content/site";
 import { getDb } from "@/lib/db";
 import { sendEmail } from "@/lib/email/send";
 import { getEventById, hasStarted } from "@/lib/events";
@@ -24,7 +25,7 @@ export async function reserveAction(_previous: ReserveState, formData: FormData)
   if (typeof honeypot === "string" && honeypot.trim() !== "") redirect("/reservations/check-email");
 
   const event = getEventById(formData.get("eventId"));
-  if (!event || hasStarted(event)) {
+  if (!site.reservationsOpen || !event || hasStarted(event)) {
     return { formError: "This gathering is no longer taking reservations." };
   }
 

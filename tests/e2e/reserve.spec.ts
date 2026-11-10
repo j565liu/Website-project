@@ -3,6 +3,7 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
+import { site } from "@/content/site";
 import { getUpcomingEvents } from "@/lib/events";
 import { testDatabaseUrl } from "../unit/test-db";
 
@@ -24,9 +25,18 @@ function linkIn(message: { text: string }, pathname: string): string {
 }
 
 // Runs against the real events in content/events.ts, so it needs at least one upcoming evening.
-test.skip(!event, "No upcoming events to reserve");
+test.skip(!event, "No upcoming events");
+
+test("the event page shows the evening's details, with the reservation form only when open", async ({ page }) => {
+  await page.goto(`/events/${event.id}`);
+  await page.getByLabel("Invitation code").fill("E2E-INVITE");
+  await page.getByRole("button", { name: "Continue" }).click();
+  await expect(page.getByRole("heading", { level: 1, name: event.title })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Reserve My Place" })).toHaveCount(site.reservationsOpen ? 1 : 0);
+});
 
 test("a registered guest reserves a place from the event page, then cancels", async ({ page }) => {
+  test.skip(!site.reservationsOpen, "Reservations are switched off in content/site.ts");
   const email = `e2e-reserve+${Date.now()}@example.com`;
   const sql = postgres(testDatabaseUrl(), { max: 1, onnotice: () => {} });
 

@@ -1,3 +1,5 @@
+import { site } from "@/content/site";
+
 export type FaqItem = {
   question: string;
   answer: string[];
@@ -30,13 +32,17 @@ export const faq: FaqItem[] = [
       "You only need to enter the code once on each device; it is remembered for 30 days.",
     ],
   },
-  {
-    question: "How do I reserve a place at a gathering?",
-    answer: [
-      "Register first. Then open the gathering on the Events page, enter the email you registered with and press \"Reserve My Place\". We will email you a link to confirm. Once you press it, your place is reserved.",
-      "If your plans change, the email confirming your place has a link to cancel, so we can offer the place to another guest.",
-    ],
-  },
+  ...(site.reservationsOpen
+    ? [
+        {
+          question: "How do I reserve a place at a gathering?",
+          answer: [
+            "Register first. Then open the gathering on the Events page, enter the email you registered with and press \"Reserve My Place\". We will email you a link to confirm. Once you press it, your place is reserved.",
+            "If your plans change, the email confirming your place has a link to cancel, so we can offer the place to another guest.",
+          ],
+        },
+      ]
+    : []),
   {
     question: "I haven't received the confirmation email.",
     answer: [

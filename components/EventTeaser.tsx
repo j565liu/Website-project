@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ClubEvent } from "@/content/events";
+import { site } from "@/content/site";
 import { formatEventDate, formatEventTime, formatPastEventDate } from "@/lib/events";
 
 // Upcoming cards are clickable as a whole: the title's link stretches over the card, so the
@@ -43,7 +44,7 @@ export function EventTeaser({ event, past = false }: { event: ClubEvent; past?: 
               {event.locationNote ?? "Location shared with registered guests"}
             </p>
             <p aria-hidden="true" className="label mt-8 text-ivory">
-              View details and reserve →
+              {site.reservationsOpen ? "View details and reserve" : "View details"} →
             </p>
           </>
         )}

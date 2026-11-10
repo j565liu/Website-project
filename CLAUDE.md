@@ -23,7 +23,7 @@ A series of private, invitation-only gatherings for high-income professionals in
 - `/about`: philosophy, what the gatherings are like, who they're for (`/the-club` redirects here)
 - `/invitation?next=…`: invitation code form (noindex); sends the guest on to `/events` or `/register`
 - `/events` (invitation only): upcoming event teasers (title, date, time, neighborhood only; never venue or address), then a "Past gatherings" section (dimmed cards with title, neighborhood and date, newest first). Upcoming cards link to the event page (the title's link stretches over the card).
-- `/events/[id]` (invitation only): one gathering's page: details, optional `description` and `dressCode` from `content/events.ts`, and the "Reserve My Place" form (closed once the evening starts).
+- `/events/[id]` (invitation only): one gathering's page: details, optional `description` and `dressCode` from `content/events.ts`, and the "Reserve My Place" form when `site.reservationsOpen` is on (closed once the evening starts).
 - `/reservations/check-email`, `/reservations/confirm`, `/reservations/confirmed`, `/reservations/cancel` (open; the signed link is enough): the reservation flow, see "Event Reservations" below.
 - `/register` (invitation only): registration form
 - `/register/check-email`: "Check your inbox" page shown after submitting
@@ -40,6 +40,7 @@ A series of private, invitation-only gatherings for high-income professionals in
 - Keep event details off public pages: the home page links to `/events` but never lists events.
 
 ## Event Reservations
+- Currently switched off: `site.reservationsOpen` is false while places are booked through Eventbrite, so event pages show details only, the "Reserve My Place" form, its FAQ entry and the card's "and reserve" are hidden, and `reserveAction` refuses requests. The code, the `event_reservations` table and already-emailed confirm/cancel links are kept; set the flag to true to bring the form back.
 - Any confirmed registered guest can reserve a place at an upcoming gathering; there is no approval step and no capacity limit (invitations are personal, and the organiser watches the counts). Logic lives in `lib/reservations/`.
 - The guest enters their email on the event page. Every valid submission shows `/reservations/check-email`, so the form never reveals who has registered: a confirmed registration gets a "Confirm your place" link, anyone else a "register first" email, and a guest who already has a place a reminder with a cancel link. Same invitation check, honeypot and per-IP rate limit as registration.
 - Confirm and cancel links are HMACs (signed with `RATE_LIMIT_SECRET`, nothing stored): confirm links expire after 48 hours or when the evening starts, cancel links when it starts. Both open a page with a button, as with email confirmation.

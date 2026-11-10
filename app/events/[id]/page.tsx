@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/PageHeader";
 import { ReservationForm } from "@/components/ReservationForm";
+import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 import { formatEventDate, formatEventTime, formatPastEventDate, getEventById, hasStarted } from "@/lib/events";
 
@@ -27,6 +28,7 @@ export default async function EventPage({ params }: PageProps<"/events/[id]">) {
   if (!event) notFound();
 
   const past = hasStarted(event);
+  const reservations = site.reservationsOpen;
   const details = [
     { term: "Date", value: past ? formatPastEventDate(event.startsAt) : formatEventDate(event.startsAt) },
     { term: "Time", value: formatEventTime(event.startsAt) },
@@ -49,7 +51,7 @@ export default async function EventPage({ params }: PageProps<"/events/[id]">) {
       />
 
       <section aria-label="About this evening" className="mx-auto max-w-7xl px-6 pb-32 md:px-10 md:pb-44">
-        <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
+        <div className={reservations ? "grid gap-16 lg:grid-cols-2 lg:gap-24" : "max-w-3xl"}>
           <div className="space-y-10">
             {event.description && (
               <div className="space-y-6 text-lg leading-relaxed text-muted">
@@ -68,7 +70,7 @@ export default async function EventPage({ params }: PageProps<"/events/[id]">) {
             </dl>
           </div>
 
-          {past ? (
+          {!reservations ? null : past ? (
             <p className="font-display text-2xl font-normal text-muted">
               Reservations for this evening have closed.
             </p>
