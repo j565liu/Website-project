@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { site } from "./content/site";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
@@ -9,11 +10,19 @@ const nextConfig: NextConfig = {
     return [
       { source: "/what-it-is", destination: "/about", permanent: true },
       { source: "/the-club", destination: "/about", permanent: true },
-      { source: "/examples", destination: "/events", permanent: true },
+      { source: "/examples", destination: site.eventsPublished ? "/events" : "/", permanent: true },
       { source: "/guide", destination: "/register", permanent: true },
       { source: "/guide/check-email", destination: "/register/check-email", permanent: true },
       { source: "/guide/confirm", destination: "/register/confirm", permanent: true },
       { source: "/guide/read", destination: "/", permanent: true },
+      // While events are unpublished (content/site.ts), their pages lead home. Temporary, so
+      // browsers don't remember it once the pages come back.
+      ...(site.eventsPublished
+        ? []
+        : [
+            { source: "/events", destination: "/", permanent: false },
+            { source: "/events/:id", destination: "/", permanent: false },
+          ]),
     ];
   },
 };

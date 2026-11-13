@@ -1,6 +1,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { expect, test } from "@playwright/test";
+import { site } from "@/content/site";
 import postgres from "postgres";
 import { testDatabaseUrl } from "../unit/test-db";
 
@@ -39,7 +40,7 @@ test("a visitor registers, confirms by email link, and is registered", async ({ 
     await page.getByLabel("Prefer to self-describe").check();
     await page.getByLabel("How do you describe your gender?").fill("Non-binary");
     await page.getByLabel(/^Phone/).fill("416-555-0123");
-    await page.getByLabel("Email me about upcoming gatherings.").check();
+    await page.getByLabel("Send me invitations to upcoming gatherings.").check();
     await expect(page.getByLabel("Email", { exact: true })).toHaveAttribute("aria-invalid", "false");
 
     await page.getByRole("button", { name: "Register Your Interest" }).click();
@@ -77,10 +78,15 @@ test("a visitor registers, confirms by email link, and is registered", async ({ 
     await page.goto(manage.pathname + manage.search);
     await expect(page.getByRole("heading", { level: 1, name: "Manage your registration" })).toBeVisible();
 
-    await page.getByRole("button", { name: "Stop emails about gatherings" }).click();
-    await expect(page.getByText("Done. You won’t receive emails about gatherings.")).toBeVisible();
+    await page.getByRole("button", { name: "Stop invitations" }).click();
+    await expect(page.getByText("Done. You won’t receive invitations to gatherings.")).toBeVisible();
     const [stopped] = await sql`select event_emails_consent_at from registrations where email = ${email}`;
     expect(stopped.event_emails_consent_at).toBeNull();
+
+    await page.getByRole("button", { name: "Send me invitations" }).click();
+    await expect(page.getByText("Done. We will email you invitations to upcoming gatherings.")).toBeVisible();
+    const [started] = await sql`select event_emails_consent_at from registrations where email = ${email}`;
+    expect(started.event_emails_consent_at).not.toBeNull();
 
     await page.getByRole("button", { name: "Delete my registration" }).click();
     await page.getByRole("button", { name: "Yes, delete my details" }).click();
@@ -92,12 +98,19 @@ test("a visitor registers, confirms by email link, and is registered", async ({ 
   }
 });
 
-test("events and registration need an invitation code; public pages don't", async ({ page }) => {
+test("registration needs an invitation code; public pages don't", async ({ page }) => {
   await page.goto("/about");
   await expect(page).toHaveURL(/\/about$/);
 
-  await page.goto("/events");
-  await expect(page).toHaveURL(/\/invitation\?next=%2Fevents$/);
+  // Event pages are unpublished (content/site.ts) and lead home.
+  if (!site.eventsPublished) {
+    await page.goto("/events");
+    await expect(page).toHaveURL(/\/$/);
+    await expect(page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: "Events" })).toHaveCount(0);
+  }
+
+  await page.goto("/register");
+  await expect(page).toHaveURL(/\/invitation\?next=%2Fregister$/);
   await page.getByLabel("Invitation code").fill("wrong-code");
   await page.getByRole("button", { name: "Continue" }).click();
   await expect(page.getByRole("alert").filter({ hasText: "isn’t recognised" })).toBeVisible();
@@ -106,10 +119,6 @@ test("events and registration need an invitation code; public pages don't", asyn
 
   await page.getByLabel("Invitation code").fill(` ${INVITATION_CODE} `);
   await page.getByRole("button", { name: "Continue" }).click();
-  await expect(page).toHaveURL(/\/events$/);
-  await expect(page.getByRole("heading", { level: 1, name: "Forthcoming gatherings" })).toBeVisible();
-
-  // The code is remembered, so the registration form opens straight away.
-  await page.goto("/register");
   await expect(page).toHaveURL(/\/register$/);
+  await expect(page.getByRole("heading", { level: 1, name: "Register your interest" })).toBeVisible();
 });

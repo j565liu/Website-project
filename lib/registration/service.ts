@@ -162,7 +162,9 @@ export async function confirmRegistration(token: unknown, deps: RegistrationDeps
 
   // The registration is confirmed either way; a missing email shouldn't undo it.
   try {
-    await deps.sendEmail(registeredEmail(row.email, row.preferredName, manageUrl(deps.baseUrl, row.id)));
+    await deps.sendEmail(
+      registeredEmail(row.email, row.preferredName, manageUrl(deps.baseUrl, row.id), row.eventEmailsConsentAt !== null),
+    );
   } catch (error) {
     console.error("[registration] Failed to send registered email", error);
   }

@@ -25,7 +25,7 @@ function linkIn(message: { text: string }, pathname: string): string {
 }
 
 // Runs against the real events in content/events.ts, so it needs at least one upcoming evening.
-test.skip(!event, "No upcoming events");
+test.skip(!event || !site.eventsPublished, "No published upcoming events");
 
 test("the event page shows the evening's details, with the reservation form only when open", async ({ page }) => {
   await page.goto(`/events/${event.id}`);

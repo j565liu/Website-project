@@ -1,4 +1,5 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
+import { site } from "@/content/site";
 
 export const INVITATION_COOKIE = "rtm_invitation";
 export const INVITATION_MAX_AGE_SECONDS = 30 * 24 * 60 * 60;
@@ -8,7 +9,7 @@ export const INVITATION_MAX_AGE_SECONDS = 30 * 24 * 60 * 60;
 const PROTECTED_PATHS = ["/events", "/register"] as const;
 // Each gathering's own page, /events/<id>. The reservation links under /reservations stay open.
 const EVENT_PAGE = /^\/events\/[a-z0-9-]{1,100}$/;
-const DEFAULT_NEXT = "/events";
+const DEFAULT_NEXT = site.eventsPublished ? "/events" : "/register";
 
 export function isProtectedPath(pathname: string): boolean {
   return (PROTECTED_PATHS as readonly string[]).includes(pathname) || EVENT_PAGE.test(pathname);

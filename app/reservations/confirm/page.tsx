@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ReservationLinkButton } from "@/components/ReservationLinkButton";
 import { StatusMessage } from "@/components/StatusMessage";
+import { site } from "@/content/site";
 import { getDb } from "@/lib/db";
 import { formatEventDate, formatEventTime, getEventById } from "@/lib/events";
 import { parseConfirmLink } from "@/lib/reservations/links";
@@ -46,7 +47,7 @@ export default async function ConfirmReservationPage({ searchParams }: PageProps
   switch (status) {
     case "reserved":
       return (
-        <StatusMessage label="Confirmed" title="You already have a place." link={{ href: "/events", label: "All gatherings" }}>
+        <StatusMessage label="Confirmed" title="You already have a place." link={site.eventsPublished ? { href: "/events", label: "All gatherings" } : { href: "/", label: "Return home" }}>
           <p>Your place at {event?.title} is confirmed. There is nothing more to do.</p>
         </StatusMessage>
       );
@@ -58,7 +59,7 @@ export default async function ConfirmReservationPage({ searchParams }: PageProps
       );
     case "past":
       return (
-        <StatusMessage label="Reservations closed" title="This evening has passed." link={{ href: "/events", label: "All gatherings" }}>
+        <StatusMessage label="Reservations closed" title="This evening has passed." link={site.eventsPublished ? { href: "/events", label: "All gatherings" } : { href: "/", label: "Return home" }}>
           <p>Reservations for {event?.title} have closed.</p>
         </StatusMessage>
       );
@@ -70,7 +71,7 @@ export default async function ConfirmReservationPage({ searchParams }: PageProps
       );
     default:
       return (
-        <StatusMessage label="Link not recognised" title="We couldn’t find that link." link={{ href: "/events", label: "All gatherings" }}>
+        <StatusMessage label="Link not recognised" title="We couldn’t find that link." link={site.eventsPublished ? { href: "/events", label: "All gatherings" } : { href: "/", label: "Return home" }}>
           <p>The link may be incomplete. Please use the most recent email we sent, or ask for your place again.</p>
         </StatusMessage>
       );

@@ -85,8 +85,9 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
         and, if you register again with an email we already have, a short reminder that you are
         already registered. When you reserve a place at a gathering, we send a link to confirm it,
         a note once your place is confirmed with a link to cancel and, if you ask again, a reminder
-        that you already have a place. If you ticked &ldquo;Email me about upcoming gatherings&rdquo;, we may
-        also occasionally invite you to a gathering. Those emails come from {site.name}, are sent
+        that you already have a place. If you asked for invitations to upcoming gatherings, when you registered
+        or later from your &ldquo;Manage my registration&rdquo; link, we may also occasionally invite
+        you to a gathering. Those emails come from {site.name}, are sent
         through our email service provider, and each one includes a link to unsubscribe. We do not
         send newsletters or share your address with anyone else.
       </p>

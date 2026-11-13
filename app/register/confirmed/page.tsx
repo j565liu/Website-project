@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { StatusMessage } from "@/components/StatusMessage";
+import { afterRegistrationLink } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "You're registered",
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function ConfirmedPage() {
   return (
-    <StatusMessage label="Confirmed" title="You’re registered." link={{ href: "/events", label: "See forthcoming gatherings" }}>
+    <StatusMessage label="Confirmed" title="You’re registered." link={afterRegistrationLink}>
       <p>
         Thank you for confirming your email. Locations for our gatherings are shared with
         registered guests only.

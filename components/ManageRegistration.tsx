@@ -39,7 +39,7 @@ export function ManageRegistration({ id, sig, eventEmails }: Props) {
     );
   }
 
-  const receivingEventEmails = eventEmails && state.outcome !== "stopped";
+  const receivingEventEmails = state.outcome === "started" || (eventEmails && state.outcome !== "stopped");
   const hidden = (
     <>
       <input type="hidden" name="id" value={id} />
@@ -57,25 +57,46 @@ export function ManageRegistration({ id, sig, eventEmails }: Props) {
 
       <section aria-labelledby="event-emails-heading" className="space-y-4">
         <h2 id="event-emails-heading" className="font-display text-3xl font-medium text-ivory">
-          Emails about gatherings
+          Invitations to gatherings
         </h2>
-        {state.outcome === "stopped" ? (
+        {state.outcome === "stopped" && (
           <p role="status" className="text-ivory">
-            Done. You won&rsquo;t receive emails about gatherings.
+            Done. You won&rsquo;t receive invitations to gatherings.
           </p>
-        ) : receivingEventEmails ? (
+        )}
+        {state.outcome === "started" && (
+          <p role="status" className="text-ivory">
+            Done. We will email you invitations to upcoming gatherings.
+          </p>
+        )}
+        {receivingEventEmails ? (
           <>
-            <p>You have asked to hear about upcoming gatherings.</p>
+            {state.outcome !== "started" && <p>You receive invitations to upcoming gatherings by email.</p>}
             <form action={formAction}>
               {hidden}
               <input type="hidden" name="intent" value="stop-emails" />
               <button type="submit" disabled={pending} className={buttonClass}>
-                Stop emails about gatherings
+                Stop invitations
               </button>
             </form>
           </>
         ) : (
-          <p>You won&rsquo;t receive emails about gatherings.</p>
+          <>
+            {state.outcome !== "stopped" && (
+              <p>
+                Invitations are sent by email only. You haven&rsquo;t asked for them, so you won&rsquo;t
+                hear about upcoming gatherings.
+              </p>
+            )}
+            <form action={formAction}>
+              {hidden}
+              <input type="hidden" name="intent" value="start-emails" />
+              <button type="submit" disabled={pending} className={buttonClass}>
+                Send me invitations
+              </button>
+            </form>
+            <p className="text-sm">Every invitation includes a link to unsubscribe.</p>
+          </>
         )}
       </section>
 

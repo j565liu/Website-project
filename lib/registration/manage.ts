@@ -1,5 +1,5 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
-import { eq } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 import type { Database } from "@/lib/db";
 import { registrations } from "@/lib/db/schema";
 
@@ -72,7 +72,21 @@ export async function findManagedRegistration(id: unknown, sig: unknown, db: Dat
   };
 }
 
-export type ManageOutcome = "invalid" | "missing" | "stopped" | "deleted";
+export type ManageOutcome = "invalid" | "missing" | "started" | "stopped" | "deleted";
+
+// Pressing "Send me invitations" on the manage page is the guest's consent, recorded with its time.
+export async function startEventEmails(id: unknown, sig: unknown, db: Database, now = new Date()): Promise<ManageOutcome> {
+  if (!isValidManageLink(id, sig)) return "invalid";
+  // Only set when off, so the time of the first consent is kept.
+  const [updated] = await db
+    .update(registrations)
+    .set({ eventEmailsConsentAt: now, updatedAt: now })
+    .where(and(eq(registrations.id, id), isNull(registrations.eventEmailsConsentAt)))
+    .returning({ id: registrations.id });
+  if (updated) return "started";
+  const [existing] = await db.select({ id: registrations.id }).from(registrations).where(eq(registrations.id, id)).limit(1);
+  return existing ? "started" : "missing";
+}
 
 export async function stopEventEmails(id: unknown, sig: unknown, db: Database, now = new Date()): Promise<ManageOutcome> {
   if (!isValidManageLink(id, sig)) return "invalid";

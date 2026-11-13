@@ -66,11 +66,11 @@ describe("protected pages", () => {
   it.each([
     ["/register", "/register"],
     ["/events", "/events"],
-    ["/faq", "/events"],
-    ["//evil.example", "/events"],
-    ["https://evil.example/events", "/events"],
-    [undefined, "/events"],
-    [["/register"], "/events"],
+    ["/faq", "/register"],
+    ["//evil.example", "/register"],
+    ["https://evil.example/events", "/register"],
+    [undefined, "/register"],
+    [["/register"], "/register"],
   ])("sends %j on to %s after the code", (next, expected) => {
     expect(safeNextPath(next)).toBe(expected);
   });

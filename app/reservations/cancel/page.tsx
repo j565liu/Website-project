@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ReservationLinkButton } from "@/components/ReservationLinkButton";
 import { StatusMessage } from "@/components/StatusMessage";
+import { site } from "@/content/site";
 import { getDb } from "@/lib/db";
 import { formatEventDate, formatEventTime, getEventById } from "@/lib/events";
 import { parseCancelLink } from "@/lib/reservations/links";
@@ -48,7 +49,7 @@ export default async function CancelReservationPage({ searchParams }: PageProps<
       );
     case "past":
       return (
-        <StatusMessage label="Reservations closed" title="This evening has passed." link={{ href: "/events", label: "All gatherings" }}>
+        <StatusMessage label="Reservations closed" title="This evening has passed." link={site.eventsPublished ? { href: "/events", label: "All gatherings" } : { href: "/", label: "Return home" }}>
           <p>{event?.title} has already taken place.</p>
         </StatusMessage>
       );
@@ -60,7 +61,7 @@ export default async function CancelReservationPage({ searchParams }: PageProps<
       );
     default:
       return (
-        <StatusMessage label="Link not recognised" title="We couldn’t find that link." link={{ href: "/events", label: "All gatherings" }}>
+        <StatusMessage label="Link not recognised" title="We couldn’t find that link." link={site.eventsPublished ? { href: "/events", label: "All gatherings" } : { href: "/", label: "Return home" }}>
           <p>The link may be incomplete. Please use the link in the most recent email we sent.</p>
         </StatusMessage>
       );

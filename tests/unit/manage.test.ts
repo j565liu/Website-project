@@ -5,6 +5,7 @@ import {
   findManagedRegistration,
   isValidManageLink,
   manageUrl,
+  startEventEmails,
   stopEventEmails,
 } from "@/lib/registration/manage";
 import { confirmRegistration, handleSubmission, type SubmissionContext } from "@/lib/registration/service";
@@ -96,6 +97,24 @@ describe("managing a registration", () => {
     const [row] = await db.select().from(registrations);
     expect(row.eventEmailsConsentAt).toBeNull();
     expect(row.confirmedAt).not.toBeNull();
+  });
+
+  it("turns invitations on, recording when, and keeps the first consent time", async () => {
+    const { id, sig, registered } = await confirmedGuest();
+    expect(registered.text).toMatch(/turn invitations on/);
+
+    const first = new Date("2026-11-13T15:00:00Z");
+    expect(await startEventEmails(id, sig, db, first)).toBe("started");
+    expect((await db.select().from(registrations))[0].eventEmailsConsentAt).toEqual(first);
+
+    expect(await startEventEmails(id, sig, db, new Date("2026-11-14T15:00:00Z"))).toBe("started");
+    expect((await db.select().from(registrations))[0].eventEmailsConsentAt).toEqual(first);
+    expect(await startEventEmails(id, "forged", db)).toBe("invalid");
+  });
+
+  it("tells a guest who asked for invitations that they will receive them", async () => {
+    const { registered } = await confirmedGuest({ eventEmails: "on" });
+    expect(registered.text).toMatch(/We will write to you/);
   });
 
   it("deletes the registration, after which the link finds nothing", async () => {

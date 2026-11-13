@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { StatusMessage } from "@/components/StatusMessage";
+import { site } from "@/content/site";
 import { formatEventDate, formatEventTime, getEventById } from "@/lib/events";
 
 export const metadata: Metadata = {
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 export default async function ReservationConfirmedPage({ searchParams }: PageProps<"/reservations/confirmed">) {
   const event = getEventById((await searchParams).e);
   return (
-    <StatusMessage label="Confirmed" title="You’re on the list." link={{ href: "/events", label: "All gatherings" }}>
+    <StatusMessage label="Confirmed" title="You’re on the list." link={site.eventsPublished ? { href: "/events", label: "All gatherings" } : { href: "/", label: "Return home" }}>
       {event && (
         <p>
           Your place at {event.title} on {formatEventDate(event.startsAt)} at{" "}

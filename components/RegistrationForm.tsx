@@ -308,10 +308,11 @@ export function RegistrationForm() {
           />
           <div>
             <label htmlFor="eventEmails" className="cursor-pointer leading-relaxed text-ivory">
-              Email me about upcoming gatherings.
+              Send me invitations to upcoming gatherings.
             </label>
             <p id="eventEmails-hint" className="mt-2 text-sm text-muted">
-              Optional. Every email includes a link to unsubscribe.
+              Invitations are sent by email only, so tick this to receive them. Every invitation
+              includes a link to unsubscribe.
             </p>
           </div>
         </div>

@@ -21,8 +21,8 @@ export default function HomePage() {
               neighbourhoods.
             </p>
             <p>
-              Every gathering is by invitation. If you have a code, registering takes a minute:
-              your name and your email. Come curious, and bring your good conversation.
+              Every gathering is by invitation. If you have a code, registering takes a minute.
+              Come curious, and bring your good conversation.
             </p>
             <Link
               href="/about"
@@ -37,22 +37,23 @@ export default function HomePage() {
       <section aria-labelledby="upcoming" className="border-t border-charcoal">
         <div className="mx-auto max-w-7xl px-6 py-32 md:px-10 md:py-44">
           <Reveal className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
-            <SectionHeading id="upcoming" label="Upcoming" title="Forthcoming gatherings" />
+            <SectionHeading id="upcoming" label="Invitations" title="How you are invited" />
           </Reveal>
           <Reveal className="mt-16 grid gap-10 border-t border-charcoal pt-10 lg:grid-cols-[1fr_1.4fr] lg:gap-24">
             <p className="font-display text-2xl font-normal text-ivory md:text-3xl">
-              Dates and details are shared with invited guests.
+              Invitations are sent personally, by email.
             </p>
             <div className="space-y-6 text-lg leading-relaxed text-muted">
               <p>
-                A small number of evenings each season, across Toronto&rsquo;s neighbourhoods. Enter
-                the code from your invitation to see what is coming up.
+                A small number of evenings each season, across Toronto&rsquo;s neighbourhoods. Once
+                you have registered with the code from your invitation, we write to you about the
+                evenings that suit you, with the date and all the details.
               </p>
               <Link
-                href="/events"
+                href="/register"
                 className="label inline-block py-3 text-ivory underline decoration-gold underline-offset-8 transition-colors duration-500 hover:text-gold"
               >
-                View events
+                Register with your code
               </Link>
             </div>
           </Reveal>

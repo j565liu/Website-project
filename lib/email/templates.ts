@@ -52,11 +52,16 @@ export function confirmationEmail(to: string, name: string, confirmUrl: string):
   ]);
 }
 
-export function registeredEmail(to: string, name: string, manageLink: string): EmailMessage {
+export function registeredEmail(to: string, name: string, manageLink: string, invitations: boolean): EmailMessage {
   return message(to, `You're registered with ${site.name}`, [
     { kind: "p", text: `Hello ${name},` },
-    { kind: "p", text: `Your email is confirmed and you are now registered with ${site.name}. Locations for our gatherings are shared with registered guests only.` },
-    { kind: "p", text: "To stop emails about gatherings or remove your details at any time, use the link below." },
+    { kind: "p", text: `Your email is confirmed and you are now registered with ${site.name}.` },
+    {
+      kind: "p",
+      text: invitations
+        ? "Invitations to our gatherings are sent personally, by email. We will write to you about the evenings that suit you. To stop invitations or remove your details at any time, use the link below."
+        : "Invitations to our gatherings are sent personally, by email, to guests who ask for them. You haven't asked yet; if you would like to be invited, turn invitations on using the link below. It also lets you remove your details at any time.",
+    },
     { kind: "button", label: "Manage my registration", href: manageLink },
   ]);
 }

@@ -68,9 +68,10 @@ export const faq: FaqItem[] = [
     ],
   },
   {
-    question: "Will you email me about upcoming gatherings?",
+    question: "How will I hear about gatherings?",
     answer: [
-      "Only if you tick \"Email me about upcoming gatherings\" when you register. Those emails are occasional, and every one includes a link to unsubscribe. Otherwise we only send the emails needed to confirm your registration.",
+      "By email. Invitations are sent personally to registered guests who asked for them: tick \"Send me invitations to upcoming gatherings\" when you register, or turn invitations on later from the \"Manage my registration\" link in the email we sent you.",
+      "Invitations are occasional, and every one includes a link to unsubscribe. Without them, we only send the emails needed to confirm your registration.",
     ],
   },
   {

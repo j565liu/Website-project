@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ConfirmForm } from "@/components/ConfirmForm";
 import { StatusMessage } from "@/components/StatusMessage";
+import { afterRegistrationLink } from "@/content/site";
 import { getDb } from "@/lib/db";
 import { getTokenStatus, type TokenStatus } from "@/lib/registration/service";
 
@@ -33,7 +34,7 @@ export default async function ConfirmPage({ searchParams }: PageProps<"/register
       );
     case "confirmed":
       return (
-        <StatusMessage label="Confirmed" title="You’re already registered." link={{ href: "/events", label: "See forthcoming gatherings" }}>
+        <StatusMessage label="Confirmed" title="You’re already registered." link={afterRegistrationLink}>
           <p>This email address has already been confirmed. There is nothing more to do.</p>
         </StatusMessage>
       );

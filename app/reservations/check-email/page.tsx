@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { StatusMessage } from "@/components/StatusMessage";
+import { site } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Check your inbox",
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function ReservationCheckEmailPage() {
   return (
-    <StatusMessage label="Almost there" title="Check your inbox." link={{ href: "/events", label: "All gatherings" }}>
+    <StatusMessage label="Almost there" title="Check your inbox." link={site.eventsPublished ? { href: "/events", label: "All gatherings" } : { href: "/", label: "Return home" }}>
       <p>
         We have sent an email to the address you entered. Open it and press the button to confirm
         your place. The link expires in 48 hours.

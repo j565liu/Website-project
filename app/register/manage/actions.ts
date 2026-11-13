@@ -1,7 +1,7 @@
 "use server";
 
 import { getDb } from "@/lib/db";
-import { deleteRegistration, stopEventEmails, type ManageOutcome } from "@/lib/registration/manage";
+import { deleteRegistration, startEventEmails, stopEventEmails, type ManageOutcome } from "@/lib/registration/manage";
 
 export type ManageState = { outcome?: ManageOutcome; error?: string };
 
@@ -9,10 +9,13 @@ export async function manageAction(_previous: ManageState, formData: FormData): 
   const id = formData.get("id");
   const sig = formData.get("sig");
   try {
+    const intent = formData.get("intent");
     const outcome =
-      formData.get("intent") === "delete"
+      intent === "delete"
         ? await deleteRegistration(id, sig, getDb())
-        : await stopEventEmails(id, sig, getDb());
+        : intent === "start-emails"
+          ? await startEventEmails(id, sig, getDb())
+          : await stopEventEmails(id, sig, getDb());
     return { outcome };
   } catch (error) {
     console.error("[manage] Update failed", error);

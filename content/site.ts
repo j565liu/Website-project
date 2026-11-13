@@ -12,7 +12,15 @@ export const site = {
   // Off while places are booked elsewhere (Eventbrite). Turning it back on restores the
   // "Reserve My Place" form on event pages; links already emailed keep working either way.
   reservationsOpen: false as boolean,
+  // Off while invitations go out by email to registered guests only: /events and each event page
+  // redirect home and drop out of the menus. The pages and content/events.ts are kept.
+  eventsPublished: false as boolean,
 } as const;
+
+// Where "back" links on the registration and reservation pages lead.
+export const afterRegistrationLink = site.eventsPublished
+  ? { href: "/events", label: "See forthcoming gatherings" }
+  : { href: "/", label: "Return home" };
 
 // Pages where the site-wide "Have an Invitation?" button is hidden: the visitor is already
 // entering their code, registering, or (on /events) has the code.
@@ -20,14 +28,13 @@ export function showsInvitationButton(pathname: string): boolean {
   return !["/invitation", "/register", "/events"].some((path) => pathname === path || pathname.startsWith(`${path}/`));
 }
 
-export const primaryNav = [
-  { href: "/about", label: "About" },
-  { href: "/events", label: "Events" },
-] as const;
+const eventsNav = site.eventsPublished ? [{ href: "/events", label: "Events" }] : [];
+
+export const primaryNav = [{ href: "/about", label: "About" }, ...eventsNav];
 
 export const footerNav = [
   { href: "/about", label: "About" },
-  { href: "/events", label: "Events" },
+  ...eventsNav,
   { href: "/faq", label: "FAQ" },
   { href: "/privacy", label: "Privacy" },
-] as const;
+];
