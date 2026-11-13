@@ -1,0 +1,80 @@
+<!doctype html>
+<!--
+  Postponement notice for Resend Broadcasts, in the same style as event-invitation.html.
+  Send it to the same segment that received the invitation. {{{RESEND_UNSUBSCRIBE_URL}}} is filled
+  in by Resend for each guest; check it in a test send. CASL also expects a mailing address in the footer; add one once there is one.
+  See docs/event-emails.md for who may receive it.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="supported-color-schemes" content="dark">
+<title>A new date for our dinner</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; padding: 0; background: #0a0a0a; }
+  a { color: #f5f3ef; }
+  @media (max-width: 620px) {
+    .card { padding: 40px 24px !important; }
+    .title { font-size: 34px !important; }
+  }
+</style>
+</head>
+<body style="margin:0;padding:0;background:#0a0a0a;">
+<center style="width:100%;background:#0a0a0a;">
+  <!-- Preview text shown next to the subject in the inbox. -->
+  <div style="display:none;max-height:0;overflow:hidden;color:#0a0a0a;">We are moving our November 26 dinner to a later date, and will share the new date soon.</div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0a0a0a" style="background:#0a0a0a;">
+    <tr>
+      <td align="center" style="padding:40px 12px;">
+        <table role="presentation" align="center" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:680px;margin:0 auto;">
+
+          <!-- Name, as in the site header -->
+          <tr>
+            <td style="padding:0 8px 32px;font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-size:26px;color:#f5f3ef;">
+              Ready to Mingle
+            </td>
+          </tr>
+
+          <tr>
+            <td class="card" bgcolor="#141414" style="background:#141414;border:1px solid #2a2a2a;padding:56px 48px;">
+
+              <p style="margin:0;font-family:Inter,Helvetica,Arial,sans-serif;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:#c2bcb1;">
+                Toronto &middot; By invitation
+              </p>
+              <h1 class="title" style="margin:20px 0 0;font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-size:40px;font-weight:500;line-height:1.1;color:#f5f3ef;">
+                A new date for our dinner
+              </h1>
+              <div style="margin:32px 0;width:64px;height:1px;background:#b89b5e;line-height:1px;font-size:1px;">&nbsp;</div>
+
+              <p style="margin:0 0 20px;font-family:Inter,Helvetica,Arial,sans-serif;font-size:18px;line-height:1.7;color:#c2bcb1;color:#f5f3ef;">Dear Friends,</p>
+              <p style="margin:0 0 20px;font-family:Inter,Helvetica,Arial,sans-serif;font-size:18px;line-height:1.7;color:#c2bcb1;">Thank you for your interest in our Ready to Mingle dinner!</p>
+              <p style="margin:0 0 20px;font-family:Inter,Helvetica,Arial,sans-serif;font-size:18px;line-height:1.7;color:#c2bcb1;">To ensure a balanced group of men and women for the best experience, we are taking a bit more time to finalize the guest list and venue. Therefore, we’ve decided to postpone the November 26 event to a later date.</p>
+              <p style="margin:0;font-family:Inter,Helvetica,Arial,sans-serif;font-size:18px;line-height:1.7;color:#c2bcb1;">We’ll keep you posted and share the new date soon. Thank you for your understanding and continued support!</p>
+
+              <p style="margin:28px 0 0;font-family:Inter,Helvetica,Arial,sans-serif;font-size:18px;line-height:1.7;color:#f5f3ef;">
+                Warm regards,<br>The Ready to Mingle team
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer: unsubscribe link and mailing address are required (CASL) -->
+          <tr>
+            <td style="padding:28px 8px 0;font-family:Inter,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.7;color:#c2bcb1;">
+              <a href="https://www.readytomingle.ca" style="color:#f5f3ef;text-decoration:underline;">readytomingle.ca</a><br>
+              You are receiving this because you asked to hear about upcoming gatherings when you registered.
+              <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:#f5f3ef;text-decoration:underline;">Unsubscribe</a><br>
+              Ready to Mingle &middot; <a href="mailto:hello@readytomingle.ca" style="color:#f5f3ef;text-decoration:underline;">hello@readytomingle.ca</a>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</center>
+</body>
+</html>
